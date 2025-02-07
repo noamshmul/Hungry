@@ -16,7 +16,7 @@ def bind_and_listen():
         while True:
             conn, addr = s.accept()
     
-            logger.info('Connected to :', addr[0], ':', addr[1])
+            logger.info(f'Connected to {addr[0]}:{addr[1]}')
     
             # Start a new thread and return its identifier
 
