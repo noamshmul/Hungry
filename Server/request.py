@@ -4,7 +4,7 @@ import json
 class Request:
 
     def __init__(self, json_request):
-        d = json.dumps(json_request)
+        d = json.loads(json_request)
         if "opcode" in d.keys() and "inventory_id" in d.keys() and "password" in d.keys() and "paramiters" in d.keys():
             self.request_dic = d
         else:
@@ -21,5 +21,4 @@ class Request:
 
     def parameters(self):
         return self.request_dic["paramiters"]
-
 

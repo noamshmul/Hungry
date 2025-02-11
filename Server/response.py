@@ -4,9 +4,9 @@ import json
 class Response:
 
     def __init__(self, json_request):
-        d = json.dumps(json_request)
+        d = json.loads(json_request)
         if "opcode" in d.keys() and "response" in d.keys():
-            self.request_dic = json.dumps(d)
+            self.request_dic = d
         else:
             raise Exception("Not valid dictionary")
 
@@ -15,6 +15,4 @@ class Response:
 
     def response(self):
         return self.request_dic["response"]
-
-
 
