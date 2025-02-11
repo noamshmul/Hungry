@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     Button btnTestConnection;
 
@@ -24,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });*/
+        int code = 1;
+        String id = "1";
+        String pass = "3";
+        HashMap<String, Object> k = new HashMap<>();
+        k.put("Check", 2);
+        HashMap<String, Object> res = Parser.parse(code, id, pass, k);
 
         btnTestConnection = (Button) findViewById(R.id.testButton);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
