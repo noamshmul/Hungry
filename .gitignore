@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,java,androidstudio,android
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,java,androidstudio,android
 
+/logs
+/.vscode
+
 ### Android ###
 # Gradle files
 .gradle/

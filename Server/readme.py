@@ -1,4 +1,7 @@
 import markdown
+from log import logger
+
+readme_html = None
 
 def read_readme() -> str:
     with open('../readme.md', 'r') as f:
@@ -6,12 +9,14 @@ def read_readme() -> str:
     return readme
 
 def get_readme():
-    try:
-        readme_md = read_readme()
-        readme_html = markdown.markdown(readme_md)
-    except Exception as e:
-        readme_html = f'<b>ERR: {e}</b>'
-    print("readme:",readme_html)
+    global readme_html
+    if not readme_html:
+        try:
+            readme_md = read_readme()
+            readme_html = markdown.markdown(readme_md)
+        except Exception as e:
+            readme_html = f'<b>ERR: {e}</b>'
+        logger.info("Pull readme.md")
 
     html_content = f"""
     <html>
