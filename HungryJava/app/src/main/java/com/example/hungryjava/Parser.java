@@ -9,7 +9,7 @@ public class Parser {
     static final String PASS = "password";
 
 
-    static HashMap<String, Object> parse(int code, String inv_id, String password, HashMap<String, Object> params)
+    static HashMap<String, Object> parseRequest(int code, String inv_id, String password, HashMap<String, Object> params)
     {
         HashMap<String, Object> request = new HashMap<>();
         request.put(CODE, code);

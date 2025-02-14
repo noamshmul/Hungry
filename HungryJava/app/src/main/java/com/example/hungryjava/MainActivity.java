@@ -1,5 +1,6 @@
 package com.example.hungryjava;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,14 +32,19 @@ public class MainActivity extends AppCompatActivity {
         String pass = "3";
         HashMap<String, Object> k = new HashMap<>();
         k.put("Check", 2);
-        HashMap<String, Object> res = Parser.parse(code, id, pass, k);
+        HashMap<String, Object> res = Parser.parseRequest(code, id, pass, k);
+
+        int code1 = (Integer)res.get("code");
+        
+
+
 
         btnTestConnection = (Button) findViewById(R.id.testButton);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("Main", "User tapped the Supabutton");
-                Communication comm = new Communication();
-                comm.connect();
+                //Example for intents                           Current Activity, Next Activity
+                Intent dummyscreen = new Intent(MainActivity.this, loginscreen.class);
+                startActivity(dummyscreen);//Starting activity
             }
         });
     }
