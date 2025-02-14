@@ -29,7 +29,7 @@ class SQL_DB_Manager:
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_BAD_DB_ERROR:
                 print("DB doesnt exist")
-                createDB()
+                self.createDB()
                 self.DB.database = DB_NAME
             else:
                 print(err.msg) #switch to log
