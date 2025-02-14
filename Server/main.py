@@ -1,10 +1,6 @@
 import gateway
 import log
 
-def main():
-    gateway.bind_and_listen()
-
-
 ascii_art = '''
  /$$   /$$                                                  
 | $$  | $$                                                  
@@ -25,4 +21,4 @@ if __name__ == '__main__':
     logger = log.logging.getLogger(__name__)
     logger.info("Starting Server")
 
-    main()
+    gateway.run()
