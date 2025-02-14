@@ -6,7 +6,7 @@ from pymongo.errors import ServerSelectionTimeoutError
 import json
 import os
 import settings
-from Server.MongoDB.MongoDB_Base import MongoDB_Base
+from Server.MongoDB import MongoDB_Base
 
 
 class MongoDB_Setup:
@@ -45,10 +45,10 @@ class MongoDB_Setup:
             print(f"Error creating container: {e}")
             raise
 
-    def wait_for_mongodb(self, mongodb_base):
+    def wait_for_mongodb(self):
         for attempt in range(settings.MAX_RETRIES):
             try:
-                mongodb_base.connect_to_mongodb()
+                MongoDB_Base.connect_to_mongodb()
                 settings.CONNECTION.close()
                 print("MongoDB is ready!")
                 return True
@@ -58,10 +58,10 @@ class MongoDB_Setup:
 
         raise Exception("MongoDB failed to become ready in time")
 
-    def setup_database(self, mongodb_base):
+    def setup_database(self):
 
         try:
-            mongodb_base.connect_to_mongodb()
+            MongoDB_Base.connect_to_mongodb()
 
             db_list = settings.CONNECTION.list_database_names()
             if settings.DATABASE_NAME in db_list:
@@ -137,15 +137,14 @@ def main():
 
     try:
 
-        mongo_base = MongoDB_Base()
         mongo_setup = MongoDB_Setup()
         mongo_setup.create_mongodb_container()
-        mongo_setup.wait_for_mongodb(mongo_base)
-        mongo_setup.setup_database(mongo_base)
+        mongo_setup.wait_for_mongodb()
+        mongo_setup.setup_database()
 
         print("MongoDB setup completed successfully!")
 
-        #print(json.dumps(mongo_base.get_recipe(settings.TEST_RECIPE), indent=1)) # For test
+        #print(json.dumps(MongoDB_Base.get_recipe(settings.TEST_RECIPE), indent=1)) # For test
         settings.CONNECTION.close()
         mongo_setup.cleanup_docker()
 
