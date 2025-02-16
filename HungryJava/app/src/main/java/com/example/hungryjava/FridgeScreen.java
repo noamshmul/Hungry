@@ -1,8 +1,11 @@
 package com.example.hungryjava;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FridgeScreen extends AppCompatActivity {
+    static List<String> items = new ArrayList<>();
+    static ItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +26,7 @@ public class FridgeScreen extends AppCompatActivity {
         setContentView(R.layout.fridge_activity);
         RecyclerView list = findViewById(R.id.fridge_list);
         // Sample data: List of strings (your fridge items)
-        List<String> items = new ArrayList<>();
+
         items.add("Milk");
         items.add("Eggs");
         items.add("Butter");
@@ -30,7 +35,17 @@ public class FridgeScreen extends AppCompatActivity {
 
         // Set up RecyclerView
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new ItemAdapter(this, items));
+        adapter = new ItemAdapter(this, items);
+        list.setAdapter(adapter);
+
+        Button add = findViewById(R.id.add_item);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupAddItem popup = new PopupAddItem();
+                popup.show(getSupportFragmentManager(), "PopupAddItem");
+            }
+        });
 
 
     }

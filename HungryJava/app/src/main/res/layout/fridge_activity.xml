@@ -31,13 +31,14 @@
 
         <!-- Button at bottom right -->
         <Button
-            android:id="@+id/button_right"
+            android:id="@+id/add_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="60dp"
             android:text="+"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="4dp"
+            />
 
     </LinearLayout>
 

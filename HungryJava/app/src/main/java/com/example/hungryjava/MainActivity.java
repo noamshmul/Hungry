@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.homescreen);
+        setContentView(R.layout.activity_loginscreen);
         /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -35,14 +35,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btnTestConnection = findViewById(R.id.testButton);
+        btnTestConnection = findViewById(R.id.btn);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FridgeScreen.class);
+                startActivity(intent);
+                /*
                 new AlertDialog.Builder(MainActivity.this)
                         .setView(R.layout.pop_up_add_item_screen)
                         .setCancelable(false)
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                         .show();
+
+                 */
             }
         });
     }
