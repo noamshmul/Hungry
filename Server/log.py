@@ -3,7 +3,6 @@ from datetime import datetime
 import os
 from json import dump, load
 
-print("Imported log.py")
 
 FORMAT = '%(asctime)s - %(name)s - %(levelname)s >\t %(message)s'
 DATE_FORMAT = '%Y-%m-%d %I:%M:%S'
@@ -35,7 +34,6 @@ if not os.path.exists(LOGS_FOLDER):
 if os.path.exists(LOGS_META):
     with open(LOGS_META, 'r') as metafile:
         current_metadata = load(metafile)
-        print(current_metadata.get('ppid'), metadata.get('ppid'))
         if (current_metadata.get('ppid') == metadata.get('ppid') or same_run(current_metadata.get('date'), metadata.get('date'))) and current_metadata.get('file'):
             metadata['file'] = current_metadata['file']
 with open(LOGS_META, '+w') as metafile:
