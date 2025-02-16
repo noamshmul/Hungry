@@ -1,34 +1,31 @@
-import socket
-import logging
+from fastapi import Depends, APIRouter
 
-logger = logging.getLogger(__name__)
+from auth import authentication
+from log import logger
 
-SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 7777
+router = APIRouter()
 
-SERVER_MAX_PARALLEL_CONNECTIONS = 5
+global items #for testing
+items = [{'name': 'tomato', 'amount':4}, {'name':'cucumber', 'amount':2}, {'name':'onion', 'amount':3}]
 
-def bind_and_listen():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((SERVER_HOST, SERVER_PORT))
-    s.listen(SERVER_MAX_PARALLEL_CONNECTIONS)
-    logger.info(f"Listening on {SERVER_HOST}:{SERVER_PORT}")
+@router.get("/test-connection")
+def test_connection(Verifcation = Depends(authentication)):
+    '''Used to test if server is alive and if auth is valid'''
+    return {"Hello": "World"}
 
-    try:
-        while True:
-            conn, addr = s.accept()
-    
-            logger.info(f'Connected to {addr[0]}:{addr[1]}')
-    
-            # Start a new thread and return its identifier
+@router.get("/users")
+def read_users(id : int = 4):
+    return {"Hello": "World"}
 
-    except KeyboardInterrupt as e:
-        logger.info("Got an keyboard interrupt- closing the server")
-    except Exception as e:
-        logger.critical("Closing server with exception:", e)
-    s.close()
+@router.post("/inventory")
+def add_item(name : str, amount : int):
+    # TODO: 
 
+    items.append({'name': name, 'amount': amount})
+    return {"status": "ok"}
 
-if __name__ == '__main__':
-    import log
-    logger.info("Running Gateway Standalone")
+@router.get("/inventory")
+def get_inventory():
+    # TODO: 
+
+    return {"status": "ok", "items" : items}
