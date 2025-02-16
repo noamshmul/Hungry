@@ -76,7 +76,7 @@ class SQL_DB_Manager:
 
 
 
-    def get_ingerdients_by_ids(self, ids ):
+    def get_ingerdients_by_ids(self, ids):
         pass
 
     def get_password(self, inv_id):
