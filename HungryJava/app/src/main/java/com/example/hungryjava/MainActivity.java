@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Example for intents                           Current Activity, Next Activity
-                Intent dummyscreen = new Intent(MainActivity.this, loginscreen.class);
-                startActivity(dummyscreen);//Starting activity
+                Intent fridge = new Intent(MainActivity.this, FridgeScreen.class);
+                startActivity(fridge);//Starting activity
             }
         });
     }
