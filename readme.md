@@ -1,20 +1,6 @@
 # Hungry!
 We are hungry for the _win_ :D
 
-```
- /$$   /$$                                                  
-| $$  | $$                                                  
-| $$  | $$ /$$   /$$ /$$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$
-| $$$$$$$$| $$  | $$| $$__  $$ /$$__  $$ /$$__  $$| $$  | $$
-| $$__  $$| $$  | $$| $$  \ $$| $$  \ $$| $$  \__/| $$  | $$
-| $$  | $$| $$  | $$| $$  | $$| $$  | $$| $$      | $$  | $$
-| $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$| $$      |  $$$$$$$
-|__/  |__/ \______/ |__/  |__/ \____  $$|__/       \____  $$
-                               /$$  \ $$           /$$  | $$
-                              |  $$$$$$/          |  $$$$$$/
-                               \______/            \______/ 
-```
-
 ## Server
 Hungry's server is built on python 3.12.7, using FastAPI as the API gateway, MongoDB as the database of the recipes and MySQL for Inventory and Ingredients.
 
