@@ -1,16 +1,12 @@
 package com.example.hungryjava;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import java.util.HashMap;
 
@@ -39,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btnTestConnection = (Button) findViewById(R.id.testButton);
+        btnTestConnection = findViewById(R.id.testButton);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Example for intents                           Current Activity, Next Activity
-                Intent fridge = new Intent(MainActivity.this, FridgeScreen.class);
-                startActivity(fridge);//Starting activity
+                new AlertDialog.Builder(MainActivity.this)
+                        .setView(R.layout.pop_up_add_item_screen)
+                        .setCancelable(false)
+                        .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                        .show();
             }
         });
     }
