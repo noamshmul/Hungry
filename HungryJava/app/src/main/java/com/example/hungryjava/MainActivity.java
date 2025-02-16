@@ -1,15 +1,11 @@
 package com.example.hungryjava;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity extends AppCompatActivity {
     Button btnTestConnection;
@@ -25,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });*/
 
-        btnTestConnection = (Button) findViewById(R.id.testButton);
+        btnTestConnection = findViewById(R.id.testButton);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("Main", "User tapped the Supabutton");
-                Communication comm = new Communication();
-                comm.connect();
+                new AlertDialog.Builder(MainActivity.this)
+                        .setView(R.layout.pop_up_add_item_screen)
+                        .setCancelable(false)
+                        .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                        .show();
             }
         });
     }
