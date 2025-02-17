@@ -1,196 +1,123 @@
-[{
-  "Classic Spaghetti Bolognese": {
-    "instructions": "1. Brown meat in large pot. 2. Add onions and garlic, sauté until soft. 3. Add tomatoes and herbs. 4. Simmer for 1 hour. 5. Cook pasta separately. 6. Combine and serve with parmesan.",
-    "approx_time": 75,
-    "ingridients": {
-      "123456": {
-        "quantity": 500,
-        "original_quantity": "500g ground beef"
+[
+    {
+      "_id": 1,
+      "name": "Classic Spaghetti Bolognese",
+      "instructions": "1. Brown meat in large pot. 2. Add onions and garlic, sauté until soft. 3. Add tomatoes and herbs. 4. Simmer for 1 hour. 5. Cook pasta separately. 6. Combine and serve with parmesan.",
+      "approx_time": 75,
+      "ingredients": {
+        "123456": { "quantity": 500, "original_quantity": "500g ground beef" },
+        "234567": { "quantity": 400, "original_quantity": "400g spaghetti" },
+        "345678": { "quantity": 2, "original_quantity": "2 cans crushed tomatoes" },
+        "456789": { "quantity": 2, "original_quantity": "2 onions" }
       },
-      "234567": {
-        "quantity": 400,
-        "original_quantity": "400g spaghetti"
-      },
-      "345678": {
-        "quantity": 2,
-        "original_quantity": "2 cans crushed tomatoes"
-      },
-      "456789": {
-        "quantity": 2,
-        "original_quantity": "2 onions"
-      }
+      "size": 4
     },
-    "size": 4
-  },
-  "Chicken Stir-Fry": {
-    "instructions": "1. Slice chicken and vegetables. 2. Heat wok with oil. 3. Stir-fry chicken until cooked. 4. Add vegetables. 5. Add sauce and combine. 6. Serve over rice.",
-    "approx_time": 30,
-    "ingridients": {
-      "567890": {
-        "quantity": 600,
-        "original_quantity": "600g chicken breast"
+    {
+      "_id": 2,
+      "name": "Chicken Stir-Fry",
+      "instructions": "1. Slice chicken and vegetables. 2. Heat wok with oil. 3. Stir-fry chicken until cooked. 4. Add vegetables. 5. Add sauce and combine. 6. Serve over rice.",
+      "approx_time": 30,
+      "ingredients": {
+        "567890": { "quantity": 600, "original_quantity": "600g chicken breast" },
+        "678901": { "quantity": 300, "original_quantity": "300g mixed vegetables" },
+        "789012": { "quantity": 200, "original_quantity": "200g rice" }
       },
-      "678901": {
-        "quantity": 300,
-        "original_quantity": "300g mixed vegetables"
-      },
-      "789012": {
-        "quantity": 200,
-        "original_quantity": "200g rice"
-      }
+      "size": 3
     },
-    "size": 3
-  },
-  "Vegetable Soup": {
-    "instructions": "1. Chop all vegetables. 2. Sauté onions and garlic. 3. Add vegetables and broth. 4. Simmer until vegetables are tender. 5. Season and serve.",
-    "approx_time": 45,
-    "ingridients": {
-      "112233": {
-        "quantity": 3,
-        "original_quantity": "3 potatoes"
+    {
+      "_id": 3,
+      "name": "Vegetable Soup",
+      "instructions": "1. Chop all vegetables. 2. Sauté onions and garlic. 3. Add vegetables and broth. 4. Simmer until vegetables are tender. 5. Season and serve.",
+      "approx_time": 45,
+      "ingredients": {
+        "112233": { "quantity": 3, "original_quantity": "3 potatoes" },
+        "890123": { "quantity": 1000, "original_quantity": "1L vegetable broth" },
+        "901234": { "quantity": 400, "original_quantity": "400g mixed vegetables" }
       },
-      "890123": {
-        "quantity": 1000,
-        "original_quantity": "1L vegetable broth"
-      },
-      "901234": {
-        "quantity": 400,
-        "original_quantity": "400g mixed vegetables"
-      }
+      "size": 6
     },
-    "size": 6
-  },
-  "Chocolate Chip Cookies": {
-    "instructions": "1. Cream butter and sugar. 2. Add eggs and vanilla. 3. Mix in dry ingredients. 4. Add chocolate chips. 5. Bake at 180°C for 12 minutes.",
-    "approx_time": 25,
-    "ingridients": {
-      "223344": {
-        "quantity": 250,
-        "original_quantity": "250g flour"
+    {
+      "_id": 4,
+      "name": "Chocolate Chip Cookies",
+      "instructions": "1. Cream butter and sugar. 2. Add eggs and vanilla. 3. Mix in dry ingredients. 4. Add chocolate chips. 5. Bake at 180°C for 12 minutes.",
+      "approx_time": 25,
+      "ingredients": {
+        "223344": { "quantity": 250, "original_quantity": "250g flour" },
+        "334455": { "quantity": 200, "original_quantity": "200g chocolate chips" },
+        "445566": { "quantity": 150, "original_quantity": "150g butter" }
       },
-      "334455": {
-        "quantity": 200,
-        "original_quantity": "200g chocolate chips"
-      },
-      "445566": {
-        "quantity": 150,
-        "original_quantity": "150g butter"
-      }
+      "size": 24
     },
-    "size": 24
-  },
-  "Greek Salad": {
-    "instructions": "1. Chop vegetables. 2. Combine in bowl. 3. Add feta cheese. 4. Drizzle with olive oil and oregano. 5. Toss and serve.",
-    "approx_time": 15,
-    "ingridients": {
-      "556677": {
-        "quantity": 4,
-        "original_quantity": "4 tomatoes"
+    {
+      "_id": 5,
+      "name": "Greek Salad",
+      "instructions": "1. Chop vegetables. 2. Combine in bowl. 3. Add feta cheese. 4. Drizzle with olive oil and oregano. 5. Toss and serve.",
+      "approx_time": 15,
+      "ingredients": {
+        "556677": { "quantity": 4, "original_quantity": "4 tomatoes" },
+        "667788": { "quantity": 1, "original_quantity": "1 cucumber" },
+        "778899": { "quantity": 200, "original_quantity": "200g feta cheese" }
       },
-      "667788": {
-        "quantity": 1,
-        "original_quantity": "1 cucumber"
-      },
-      "778899": {
-        "quantity": 200,
-        "original_quantity": "200g feta cheese"
-      }
+      "size": 4
     },
-    "size": 4
-  },
-  "Fish Tacos": {
-    "instructions": "1. Season fish. 2. Grill until cooked. 3. Warm tortillas. 4. Prepare toppings. 5. Assemble tacos. 6. Serve with lime.",
-    "approx_time": 35,
-    "ingridients": {
-      "889900": {
-        "quantity": 500,
-        "original_quantity": "500g white fish"
+    {
+      "_id": 6,
+      "name": "Fish Tacos",
+      "instructions": "1. Season fish. 2. Grill until cooked. 3. Warm tortillas. 4. Prepare toppings. 5. Assemble tacos. 6. Serve with lime.",
+      "approx_time": 35,
+      "ingredients": {
+        "889900": { "quantity": 500, "original_quantity": "500g white fish" },
+        "990011": { "quantity": 8, "original_quantity": "8 tortillas" },
+        "001122": { "quantity": 300, "original_quantity": "300g coleslaw" }
       },
-      "990011": {
-        "quantity": 8,
-        "original_quantity": "8 tortillas"
-      },
-      "001122": {
-        "quantity": 300,
-        "original_quantity": "300g coleslaw"
-      }
+      "size": 4
     },
-    "size": 4
-  },
-  "Mushroom Risotto": {
-    "instructions": "1. Sauté mushrooms. 2. Cook onions in butter. 3. Add rice and wine. 4. Gradually add hot broth. 5. Finish with parmesan.",
-    "approx_time": 50,
-    "ingridients": {
-      "112244": {
-        "quantity": 300,
-        "original_quantity": "300g arborio rice"
+    {
+      "_id": 7,
+      "name": "Mushroom Risotto",
+      "instructions": "1. Sauté mushrooms. 2. Cook onions in butter. 3. Add rice and wine. 4. Gradually add hot broth. 5. Finish with parmesan.",
+      "approx_time": 50,
+      "ingredients": {
+        "112244": { "quantity": 300, "original_quantity": "300g arborio rice" },
+        "223355": { "quantity": 400, "original_quantity": "400g mushrooms" },
+        "334466": { "quantity": 1000, "original_quantity": "1L chicken broth" }
       },
-      "223355": {
-        "quantity": 400,
-        "original_quantity": "400g mushrooms"
-      },
-      "334466": {
-        "quantity": 1000,
-        "original_quantity": "1L chicken broth"
-      }
+      "size": 4
     },
-    "size": 4
-  },
-  "Berry Smoothie": {
-    "instructions": "1. Add berries and yogurt to blender. 2. Add honey and milk. 3. Blend until smooth. 4. Serve immediately.",
-    "approx_time": 5,
-    "ingridients": {
-      "445577": {
-        "quantity": 300,
-        "original_quantity": "300g mixed berries"
+    {
+      "_id": 8,
+      "name": "Berry Smoothie",
+      "instructions": "1. Add berries and yogurt to blender. 2. Add honey and milk. 3. Blend until smooth. 4. Serve immediately.",
+      "approx_time": 5,
+      "ingredients": {
+        "445577": { "quantity": 300, "original_quantity": "300g mixed berries" },
+        "556688": { "quantity": 200, "original_quantity": "200ml yogurt" },
+        "667799": { "quantity": 100, "original_quantity": "100ml milk" }
       },
-      "556688": {
-        "quantity": 200,
-        "original_quantity": "200ml yogurt"
-      },
-      "667799": {
-        "quantity": 100,
-        "original_quantity": "100ml milk"
-      }
+      "size": 2
     },
-    "size": 2
-  },
-  "Beef Burger": {
-    "instructions": "1. Mix beef with seasonings. 2. Form patties. 3. Grill to desired doneness. 4. Toast buns. 5. Assemble with toppings.",
-    "approx_time": 25,
-    "ingridients": {
-      "778800": {
-        "quantity": 500,
-        "original_quantity": "500g ground beef"
+    {
+      "_id": 9,
+      "name": "Beef Burger",
+      "instructions": "1. Mix beef with seasonings. 2. Form patties. 3. Grill to desired doneness. 4. Toast buns. 5. Assemble with toppings.",
+      "approx_time": 25,
+      "ingredients": {
+        "778800": { "quantity": 500, "original_quantity": "500g ground beef" },
+        "889911": { "quantity": 4, "original_quantity": "4 burger buns" },
+        "990022": { "quantity": 1, "original_quantity": "1 onion" }
       },
-      "889911": {
-        "quantity": 4,
-        "original_quantity": "4 burger buns"
-      },
-      "990022": {
-        "quantity": 1,
-        "original_quantity": "1 onion"
-      }
+      "size": 4
     },
-    "size": 4
-  },
-  "Banana Bread": {
-    "instructions": "1. Mash bananas. 2. Mix wet ingredients. 3. Combine with dry ingredients. 4. Pour into loaf pan. 5. Bake at 160°C for 1 hour.",
-    "approx_time": 70,
-    "ingridients": {
-      "112255": {
-        "quantity": 250,
-        "original_quantity": "250g flour"
+    {
+      "_id": 10,
+      "name": "Banana Bread",
+      "instructions": "1. Mash bananas. 2. Mix wet ingredients. 3. Combine with dry ingredients. 4. Pour into loaf pan. 5. Bake at 160°C for 1 hour.",
+      "approx_time": 70,
+      "ingredients": {
+        "112255": { "quantity": 250, "original_quantity": "250g flour" },
+        "223366": { "quantity": 100, "original_quantity": "100g butter" },
+        "001133": { "quantity": 3, "original_quantity": "3 ripe bananas" }
       },
-      "223366": {
-        "quantity": 100,
-        "original_quantity": "100g butter"
-      },
-      "001133": {
-        "quantity": 3,
-        "original_quantity": "3 ripe bananas"
-      }
-    },
-    "size": 8
-  }
-}]
+      "size": 8
+    }
+]
