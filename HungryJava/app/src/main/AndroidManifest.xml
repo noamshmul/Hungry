@@ -15,6 +15,9 @@
         android:theme="@style/Theme.HungryJava"
         tools:targetApi="31">
         <activity
+            android:name=".HomeScreen"
+            android:exported="false" />
+        <activity
             android:name=".FridgeScreen"
             android:exported="false" />
         <activity

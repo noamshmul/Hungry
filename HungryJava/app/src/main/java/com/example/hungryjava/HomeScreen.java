@@ -1,5 +1,6 @@
 package com.example.hungryjava;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,8 +37,8 @@ public class HomeScreen extends AppCompatActivity {
         fridge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to execute when the button is clicked}
-                Toast.makeText(HomeScreen.this, "fridge clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeScreen.this, FridgeScreen.class);
+                startActivity(intent);
             }
         });
 

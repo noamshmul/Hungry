@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnTestConnection = findViewById(R.id.btn);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FridgeScreen.class);
+                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(intent);
                 /*
                 new AlertDialog.Builder(MainActivity.this)
