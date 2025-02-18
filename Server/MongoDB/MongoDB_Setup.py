@@ -49,7 +49,6 @@ class MongoDB_Setup:
         for attempt in range(settings.MAX_RETRIES):
             try:
                 MongoDB_Base.connect_to_mongodb()
-                settings.CONNECTION.close()
                 print("MongoDB is ready!")
                 return True
             except ServerSelectionTimeoutError:
