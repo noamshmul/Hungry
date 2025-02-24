@@ -19,7 +19,7 @@ COLLECTION_NAME = "recipes"
 TEST_RECIPE = "Vegetable Soup"
 
 # Data Path
-DATA_FILE = "data.json"
+DATA_FILE = "MongoDB\\data.json"
 
 # Connection Settings
 CONNECTION = None  # Global connection. DO NOT CHANGE!!!
@@ -231,12 +231,12 @@ class MongoDB_Setup:
             self.client.close()
 
 def main():
-    mongodb_base = MongoDB_Base()
-    mongodb_functions = MongoDB_Functions(mongodb_base)
-    print(mongodb_functions.get_recipe_by_name(TEST_RECIPE))
-    print(mongodb_functions.get_recipe_by_id(8))
-    #mongodb_setup = MongoDB_Setup()
-    #mongodb_setup.startup()
+    # mongodb_base = MongoDB_Base()
+    # mongodb_functions = MongoDB_Functions(mongodb_base)
+    # print(mongodb_functions.get_recipe_by_name(TEST_RECIPE))
+    # print(mongodb_functions.get_recipe_by_id(8))
+    mongodb_setup = MongoDB_Setup()
+    mongodb_setup.startup()
     #mongodb_setup.cleanup_docker()
 
 if __name__ == "__main__":
