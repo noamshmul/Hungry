@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 
 from log import logger
 from gateway import router
+from MongoDB.Recipes import MongoDB_Setup
 import auth
 import readme
 
@@ -23,6 +24,9 @@ ascii_art = '''
 app = FastAPI(dependencies=[Depends(auth.security)])
 
 app.include_router(router)
+
+mongo_bootstrapper = MongoDB_Setup()
+mongo_bootstrapper.startup()
 
 @app.get("/")
 def show_readme():
