@@ -26,3 +26,13 @@ def add_item(name : str, amount : int, inventory_id = Depends(authentication)):
 def remove_item(name : str, amount : int, inventory_id = Depends(authentication)):
     inventory_manager.remove_item(name, amount, inventory_id)
     return {"status": "ok"}
+
+@router.get("/custom-recipes")
+def get_custom_recipes(inventory_id = Depends(authentication)):
+    custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id)
+    return custom_recipes
+
+@router.post("/custom-recipes")
+def add_custom_recipes(name : str, instructions : list, approx_time : int, ingredients : list, size : int, inventory_id = Depends(authentication)):
+    inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size,inventory_id)
+    return {"status": "ok"}

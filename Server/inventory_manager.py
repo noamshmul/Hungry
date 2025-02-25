@@ -45,7 +45,7 @@ def remove_item(name, amount, inventory_id: int):
 def get_all_custom_recipes(inventory_id : int):
     return CUSTOM_RECIPES
 
-def add_custom_recipe(name, instractions, approx_time, ingridients, size, inventory_id : int):
-    new_recipe = {"recipe name": name, "recipe instraction": instractions, "recipe approx time": approx_time,
-                        "recipe ingridients": ingridients, "recipe size": size}
+def add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id : int):
+    new_recipe = {"recipe name": name, "recipe instraction": instructions, "recipe approx time": approx_time,
+                        "recipe ingredients": ingredients, "recipe size": size}
     CUSTOM_RECIPES.append(new_recipe)
