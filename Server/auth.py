@@ -13,7 +13,7 @@ def authentication(creds: HTTPBasicCredentials = Depends(security)):
     # TODO: add authentication check
     if id and password: 
         logger.info("%s has authenticated", id)
-        return True
+        return id
     else:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
