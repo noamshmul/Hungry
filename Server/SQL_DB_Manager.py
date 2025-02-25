@@ -42,6 +42,25 @@ class DB_Manager:
 
     def get_obj_by_id(self, db: Session, obj, obj_id: int):
         return db.query(obj).filter(obj.id == obj_id).first()
+    
+  
+
+    def delete_Ingredient(self, db: Session, ing_id):
+        ingredient = self.get_obj_by_id(db, Ingredient, ing_id)
+        db.delete(ingredient)
+        db.commit()
+
+    def delete_Item(self, db: Session, item_id):
+        item = self.get_obj_by_id(db, Items, item_id)
+        db.delete(item)
+        db.commit()
+
+    def delete_Inventory(self, db: Session, inv_id):
+        Inv = self.get_obj_by_id(db, Inventory, inv_id)
+        db.delete(Inv)
+        db.commit()
+    
+    
 
     def get_password(self, db: Session, inv_id):
         return db.query(Inventory.password).filter(Inventory.id == inv_id).first()    
