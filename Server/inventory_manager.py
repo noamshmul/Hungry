@@ -9,19 +9,12 @@ class Inventory_Manager:
         self.id = 1
 
     def get_password(self, inventory_id: int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
         return self.password
 
     def get_inventory(self, inventory_id: int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
         return self.items
     
     def add_item(self, name, amount, inventory_id: int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
-            return
         for d in self.items:
             if d["name"] == name:
                 d["amount"] += amount
@@ -31,8 +24,6 @@ class Inventory_Manager:
         self.items.append(new_item)
 
     def remove_item(self, name, amount, inventory_id: int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
         for d in self.items:
             if d["name"] == name:
                 if d["amount"] - amount > 0:
@@ -52,13 +43,9 @@ class Inventory_Manager:
 
     
     def get_all_custom_recipes(self, inventory_id : int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
         return self.recipes
     
     def add_custom_recipe(self, name, instractions, approx_time, ingridients, size, inventory_id : int):
-        if inventory_id != self.id:
-            raise ValueError("wrong id")
         new_recipe = {"recipe name": name, "recipe instraction": instractions, "recipe approx time": approx_time,
                          "recipe ingridients": ingridients, "recipe size": size}
         self.recipes.append(new_recipe)
