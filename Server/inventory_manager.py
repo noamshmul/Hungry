@@ -1,51 +1,51 @@
 
+ITEMS = [{'name': 'tomato', 'amount': 4}, {'name': 'cucumber', 'amount': 2}, {'name': 'onion', 'amount': 3}]
+PASSWORD = "password"
+CUSTOM_RECIPES = [{"recipe name": "", "recipe instraction":"", "recipe approx time": "",
+                        "recipe ingridients": {}, "recipe size": 1}]
+ID = 1
 
-class Inventory_Manager:
-    def __init__(self):
-        self.items = [{'name': 'tomato', 'amount': 4}, {'name': 'cucumber', 'amount': 2}, {'name': 'onion', 'amount': 3}]
-        self.password = "password"
-        self.recipes = [{"recipe name": "", "recipe instraction":"", "recipe approx time": "",
-                         "recipe ingridients": {}, "recipe size": 1}]
-        self.id = 1
+def get_password(inventory_id: int):
+    return PASSWORD
 
-    def get_password(self, inventory_id: int):
-        return self.password
+def get_inventory(inventory_id: int):
+    return ITEMS
 
-    def get_inventory(self, inventory_id: int):
-        return self.items
+def add_item(name, amount, inventory_id: int):
+    # On Error TODO
+    if name == "error":
+        raise ValueError
     
-    def add_item(self, name, amount, inventory_id: int):
-        for d in self.items:
-            if d["name"] == name:
-                d["amount"] += amount
+    for d in ITEMS:
+        if d["name"] == name:
+            d["amount"] += amount
 
-        # if item isn't in the list
-        new_item = {"name": name, "amount": amount}
-        self.items.append(new_item)
+    # if item isn't in the list
+    new_item = {"name": name, "amount": amount}
+    ITEMS.append(new_item)
 
-    def remove_item(self, name, amount, inventory_id: int):
-        for d in self.items:
-            if d["name"] == name:
-                if d["amount"] - amount > 0:
-                    d["amount"] -= amount
-                    return
+def remove_item(name, amount, inventory_id: int):
+    for d in ITEMS:
+        if d["name"] == name:
+            if d["amount"] - amount > 0:
+                d["amount"] -= amount
+                return
 
-                elif d["amount"] == amount:
-                    self.items.remove(d)
-                    return
+            elif d["amount"] == amount:
+                ITEMS.remove(d)
+                return
 
-                else:
-                    raise ValueError("invalid argument")
-                    return
+            else:
+                raise ValueError("invalid argument")
 
-        # if item isn't in the list
-        raise ValueError("invalid argument")
+    # if item isn't in the list
+    raise ValueError("invalid argument")
 
-    
-    def get_all_custom_recipes(self, inventory_id : int):
-        return self.recipes
-    
-    def add_custom_recipe(self, name, instractions, approx_time, ingridients, size, inventory_id : int):
-        new_recipe = {"recipe name": name, "recipe instraction": instractions, "recipe approx time": approx_time,
-                         "recipe ingridients": ingridients, "recipe size": size}
-        self.recipes.append(new_recipe)
+
+def get_all_custom_recipes(inventory_id : int):
+    return CUSTOM_RECIPES
+
+def add_custom_recipe(name, instractions, approx_time, ingridients, size, inventory_id : int):
+    new_recipe = {"recipe name": name, "recipe instraction": instractions, "recipe approx time": approx_time,
+                        "recipe ingridients": ingridients, "recipe size": size}
+    CUSTOM_RECIPES.append(new_recipe)
