@@ -7,9 +7,9 @@ from log import logger
 router = APIRouter()
 
 @router.get("/test-connection")
-def test_connection(Verifcation = Depends(authentication)):
+def test_connection(inventory_id = Depends(authentication)):
     '''Used to test if server is alive and if auth is valid'''
-    return {"Hello": "World"}
+    return {"Hello": "World", "inventory_id" :inventory_id}
 
 # @router.get("/users")
 # def read_users(id : int = 4):
