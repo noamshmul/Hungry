@@ -1,92 +1,60 @@
-import mysql.connector
-from mysql.connector import errorcode
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker, Session
+from tables import Inventory, Ingredient, Items, Base
+import pymysql
 
-TABLES = {'Ingredients_Table': "CREATE TABLE `Ingredients_Table` ("
-    "  `id` int(11) NOT NULL AUTO_INCREMENT,"
-    "  `Name` varchar(15) NOT NULL,"
-    "  `Estimated Expiry` int(11) NOT NULL,"
-    "  `Unit Size` varchar(255) NOT NULL,"
-    ") ENGINE=InnoDB",
-    'Inventories_Table': "CREATE TABLE `Inventories_Table` ("
-    "  `id` int(11) NOT NULL AUTO_INCREMENT,"
-    "  `items` JSON,"
-    "  `password` varchar(255) NOT NULL,"
-    "  `custom recipes` JSON NOT NULL,"
-    ") ENGINE=InnoDB",
-}
 
-config = {"host": "localhost", "user": "admin", "password": "admin"}
+config = {"host": "localhost", "user": "root", "password": "admin", "port": "2025"}
 DB_NAME = "HungryDB"
+SQL_DB_URL = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{DB_NAME}"
 
 
-
-class SQL_DB_Manager:
-    def __init__(self):
-        self.DB = mysql.connector.connect(**config)
-        self.DBcursor = self.DB.cursor()
-        try:
-            self.DBcursor.execute("USE {}".format(DB_NAME))
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("DB doesnt exist")
-                self.createDB()
-                self.DB.database = DB_NAME
-            else:
-                print(err.msg) #switch to log
-        
-
-    def __del__(self):
-        self.DBcursor.close()
-        self.DB.close()
-
-    def createDB(self):
-        self.DBcursor.execute("CREATE DATABASE HungryDB")
-        #call create tables functions
-
+class DB_Manager:
     
-
-    def create_ingredients_table(self):
-        table_description = TABLES['Ingredients_Table']
+    def __init__(self):
+        self.create_DB()
+        self.engine = create_engine(SQL_DB_URL)
+        self.LocalSession = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        self.create_Tables()
+        
+    def get_db(self):
+        db = self.LocalSession()
         try:
-            #print("Creating table {}: ".format(table_name), end='') to log
-            self.DBcursor.execute(table_description)
-        except mysql.connector.Error as err:
-            print(err.msg) #to log
+            yield db
+        finally:
+            db.close()
 
-    def create_inventories_table(self):
-        table_description = TABLES['Inventories_Table']
-        try:
-            #print("Creating table {}: ".format(table_name), end='') to log
-            self.DBcursor.execute(table_description)
-        except mysql.connector.Error as err:
-            print(err.msg) #to log
+    def add(self, db: Session, obj):
+        db.add(obj)
+        db.commit()
+        db.refresh(obj)       
+    
+    
+    def create_Tables(self): 
+        Base.metadata.create_all(bind=self.engine)
 
+    def create_DB(self):
+        temp_url = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/"
+        temp_engine = create_engine(temp_url)
+        with temp_engine.connect() as conn:
+            conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {DB_NAME};"))
+        temp_engine.dispose()
 
-    def create_Tables(self): #optional
-        for table in TABLES:
-            table_description = TABLES['Inventories_Table']
-            try:
-                #print("Creating table {}: ".format(table_name), end='') to log
-                self.DBcursor.execute(table_description)
-            except mysql.connector.Error as err:
-                if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
-                    print("already exists")
-                else:
-                    print(err.msg) #to log
+    def get_obj_by_id(self, db: Session, obj, obj_id: int):
+        return db.query(obj).filter(obj.id == obj_id).first()
 
-
-
-    def get_ingerdients_by_ids(self, ids):
-        pass
-
-    def get_password(self, inv_id):
-        pass
-    def get_inventory_items(self, inv_id):
-        pass
+    def get_password(self, db: Session, inv_id):
+        return db.query(Inventory.password).filter(Inventory.id == inv_id).first()    
+    
+    def get_inventory_items(self, db: Session, inv_id):
+        return db.query(Items).filter(Items.Inventory_id == inv_id).all()
+    
+    def get_custom_recipes(self, db: Session, inv_id):
+        return db.query(Inventory.custom_recipes).filter(Inventory.id == inv_id).all()
+    
     def update_inventory_recipes(self, inv_id, recipe):
         pass
-    def get_custom_recipes(self, inv_id):
-        pass
+
 
 
 
