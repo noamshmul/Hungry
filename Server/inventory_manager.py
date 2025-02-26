@@ -1,3 +1,6 @@
+import SQL_DB_Manager
+
+
 
 ITEMS = [{'name': 'tomato', 'amount': 4}, {'name': 'cucumber', 'amount': 2}, {'name': 'onion', 'amount': 3}]
 PASSWORD = "password"
@@ -5,11 +8,11 @@ CUSTOM_RECIPES = [{"recipe name": "", "recipe instraction":"", "recipe approx ti
                         "recipe ingridients": {}, "recipe size": 1}]
 ID = 1
 
-def get_password(inventory_id: int):
-    return PASSWORD
+def get_password(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
+    return db_instance.get_password(db_session, inventory_id)
 
-def get_inventory(inventory_id: int):
-    return ITEMS
+def get_inventory(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
+    return db_instance.get_inventory_items(db_session, inventory_id)
 
 def add_item(name, amount, inventory_id: int):
     # On Error TODO
