@@ -1,10 +1,16 @@
 from fastapi import Depends, APIRouter
 
 from auth import authentication
+from SQL_DB_Manager import DB_Manager
 import inventory_manager
 from log import logger
 
+
 router = APIRouter()
+db_instance = DB_Manager()
+
+def get_db():
+    return next(db_instance.get_db())
 
 @router.get("/test-connection")
 def test_connection(inventory_id = Depends(authentication)):
@@ -12,23 +18,23 @@ def test_connection(inventory_id = Depends(authentication)):
     return {"Hello": "World", "inventory_id" :inventory_id}
 
 @router.get("/inventory")
-def get_inventory(inventory_id = Depends(authentication)):
-    items = inventory_manager.get_inventory(inventory_id)
+def get_inventory(inventory_id = Depends(authentication), db = Depends(get_db)):
+    items = inventory_manager.get_inventory(db_instance, db, inventory_id)
 
     return {"items" : items}
 
 @router.post("/inventory")
-def add_item(name : str, amount : int, inventory_id = Depends(authentication)):
+def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(get_db)):
     inventory_manager.add_item(name, amount, inventory_id)
     return {"status": "ok"}
 
 @router.delete("/inventory")
-def remove_item(name : str, amount : int, inventory_id = Depends(authentication)):
+def remove_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(get_db)):
     inventory_manager.remove_item(name, amount, inventory_id)
     return {"status": "ok"}
 
 @router.get("/custom-recipes")
-def get_custom_recipes(inventory_id = Depends(authentication)):
+def get_custom_recipes(inventory_id = Depends(authentication), db = Depends(get_db)):
     custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id)
     return custom_recipes
 
