@@ -25,8 +25,6 @@ app = FastAPI(dependencies=[Depends(auth.security)])
 
 app.include_router(router)
 
-mongo_bootstrapper = MongoDB_Setup()
-mongo_bootstrapper.startup()
 
 @app.get("/")
 def show_readme():
