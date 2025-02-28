@@ -1,3 +1,5 @@
+import logging
+
 import docker
 import time
 import json
@@ -5,6 +7,8 @@ import os
 from pymongo import MongoClient
 from docker.errors import NotFound
 from pymongo.errors import ServerSelectionTimeoutError
+from logging import log
+logger = logging.getLogger(__name__)
 
 # Database Settings
 MONGODB_HOST = "localhost"
@@ -54,7 +58,7 @@ class MongoDB_Base:
             self.connect_to_mongodb()
             return CONNECTION.get_database(database_name).get_collection(collection_name).find_one(query, projection)
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.error("Failed with query: " + query)
             return None
 
     def set(self, query, new_data, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME, upsert=True):
@@ -68,7 +72,7 @@ class MongoDB_Base:
             )
             return result.upserted_id
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.error("Failed with query: " + query)
             return None
 
     def delete(self, query, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
@@ -78,7 +82,7 @@ class MongoDB_Base:
             result = collection.delete_one(query)
             return result.deleted_count
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.error("Failed with query: " + query)
             return None
 
 class MongoDB_Functions:
@@ -94,7 +98,6 @@ class MongoDB_Functions:
                 print(f"Recipe '{recipe_name}' not found")
                 return None
         except Exception as e:
-            print(f"An error occurred: {e}")
             return None
 
     def get_recipe_by_id(self, recipe_id):
@@ -106,7 +109,6 @@ class MongoDB_Functions:
                 print(f"Recipe '{recipe_id}' not found")
                 return None
         except Exception as e:
-            print(f"An error occurred: {e}")
             return None
 
 class MongoDB_Setup:
@@ -121,7 +123,7 @@ class MongoDB_Setup:
             self.wait_for_mongodb()
             self.setup_database()
 
-            print("MongoDB setup completed successfully!")
+            logger.info("MongoDB setup completed successfully!")
 
             # print(json.dumps(mongodb_base.get_recipe(TEST_RECIPE), indent=1))  # For test
             global CONNECTION
@@ -130,7 +132,7 @@ class MongoDB_Setup:
             self.cleanup_docker()
 
         except Exception as e:
-            print(f"An error occurred during setup: {e}")
+            logger.error("An error occurred during setup")
 
     def check_container_exists(self):
         try:
@@ -141,7 +143,7 @@ class MongoDB_Setup:
 
     def create_mongodb_container(self):
         if self.check_container_exists():
-            print(f"Container '{CONTAINER_NAME}' already exists")
+            logger.info(f"Container '{CONTAINER_NAME}' already exists")
             self.client.containers.get(CONTAINER_NAME).start()
             return True
         try:
@@ -158,10 +160,10 @@ class MongoDB_Setup:
                 },
                 detach=True
             )
-            print(f"Container '{CONTAINER_NAME}' created successfully")
+            logger.info(f"Container '{CONTAINER_NAME}' created successfully")
             return True
         except docker.errors.APIError as e:
-            print(f"Error creating container: {e}")
+            logger.error("Error creating container")
             raise
 
     def wait_for_mongodb(self):
@@ -170,12 +172,13 @@ class MongoDB_Setup:
             try:
                 self.mongodb_base.connect_to_mongodb()
                 CONNECTION.close()
-                print("MongoDB is ready!")
+                logger.info("MongoDB is ready!")
                 return True
             except ServerSelectionTimeoutError:
-                print(f"Waiting for MongoDB to be ready... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                logger.info(f"Waiting for MongoDB to be ready... (Attempt {attempt + 1}/{MAX_RETRIES})")
                 time.sleep(RETRY_DELAY)
 
+        logger.error("MongoDB failed to become ready in time")
         raise Exception("MongoDB failed to become ready in time")
 
     def setup_database(self):
@@ -203,7 +206,7 @@ class MongoDB_Setup:
                     print(f"Inserted document with id {result.inserted_id}")
 
         except Exception as e:
-            print(f"Error setting up database: {e}")
+            logger.error("Error setting up database")
             raise
 
     def cleanup_docker(self):
@@ -214,19 +217,19 @@ class MongoDB_Setup:
                     container = self.client.containers.get(CONTAINER_NAME)
                     container.stop()
                     container.remove()
-                    print(f"Container '{CONTAINER_NAME}' removed successfully")
+                    logger.info(f"Container '{CONTAINER_NAME}' removed successfully")
                 except NotFound:
-                    print(f"Container '{CONTAINER_NAME}' not found")
+                    logger.error(f"Container '{CONTAINER_NAME}' not found")
 
             if DELETE_VOLUME:
                 try:
                     self.client.volumes.get(DOCKER_VOLUME_NAME).remove(force=True)
-                    print(f"Volume '{DOCKER_VOLUME_NAME}' removed successfully")
+                    logger.info(f"Volume '{DOCKER_VOLUME_NAME}' removed successfully")
                 except NotFound:
-                    print(f"Volume '{DOCKER_VOLUME_NAME}' not found")
+                    logger.error(f"Volume '{DOCKER_VOLUME_NAME}' not found")
 
         except Exception as e:
-            print(f"An error occurred during cleanup: {e}")
+            logger.error(f"An error occurred during cleanup: {e}")
         finally:
             self.client.close()
 
