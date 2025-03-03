@@ -34,7 +34,7 @@ RETRY_DELAY = 1  # seconds
 DELETE_CONTAINER = False
 DELETE_IMAGE = False  # We always use the same image (Recommended: always use False)
 DELETE_VOLUME = False
-CONTAINER_NAME = "mongo"
+CONTAINER_NAME = "mongodb"
 DOCKER_VOLUME_NAME = "mongo"
 
 
@@ -119,7 +119,7 @@ class MongoDB_Setup:
     def startup(self):
 
         try:
-            self.create_mongodb_container()
+            # self.create_mongodb_container()
             self.wait_for_mongodb()
             self.setup_database()
 
