@@ -22,21 +22,8 @@ COLLECTION_NAME = "recipes"
 # Database test search name
 TEST_RECIPE = "Vegetable Soup"
 
-# Data Path
-DATA_FILE = "MongoDB\\data.json"
-
 # Connection Settings
 CONNECTION = None  # Global connection. DO NOT CHANGE!!!
-MAX_RETRIES = 30
-RETRY_DELAY = 1  # seconds
-
-# Docker Settings
-DELETE_CONTAINER = False
-DELETE_IMAGE = False  # We always use the same image (Recommended: always use False)
-DELETE_VOLUME = False
-CONTAINER_NAME = "mongo"
-DOCKER_VOLUME_NAME = "mongo"
-
 
 class MongoDB_Base:
     def is_connected(self):
@@ -111,136 +98,8 @@ class MongoDB_Functions:
         except Exception as e:
             return None
 
-class MongoDB_Setup:
-    def __init__(self):
-        self.client = docker.from_env()
-        self.mongodb_base = MongoDB_Base()
-
-    def startup(self):
-
-        try:
-            self.create_mongodb_container()
-            self.wait_for_mongodb()
-            self.setup_database()
-
-            logger.info("MongoDB setup completed successfully!")
-
-            # print(json.dumps(mongodb_base.get_recipe(TEST_RECIPE), indent=1))  # For test
-            global CONNECTION
-            if CONNECTION:
-                CONNECTION.close()
-            self.cleanup_docker()
-
-        except Exception as e:
-            logger.error("An error occurred during setup")
-
-    def check_container_exists(self):
-        try:
-            self.client.containers.get(CONTAINER_NAME)
-            return True
-        except docker.errors.NotFound:
-            return False
-
-    def create_mongodb_container(self):
-        if self.check_container_exists():
-            logger.info(f"Container '{CONTAINER_NAME}' already exists")
-            self.client.containers.get(CONTAINER_NAME).start()
-            return True
-        try:
-            self.client.containers.run(
-                'mongo:latest',
-                name=CONTAINER_NAME,
-                environment=[
-                    f"MONGO_INITDB_ROOT_USERNAME={MONGODB_USER}",
-                    f"MONGO_INITDB_ROOT_PASSWORD={MONGODB_PASSWORD}"
-                ],
-                ports={'27017/tcp': MONGODB_PORT},
-                volumes={
-                    'mongo': {'bind': '/data/db', 'mode': 'rw'}
-                },
-                detach=True
-            )
-            logger.info(f"Container '{CONTAINER_NAME}' created successfully")
-            return True
-        except docker.errors.APIError as e:
-            logger.error("Error creating container")
-            raise
-
-    def wait_for_mongodb(self):
-        global CONNECTION
-        for attempt in range(MAX_RETRIES):
-            try:
-                self.mongodb_base.connect_to_mongodb()
-                CONNECTION.close()
-                logger.info("MongoDB is ready!")
-                return True
-            except ServerSelectionTimeoutError:
-                logger.info(f"Waiting for MongoDB to be ready... (Attempt {attempt + 1}/{MAX_RETRIES})")
-                time.sleep(RETRY_DELAY)
-
-        logger.error("MongoDB failed to become ready in time")
-        raise Exception("MongoDB failed to become ready in time")
-
-    def setup_database(self):
-        global CONNECTION
-        try:
-            self.mongodb_base.connect_to_mongodb()
-
-            db_list = CONNECTION.list_database_names()
-            if DATABASE_NAME in db_list:
-                print(f"Database '{DATABASE_NAME}' already exists")
-            else:
-                print(f"Creating database '{DATABASE_NAME}'")
-
-            db = CONNECTION[DATABASE_NAME]
-            collection = db[COLLECTION_NAME]
-
-            if DATA_FILE and os.path.exists(DATA_FILE):
-                with open(DATA_FILE, 'r') as file:
-                    data = json.load(file)
-                if isinstance(data, list):
-                    result = collection.insert_many(data)
-                    print(f"Inserted {len(result.inserted_ids)} documents")
-                else:
-                    result = collection.insert_one(data)
-                    print(f"Inserted document with id {result.inserted_id}")
-
-        except Exception as e:
-            logger.error("Error setting up database")
-            raise
-
-    def cleanup_docker(self):
-
-        try:
-            if DELETE_CONTAINER:
-                try:
-                    container = self.client.containers.get(CONTAINER_NAME)
-                    container.stop()
-                    container.remove()
-                    logger.info(f"Container '{CONTAINER_NAME}' removed successfully")
-                except NotFound:
-                    logger.error(f"Container '{CONTAINER_NAME}' not found")
-
-            if DELETE_VOLUME:
-                try:
-                    self.client.volumes.get(DOCKER_VOLUME_NAME).remove(force=True)
-                    logger.info(f"Volume '{DOCKER_VOLUME_NAME}' removed successfully")
-                except NotFound:
-                    logger.error(f"Volume '{DOCKER_VOLUME_NAME}' not found")
-
-        except Exception as e:
-            logger.error(f"An error occurred during cleanup: {e}")
-        finally:
-            self.client.close()
-
 def main():
-    # mongodb_base = MongoDB_Base()
-    # mongodb_functions = MongoDB_Functions(mongodb_base)
-    # print(mongodb_functions.get_recipe_by_name(TEST_RECIPE))
-    # print(mongodb_functions.get_recipe_by_id(8))
-    mongodb_setup = MongoDB_Setup()
-    mongodb_setup.startup()
-    #mongodb_setup.cleanup_docker()
+    print("Hello from Recipes")
 
 if __name__ == "__main__":
     main()
