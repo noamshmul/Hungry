@@ -28,6 +28,8 @@ All configuration options are available in each .sh files at the start.
 
 ## Important Notes
 
+* Run `sed -i -e 's/\r$//' {file_name}.sh` for each .sh file that you can't run.
+
 1. The `data.json` & `data.sql` files contains the initial data that will be loaded into the databases.
 2. You only need to run `Startup.sh` once to initialize the databases
 3. Resource Management:
