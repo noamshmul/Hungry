@@ -14,7 +14,7 @@ def get_password(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_s
 def get_inventory(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     return db_instance.get_inventory_items(db_session, inventory_id)
 
-def add_item(name, amount, inventory_id: int):
+def add_item(name, amount, inv_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     # On Error TODO
     if name == "error":
         raise ValueError
@@ -24,8 +24,9 @@ def add_item(name, amount, inventory_id: int):
             d["amount"] += amount
 
     # if item isn't in the list
-    new_item = {"name": name, "amount": amount}
-    ITEMS.append(new_item)
+    ing_id = db_instance.get_ingredient_id_by_name(db_session, name)
+    new_item = SQL_DB_Manager.Items(Inventory_id=inv_id, ingredient_id=ing_id)
+    db_instance.add(db_session, new_item)
 
 def remove_item(name, amount, inventory_id: int):
     for d in ITEMS:

@@ -43,7 +43,13 @@ class DB_Manager:
     def get_obj_by_id(self, db: Session, obj, obj_id: int):
         return db.query(obj).filter(obj.id == obj_id).first()
     
-  
+    def get_ingredient_id_by_name(self, db: Session, ing_name):
+        return db.query(Ingredient).filter(Ingredient.name == ing_name).first().id
+    
+
+    def check_if_inventory_has_item(self, db: Session,inv_name, ing_id):
+        pass
+
 
     def delete_Ingredient(self, db: Session, ing_id):
         ingredient = self.get_obj_by_id(db, Ingredient, ing_id)
