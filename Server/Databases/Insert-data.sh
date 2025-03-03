@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# MongoDB variables
+# Databases variables
 MONGO_CONTAINER="mongodb"
 MONGO_USERNAME="admin"
 MONGO_PASSWORD="password123"
