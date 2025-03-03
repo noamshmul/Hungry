@@ -28,7 +28,7 @@ def add_item(name, amount, inv_id: int, db_instance: SQL_DB_Manager.DB_Manager, 
     new_item = SQL_DB_Manager.Items(Inventory_id=inv_id, ingredient_id=ing_id)
     db_instance.add(db_session, new_item)
 
-def remove_item(name, amount, inventory_id: int):
+def remove_item(name, amount, inv_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     for d in ITEMS:
         if d["name"] == name:
             if d["amount"] - amount > 0:
@@ -46,10 +46,10 @@ def remove_item(name, amount, inventory_id: int):
     raise ValueError("invalid argument")
 
 
-def get_all_custom_recipes(inventory_id : int):
+def get_all_custom_recipes(inventory_id : int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     return CUSTOM_RECIPES
 
-def add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id : int):
+def add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id : int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     new_recipe = {"recipe name": name, "recipe instraction": instructions, "recipe approx time": approx_time,
                         "recipe ingredients": ingredients, "recipe size": size}
     CUSTOM_RECIPES.append(new_recipe)
