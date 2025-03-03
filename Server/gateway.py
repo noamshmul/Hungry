@@ -28,12 +28,12 @@ def add_item(name : str, amount : int, inventory_id = Depends(authentication), d
 
 @router.delete("/inventory")
 def remove_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    inventory_manager.remove_item(name, amount, inventory_id)
+    inventory_manager.remove_item(name, amount, inventory_id, db_instance, db)
     return {"status": "ok"}
 
 @router.get("/custom-recipes")
 def get_custom_recipes(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id)
+    custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id, db_instance, db)
     return custom_recipes
 
 @router.post("/custom-recipes")

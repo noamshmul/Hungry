@@ -43,12 +43,38 @@ class DB_Manager:
     def get_obj_by_id(self, db: Session, obj, obj_id: int):
         return db.query(obj).filter(obj.id == obj_id).first()
     
+    
     def get_ingredient_id_by_name(self, db: Session, ing_name):
         return db.query(Ingredient).filter(Ingredient.name == ing_name).first().id
     
 
-    def check_if_inventory_has_item(self, db: Session,inv_name, ing_id):
-        pass
+
+
+    def increase_inv_item_amount(self, db: Session, inv_id, item_id, amount):
+        item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()
+        if item:
+            item.quantity += amount
+            db.commit()
+            db.refresh(item)
+            return item
+        return None
+
+
+    def decrease_inv_item_amount(self, db: Session, inv_id, item_id, amount):
+        item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()
+        if item:
+            item.quantity -= amount
+            db.commit()
+            db.refresh(item)
+            return item.quantity
+        return 0
+
+
+    def check_if_inventory_has_item(self, db: Session, inv_id, ing_name):
+        item = db.query(Items).join(Ingredient).filter(Items.Inventory_id == inv_id, Ingredient.name == ing_name).first()
+        if item:
+            return item
+        return None
 
 
     def delete_Ingredient(self, db: Session, ing_id):
