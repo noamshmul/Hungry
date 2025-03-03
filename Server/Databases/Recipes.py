@@ -37,12 +37,12 @@ class MongoDB_Base:
 
     def connect_to_mongodb(self):
         global CONNECTION
-        if not self.is_connected():
+        if not self.is_connected(self):
             CONNECTION = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@localhost:{MONGODB_PORT}/")
 
     def get(self, query, projection=None, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
         try:
-            self.connect_to_mongodb()
+            self.connect_to_mongodb(self)
             return CONNECTION.get_database(database_name).get_collection(collection_name).find_one(query, projection)
         except Exception as e:
             logger.error("Failed with query: " + query)
@@ -89,7 +89,7 @@ class MongoDB_Functions:
 
     def get_recipe_by_id(self, recipe_id):
         try:
-            recipe = self.mongodb_base.get({"_id": recipe_id})
+            recipe = self.mongodb_base.get(self.mongodb_base ,{"_id": recipe_id})
             if recipe:
                 return recipe
             else:
@@ -99,7 +99,10 @@ class MongoDB_Functions:
             return None
 
 def main():
+    base = MongoDB_Base
+    func = MongoDB_Functions(base)
     print("Hello from Recipes")
+    print(func.get_recipe_by_id(2))
 
 if __name__ == "__main__":
     main()

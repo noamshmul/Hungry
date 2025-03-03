@@ -35,4 +35,4 @@ docker-compose up -d
 echo "----------------------------------------"
 echo "To connect to MySQL: mysql -h localhost -P 3306 -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE}"
 echo "Or via any CLI: docker exec -it ${MYSQL_CONTAINER} mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE}"
-echo "To connect to MongoDB: mongosh mongodb://${MYSQL_USER}:${MYSQL_PASSWORD}@localhost:27017/${MYSQL_DATABASE}"
+echo "To connect to MongoDB: mongosh mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@localhost:27017/${MYSQL_DATABASE}"
