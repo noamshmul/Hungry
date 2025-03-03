@@ -35,7 +35,7 @@ public class PopupAddItem extends DialogFragment {
                 try {
                     double amount = Double.parseDouble(amountStr);
                     Toast.makeText(getContext(), "Ingredient: " + ingredient + ", Amount: " + amount, Toast.LENGTH_SHORT).show();
-                    FridgeScreen.items.add(ingredient + " - " + amountStr);
+                    FridgeScreen.items.add(ingredient + " " + amountStr);
                     FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
                     dismiss(); // Close the dialog
                 } catch (NumberFormatException e) {

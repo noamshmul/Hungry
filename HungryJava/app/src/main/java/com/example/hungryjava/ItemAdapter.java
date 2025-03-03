@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 // ItemAdapter.java
@@ -34,7 +36,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         String item = items.get(position);
-        holder.textView.setText(item);  // Set the data on the TextView
+        holder.name.setText(item.split(" ")[0]);
+        holder.amount.setText(item.split(" ")[1]);// Set the data on the TextView
     }
 
     // Return the size of the data list
@@ -45,11 +48,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     // ViewHolder class to hold references to item views
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView name;
+        TextView amount;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.item_text);
+            name = itemView.findViewById(R.id.item_name);
+            amount = itemView.findViewById(R.id.item_quantity);
         }
     }
 }

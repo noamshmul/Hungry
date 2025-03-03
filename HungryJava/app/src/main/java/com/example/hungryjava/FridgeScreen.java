@@ -80,11 +80,11 @@ public class FridgeScreen extends AppCompatActivity {
         RecyclerView list = findViewById(R.id.fridge_list);
         // Sample data: List of strings (your fridge items)
 
-        items.add("Milk");
-        items.add("Eggs");
-        items.add("Butter");
-        items.add("Cheese");
-        items.add("Yogurt");
+        items.add("Milk 5");
+        items.add("Eggs 3");
+        items.add("Butter 1");
+        items.add("Cheese 1");
+        items.add("Yogurt 2");
 
         // Set up RecyclerView
         list.setLayoutManager(new LinearLayoutManager(this));
