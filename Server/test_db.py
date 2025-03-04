@@ -11,7 +11,8 @@ def test_DB():
         # inventory = Inventory(password="1234",custom_recipes="{}")
         # db_instance.add(db, inventory)
         inventory_item = Items(Inventory_id=1, Ingredient_id=1, quantity=2)
-        db_instance.add(db, inventory_item)
+        #db_instance.add(db, inventory_item)
+        inv_items = db_instance.get_inventory_items(db, 1)
 
         inv_item = db_instance.check_if_inventory_has_item(db, 1, "Tomato")
         if inv_item:

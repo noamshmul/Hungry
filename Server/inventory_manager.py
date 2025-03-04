@@ -12,6 +12,7 @@ def get_password(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_s
     return db_instance.get_password(db_session, inventory_id)
 
 def get_inventory(inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
+    
     return db_instance.get_inventory_items(db_session, inventory_id)
 
 

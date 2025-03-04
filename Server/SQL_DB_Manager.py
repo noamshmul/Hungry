@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker, Session, joinedload
 from tables import Inventory, Ingredient, Items, Base
 import pymysql
 
@@ -98,7 +98,8 @@ class DB_Manager:
         return db.query(Inventory.password).filter(Inventory.id == inv_id).first()    
     
     def get_inventory_items(self, db: Session, inv_id):
-        return db.query(Items).filter(Items.Inventory_id == inv_id).all()
+        items = (db.query(Items).filter(Items.Inventory_id == inv_id).options(joinedload(Items.ingredient))).all()
+        return [{"id": item.id, "Ingredient_id": item.Ingredient_id, "Inventory_id": item.Inventory_id , "ingredient_name": item.ingredient.name, "quantity": item.quantity} for item in items]
     
     def get_custom_recipes(self, db: Session, inv_id):
         return db.query(Inventory.custom_recipes).filter(Inventory.id == inv_id).all()
