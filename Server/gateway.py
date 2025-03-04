@@ -37,6 +37,6 @@ def get_custom_recipes(inventory_id = Depends(authentication), db = Depends(db_i
     return custom_recipes
 
 @router.post("/custom-recipes")
-def add_custom_recipes(name : str, instructions : list, approx_time : int, ingredients : list, size : int, inventory_id = Depends(authentication)):
-    inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size,inventory_id)
+def add_custom_recipes(name : str, instructions : list, approx_time : int, ingredients : list, size : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id, db_instance, db)
     return {"status": "ok"}

@@ -49,7 +49,8 @@ def remove_item(name, amount, inv_id: int, db_instance: SQL_DB_Manager.DB_Manage
 def get_all_custom_recipes(inventory_id : int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     return db_instance.get_custom_recipes(db_session, inventory_id)
 
-def add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id : int):
+
+def add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id : int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     new_recipe = {"recipe name": name, "recipe instraction": instructions, "recipe approx time": approx_time,
                         "recipe ingredients": ingredients, "recipe size": size}
     CUSTOM_RECIPES.append(new_recipe)

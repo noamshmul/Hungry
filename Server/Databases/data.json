@@ -1,0 +1,609 @@
+[
+  {
+    "_id": 1,
+    "name": "Moroccan Vegetable Tagine",
+    "instructions": "1. Heat olive oil in a large pot or tagine. 2. Add chopped onions and garlic, sauté until softened. 3. Stir in spices (cumin, coriander, turmeric, ginger, cinnamon) and cook for 1 minute. 4. Add chopped vegetables (carrots, zucchini, bell peppers, potatoes) and chickpeas. 5. Pour in vegetable broth and diced tomatoes. 6. Bring to a simmer, cover, and cook for 30-40 minutes, or until vegetables are tender. 7. Stir in chopped cilantro and lemon juice before serving. Serve with couscous or quinoa.",
+    "approx_time": 60,
+    "ingredients": {
+      "1001": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "1002": { "quantity": 2, "original_quantity": "2 onions, chopped" },
+      "1003": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "1004": { "quantity": 1, "original_quantity": "1 tsp cumin" },
+      "1005": { "quantity": 1, "original_quantity": "1 tsp coriander" },
+      "1006": { "quantity": 0.5, "original_quantity": "1/2 tsp turmeric" },
+      "1007": { "quantity": 0.5, "original_quantity": "1/2 tsp ginger powder" },
+      "1008": { "quantity": 0.25, "original_quantity": "1/4 tsp cinnamon" },
+      "1009": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "1010": { "quantity": 2, "original_quantity": "2 zucchini, chopped" },
+      "1011": { "quantity": 2, "original_quantity": "2 bell peppers, chopped" },
+      "1012": { "quantity": 2, "original_quantity": "2 potatoes, chopped" },
+      "1013": { "quantity": 400, "original_quantity": "400g can chickpeas, drained and rinsed" },
+      "1014": { "quantity": 500, "original_quantity": "500ml vegetable broth" },
+      "1015": { "quantity": 400, "original_quantity": "400g can diced tomatoes" },
+      "1016": { "quantity": 0.25, "original_quantity": "1/4 cup chopped cilantro" },
+      "1017": { "quantity": 1, "original_quantity": "1 tbsp lemon juice" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 2,
+    "name": "Indian Vegetable Curry",
+    "instructions": "1. Heat oil in a pot. Add mustard seeds and cumin seeds, let them splutter. 2. Add chopped onions and sauté until golden brown. 3. Add ginger-garlic paste and sauté for a minute. 4. Add chopped vegetables (potatoes, cauliflower, peas, carrots) and curry powder. 5. Stir well and cook for 2-3 minutes. 6. Add diced tomatoes and vegetable broth. 7. Bring to a boil, then simmer for 20-25 minutes, or until vegetables are tender. 8. Stir in coconut milk and cilantro before serving. Serve with rice or naan.",
+    "approx_time": 45,
+    "ingredients": {
+      "2001": { "quantity": 3, "original_quantity": "3 tbsp vegetable oil" },
+      "2002": { "quantity": 1, "original_quantity": "1 tsp mustard seeds" },
+      "2003": { "quantity": 1, "original_quantity": "1 tsp cumin seeds" },
+      "2004": { "quantity": 2, "original_quantity": "2 onions, chopped" },
+      "2005": { "quantity": 2, "original_quantity": "2 tbsp ginger-garlic paste" },
+      "2006": { "quantity": 2, "original_quantity": "2 potatoes, cubed" },
+      "2007": { "quantity": 0.5, "original_quantity": "1/2 cauliflower head, cut into florets" },
+      "2008": { "quantity": 200, "original_quantity": "200g peas, frozen or fresh" },
+      "2009": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "2010": { "quantity": 2, "original_quantity": "2 tbsp curry powder" },
+      "2011": { "quantity": 400, "original_quantity": "400g can diced tomatoes" },
+      "2012": { "quantity": 400, "original_quantity": "400ml vegetable broth" },
+      "2013": { "quantity": 200, "original_quantity": "200ml coconut milk" },
+      "2014": { "quantity": 0.25, "original_quantity": "1/4 cup chopped cilantro" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 3,
+    "name": "Israeli Salad with Tahini",
+    "instructions": "1. Finely chop cucumbers, tomatoes, and red onion. 2. Combine chopped vegetables in a bowl. 3. Add fresh parsley and mint, chopped. 4. Dress with lemon juice, olive oil, salt, and pepper. 5. Drizzle generously with tahini sauce before serving.",
+    "approx_time": 15,
+    "ingredients": {
+      "3001": { "quantity": 2, "original_quantity": "2 cucumbers, diced" },
+      "3002": { "quantity": 3, "original_quantity": "3 tomatoes, diced" },
+      "3003": { "quantity": 1, "original_quantity": "1 red onion, finely chopped" },
+      "3004": { "quantity": 0.25, "original_quantity": "1/4 cup chopped parsley" },
+      "3005": { "quantity": 0.25, "original_quantity": "1/4 cup chopped mint" },
+      "3006": { "quantity": 2, "original_quantity": "2 tbsp lemon juice" },
+      "3007": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "3008": { "quantity": 0.5, "original_quantity": "1/2 tsp salt" },
+      "3009": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper" },
+      "3010": { "quantity": 3, "original_quantity": "3 tbsp tahini sauce" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 4,
+    "name": "Miso Soup with Tofu and Seaweed",
+    "instructions": "1. Bring dashi or vegetable broth to a simmer in a pot. 2. Reduce heat to low, and whisk in miso paste until dissolved. Do not boil after adding miso. 3. Add cubed tofu, dried seaweed (wakame or nori), and sliced green onions. 4. Simmer gently for 5-7 minutes to heat through and soften seaweed. Serve hot.",
+    "approx_time": 20,
+    "ingredients": {
+      "4001": { "quantity": 1000, "original_quantity": "1000ml dashi or vegetable broth" },
+      "4002": { "quantity": 3, "original_quantity": "3 tbsp miso paste (white or awase)" },
+      "4003": { "quantity": 200, "original_quantity": "200g firm tofu, cubed" },
+      "4004": { "quantity": 2, "original_quantity": "2 sheets dried seaweed (wakame or nori)" },
+      "4005": { "quantity": 2, "original_quantity": "2 green onions, thinly sliced" }
+    },
+    "size": 2
+  },
+  {
+    "_id": 5,
+    "name": "Mediterranean Quinoa Salad",
+    "instructions": "1. Cook quinoa according to package directions. Let cool. 2. Chop cucumbers, bell peppers, red onion, and Kalamata olives. 3. Combine cooked quinoa with chopped vegetables, crumbled feta cheese (optional - omit for strict pareve), and sun-dried tomatoes. 4. Dress with olive oil, lemon juice, dried oregano, salt, and pepper. Toss gently. 5. Garnish with fresh parsley before serving.",
+    "approx_time": 30,
+    "ingredients": {
+      "5001": { "quantity": 200, "original_quantity": "200g quinoa" },
+      "5002": { "quantity": 2, "original_quantity": "2 cucumbers, diced" },
+      "5003": { "quantity": 2, "original_quantity": "2 bell peppers (any color), diced" },
+      "5004": { "quantity": 1, "original_quantity": "1 red onion, finely chopped" },
+      "5005": { "quantity": 100, "original_quantity": "100g Kalamata olives, halved" },
+      "5006": { "quantity": 50, "original_quantity": "50g sun-dried tomatoes, oil-packed, drained and chopped" },
+      "5007": { "quantity": 3, "original_quantity": "3 tbsp olive oil" },
+      "5008": { "quantity": 2, "original_quantity": "2 tbsp lemon juice" },
+      "5009": { "quantity": 1, "original_quantity": "1 tsp dried oregano" },
+      "5010": { "quantity": 0.5, "original_quantity": "1/2 tsp salt" },
+      "5011": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper" },
+      "5012": { "quantity": 0.25, "original_quantity": "1/4 cup chopped parsley" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 6,
+    "name": "Black Bean Soup",
+    "instructions": "1. Soak dried black beans overnight (if using dried). If using canned, drain and rinse. 2. Heat olive oil in a large pot. Add chopped onions, carrots, and celery, sauté until softened. 3. Add minced garlic, cumin, and chili powder, cook for 1 minute. 4. Add black beans, vegetable broth, and bay leaf. 5. Bring to a boil, then simmer for 1-1.5 hours (if using dried beans) or 20-25 minutes (if using canned), or until beans are tender. 6. Remove bay leaf. Use an immersion blender to partially blend the soup for a creamy texture (optional). 7. Season with salt and pepper to taste. Serve hot, garnished with cilantro or a dollop of pareve sour cream (optional).",
+    "approx_time": 90,
+    "ingredients": {
+      "6001": { "quantity": 250, "original_quantity": "250g dried black beans OR 2 cans (400g each) black beans" },
+      "6002": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "6003": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "6004": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "6005": { "quantity": 2, "original_quantity": "2 celery stalks, chopped" },
+      "6006": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "6007": { "quantity": 1, "original_quantity": "1 tsp cumin" },
+      "6008": { "quantity": 1, "original_quantity": "1 tsp chili powder" },
+      "6009": { "quantity": 1500, "original_quantity": "1500ml vegetable broth" },
+      "6010": { "quantity": 1, "original_quantity": "1 bay leaf" },
+      "6011": { "quantity": 0.5, "original_quantity": "1/2 tsp salt, or to taste" },
+      "6012": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper, or to taste" },
+      "6013": { "quantity": 0.25, "original_quantity": "1/4 cup chopped cilantro, for garnish (optional)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 7,
+    "name": "Minestrone Soup",
+    "instructions": "1. Heat olive oil in a large pot. Add chopped onions, carrots, and celery, sauté until softened. 2. Add minced garlic and dried oregano, cook for 1 minute. 3. Add diced tomatoes, vegetable broth, cannellini beans (drained and rinsed), and ditalini pasta. 4. Bring to a boil, then simmer for 15-20 minutes, or until pasta is cooked and vegetables are tender. 5. Stir in chopped spinach or kale during the last few minutes of cooking. 6. Season with salt and pepper to taste. Serve hot, garnished with fresh basil (optional).",
+    "approx_time": 40,
+    "ingredients": {
+      "7001": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "7002": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "7003": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "7004": { "quantity": 2, "original_quantity": "2 celery stalks, chopped" },
+      "7005": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "7006": { "quantity": 1, "original_quantity": "1 tsp dried oregano" },
+      "7007": { "quantity": 400, "original_quantity": "400g can diced tomatoes" },
+      "7008": { "quantity": 1500, "original_quantity": "1500ml vegetable broth" },
+      "7009": { "quantity": 400, "original_quantity": "400g can cannellini beans, drained and rinsed" },
+      "7010": { "quantity": 100, "original_quantity": "100g ditalini pasta (or small pasta)" },
+      "7011": { "quantity": 100, "original_quantity": "100g spinach or kale, roughly chopped" },
+      "7012": { "quantity": 0.5, "original_quantity": "1/2 tsp salt, or to taste" },
+      "7013": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper, or to taste" },
+      "7014": { "quantity": 0.25, "original_quantity": "1/4 cup fresh basil, for garnish (optional)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 8,
+    "name": "Ratatouille",
+    "instructions": "1. Slice eggplant, zucchini, and bell peppers into rounds. Chop onions and tomatoes. Mince garlic. 2. Heat olive oil in a large oven-safe skillet or Dutch oven. Add onions and garlic, sauté until softened. 3. Add eggplant, zucchini, and bell peppers in layers. 4. Top with chopped tomatoes, tomato paste, herbs (thyme, basil, oregano), salt, and pepper. 5. Cover and bake in a preheated oven at 375°F (190°C) for 1-1.5 hours, or until vegetables are tender. 6. Uncover for the last 20 minutes of baking for some browning. Serve warm or at room temperature, garnished with fresh basil (optional).",
+    "approx_time": 90,
+    "ingredients": {
+      "8001": { "quantity": 1, "original_quantity": "1 eggplant, sliced" },
+      "8002": { "quantity": 2, "original_quantity": "2 zucchini, sliced" },
+      "8003": { "quantity": 2, "original_quantity": "2 bell peppers (any color), sliced" },
+      "8004": { "quantity": 2, "original_quantity": "2 onions, chopped" },
+      "8005": { "quantity": 4, "original_quantity": "4 tomatoes, chopped" },
+      "8006": { "quantity": 4, "original_quantity": "4 cloves garlic, minced" },
+      "8007": { "quantity": 3, "original_quantity": "3 tbsp olive oil" },
+      "8008": { "quantity": 2, "original_quantity": "2 tbsp tomato paste" },
+      "8009": { "quantity": 1, "original_quantity": "1 tsp dried thyme" },
+      "8010": { "quantity": 1, "original_quantity": "1 tsp dried basil" },
+      "8011": { "quantity": 1, "original_quantity": "1 tsp dried oregano" },
+      "8012": { "quantity": 0.75, "original_quantity": "3/4 tsp salt" },
+      "8013": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "8014": { "quantity": 0.25, "original_quantity": "1/4 cup fresh basil, for garnish (optional)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 9,
+    "name": "Vegetarian Paella",
+    "instructions": "1. Heat olive oil in a paella pan or large skillet. Add chopped onions and bell peppers, sauté until softened. 2. Add minced garlic and paprika, cook for 1 minute. 3. Stir in paella rice (Bomba or Arborio) and cook for 1 minute more. 4. Add vegetable broth, saffron threads (if using), peas, artichoke hearts, and olives. 5. Bring to a boil, then reduce heat to low, cover, and simmer for 18-20 minutes, or until rice is cooked and liquid is absorbed. Do not stir during cooking. 6. Let rest, covered, for 5 minutes before serving. Garnish with lemon wedges and fresh parsley.",
+    "approx_time": 45,
+    "ingredients": {
+      "9001": { "quantity": 4, "original_quantity": "4 tbsp olive oil" },
+      "9002": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "9003": { "quantity": 2, "original_quantity": "2 bell peppers (red and yellow), chopped" },
+      "9004": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "9005": { "quantity": 1, "original_quantity": "1 tsp paprika" },
+      "9006": { "quantity": 300, "original_quantity": "300g paella rice (Bomba or Arborio)" },
+      "9007": { "quantity": 750, "original_quantity": "750ml vegetable broth, hot" },
+      "9008": { "quantity": 0.01, "original_quantity": "a pinch of saffron threads (optional)" },
+      "9009": { "quantity": 200, "original_quantity": "200g peas, frozen" },
+      "9010": { "quantity": 200, "original_quantity": "200g artichoke hearts, canned or frozen, quartered" },
+      "9011": { "quantity": 100, "original_quantity": "100g olives, halved" },
+      "9012": { "quantity": 1, "original_quantity": "1 lemon, cut into wedges, for serving" },
+      "9013": { "quantity": 0.25, "original_quantity": "1/4 cup fresh parsley, chopped, for garnish" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 10,
+    "name": "Lentil Soup",
+    "instructions": "1. Rinse lentils. Heat olive oil in a large pot. Add chopped onions, carrots, and celery, sauté until softened. 2. Add minced garlic and cumin, cook for 1 minute. 3. Add lentils, vegetable broth, diced tomatoes, and bay leaf. 4. Bring to a boil, then simmer for 25-30 minutes, or until lentils are tender. 5. Remove bay leaf. Season with salt and pepper to taste. Serve hot, garnished with a swirl of olive oil or lemon juice (optional).",
+    "approx_time": 45,
+    "ingredients": {
+      "10001": { "quantity": 200, "original_quantity": "200g lentils (brown or green), rinsed" },
+      "10002": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "10003": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "10004": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "10005": { "quantity": 2, "original_quantity": "2 celery stalks, chopped" },
+      "10006": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "10007": { "quantity": 1, "original_quantity": "1 tsp cumin" },
+      "10008": { "quantity": 1500, "original_quantity": "1500ml vegetable broth" },
+      "10009": { "quantity": 400, "original_quantity": "400g can diced tomatoes" },
+      "10010": { "quantity": 1, "original_quantity": "1 bay leaf" },
+      "10011": { "quantity": 0.5, "original_quantity": "1/2 tsp salt, or to taste" },
+      "10012": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper, or to taste" },
+      "10013": { "quantity": 1, "original_quantity": "1 tbsp olive oil or lemon juice, for garnish (optional)" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 11,
+    "name": "Salmon with Roasted Vegetables",
+    "instructions": "1. Preheat oven to 400°F (200°C). Chop vegetables (broccoli, carrots, bell peppers). 2. Toss vegetables with olive oil, salt, pepper, and dried herbs (rosemary or thyme). Spread on a baking sheet. 3. Place salmon fillets on the same baking sheet alongside vegetables. 4. Drizzle salmon with olive oil, lemon juice, salt, and pepper. 5. Roast for 15-20 minutes, or until salmon is cooked through and vegetables are tender. Serve hot.",
+    "approx_time": 30,
+    "ingredients": {
+      "11001": { "quantity": 4, "original_quantity": "4 salmon fillets (skin on or off)" },
+      "11002": { "quantity": 1, "original_quantity": "1 head broccoli, cut into florets" },
+      "11003": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "11004": { "quantity": 2, "original_quantity": "2 bell peppers (any color), cut into strips" },
+      "11005": { "quantity": 3, "original_quantity": "3 tbsp olive oil" },
+      "11006": { "quantity": 2, "original_quantity": "2 tbsp lemon juice" },
+      "11007": { "quantity": 0.75, "original_quantity": "3/4 tsp salt" },
+      "11008": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "11009": { "quantity": 1, "original_quantity": "1 tsp dried rosemary or thyme" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 12,
+    "name": "Baked Cod with Lemon and Herbs",
+    "instructions": "1. Preheat oven to 400°F (200°C). Place cod fillets in a baking dish. 2. Drizzle cod with olive oil and lemon juice. 3. Sprinkle with minced garlic, chopped parsley, dried oregano, salt, and pepper. 4. Bake for 15-20 minutes, or until cod is cooked through and flakes easily. Garnish with lemon wedges before serving.",
+    "approx_time": 25,
+    "ingredients": {
+      "12001": { "quantity": 4, "original_quantity": "4 cod fillets (about 150g each)" },
+      "12002": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "12003": { "quantity": 2, "original_quantity": "2 tbsp lemon juice" },
+      "12004": { "quantity": 2, "original_quantity": "2 cloves garlic, minced" },
+      "12005": { "quantity": 0.25, "original_quantity": "1/4 cup chopped parsley" },
+      "12006": { "quantity": 0.5, "original_quantity": "1/2 tsp dried oregano" },
+      "12007": { "quantity": 0.5, "original_quantity": "1/2 tsp salt" },
+      "12008": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper" },
+      "12009": { "quantity": 1, "original_quantity": "1 lemon, cut into wedges, for serving" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 13,
+    "name": "Pareve Tuna Salad",
+    "instructions": "1. Drain tuna well. In a bowl, combine tuna with mayonnaise (pareve), finely chopped celery, finely chopped red onion, lemon juice, salt, and pepper. 2. Mix well. Serve on lettuce leaves, in sandwiches, or with crackers.",
+    "approx_time": 10,
+    "ingredients": {
+      "13001": { "quantity": 2, "original_quantity": "2 cans (150g each) tuna in water, drained" },
+      "13002": { "quantity": 4, "original_quantity": "4 tbsp pareve mayonnaise" },
+      "13003": { "quantity": 2, "original_quantity": "2 celery stalks, finely chopped" },
+      "13004": { "quantity": 0.5, "original_quantity": "1/2 red onion, finely chopped" },
+      "13005": { "quantity": 1, "original_quantity": "1 tbsp lemon juice" },
+      "13006": { "quantity": 0.25, "original_quantity": "1/4 tsp salt" },
+      "13007": { "quantity": 0.125, "original_quantity": "1/8 tsp black pepper" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 14,
+    "name": "Classic Chicken Soup (Kosher Style)",
+    "instructions": "1. Place chicken pieces in a large pot. Cover with water. Bring to a boil, then reduce heat and simmer, skimming off any foam. 2. Add chopped onions, carrots, and celery. 3. Add salt, pepper, and dill (optional). 4. Simmer for 1.5-2 hours, or until chicken is very tender and vegetables are cooked. 5. Remove chicken and shred meat (optional, can serve as is). Return shredded chicken to the soup. Adjust seasoning if needed. Serve hot with matzah balls or noodles (optional, cooked separately).",
+    "approx_time": 120,
+    "ingredients": {
+      "14001": { "quantity": 1, "original_quantity": "1 whole chicken or 8-10 chicken pieces (legs, thighs, wings)" },
+      "14002": { "quantity": 2, "original_quantity": "2 onions, quartered" },
+      "14003": { "quantity": 3, "original_quantity": "3 carrots, chopped" },
+      "14004": { "quantity": 3, "original_quantity": "3 celery stalks, chopped" },
+      "14005": { "quantity": 1.5, "original_quantity": "1.5 tsp salt, or to taste" },
+      "14006": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper, or to taste" },
+      "14007": { "quantity": 0.25, "original_quantity": "1/4 cup fresh dill, chopped (optional)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 15,
+    "name": "Roast Chicken with Potatoes",
+    "instructions": "1. Preheat oven to 400°F (200°C). Cut potatoes into chunks. Chop onions and garlic. 2. Toss potatoes and onions with olive oil, salt, pepper, and paprika. Spread in a roasting pan. 3. Place chicken on top of potatoes. Rub chicken with olive oil, salt, pepper, paprika, and garlic powder. 4. Roast for 1-1.25 hours, or until chicken is cooked through and potatoes are tender. Baste chicken with pan juices a few times during roasting. Let rest for 10 minutes before serving.",
+    "approx_time": 80,
+    "ingredients": {
+      "15001": { "quantity": 1.5, "original_quantity": "1.5 kg whole chicken or parts" },
+      "15002": { "quantity": 1, "original_quantity": "1 kg potatoes, cut into chunks" },
+      "15003": { "quantity": 2, "original_quantity": "2 onions, quartered" },
+      "15004": { "quantity": 4, "original_quantity": "4 cloves garlic, minced" },
+      "15005": { "quantity": 4, "original_quantity": "4 tbsp olive oil" },
+      "15006": { "quantity": 1, "original_quantity": "1 tsp salt" },
+      "15007": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "15008": { "quantity": 1, "original_quantity": "1 tsp paprika" },
+      "15009": { "quantity": 1, "original_quantity": "1 tsp garlic powder" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 16,
+    "name": "Brisket with Root Vegetables",
+    "instructions": "1. Season brisket generously with salt and pepper. Heat olive oil in a large Dutch oven or pot over medium-high heat. Sear brisket on all sides until browned. Remove brisket from pot. 2. Add chopped onions, carrots, and celery to the pot, sauté until softened. Add minced garlic and tomato paste, cook for 1 minute. 3. Return brisket to the pot. Add beef broth, bay leaf, and thyme sprigs. 4. Bring to a simmer, then cover and braise in a preheated oven at 325°F (160°C) for 3-4 hours, or until brisket is fork-tender. 5. Remove brisket and vegetables from pot. Skim excess fat from braising liquid. Thicken sauce with a cornstarch slurry if desired (mix cornstarch with cold water and whisk into sauce, simmer until thickened). Slice brisket against the grain. Serve brisket and vegetables with sauce.",
+    "approx_time": 240,
+    "ingredients": {
+      "16001": { "quantity": 1.5, "original_quantity": "1.5 kg beef brisket" },
+      "16002": { "quantity": 1.5, "original_quantity": "1.5 tsp salt" },
+      "16003": { "quantity": 1, "original_quantity": "1 tsp black pepper" },
+      "16004": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "16005": { "quantity": 2, "original_quantity": "2 onions, chopped" },
+      "16006": { "quantity": 3, "original_quantity": "3 carrots, chopped" },
+      "16007": { "quantity": 3, "original_quantity": "3 celery stalks, chopped" },
+      "16008": { "quantity": 4, "original_quantity": "4 cloves garlic, minced" },
+      "16009": { "quantity": 2, "original_quantity": "2 tbsp tomato paste" },
+      "16010": { "quantity": 750, "original_quantity": "750ml beef broth" },
+      "16011": { "quantity": 2, "original_quantity": "2 bay leaves" },
+      "16012": { "quantity": 2, "original_quantity": "2 sprigs fresh thyme" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 17,
+    "name": "Shepherd's Pie (Lamb)",
+    "instructions": "1. Preheat oven to 375°F (190°C). Cook potatoes until tender, mash with pareve margarine or olive oil, salt, and pepper. Set aside. 2. Heat olive oil in a large skillet. Brown ground lamb. Drain excess fat. 3. Add chopped onions, carrots, and celery, sauté until softened. Add minced garlic and tomato paste, cook for 1 minute. 4. Stir in beef broth, peas, and corn. Season with salt, pepper, and thyme. Simmer for 10 minutes. 5. Transfer meat mixture to a baking dish. Top evenly with mashed potatoes. 6. Bake for 20-25 minutes, or until potatoes are lightly golden brown. Let cool slightly before serving.",
+    "approx_time": 75,
+    "ingredients": {
+      "17001": { "quantity": 1, "original_quantity": "1 kg potatoes, peeled and quartered" },
+      "17002": { "quantity": 50, "original_quantity": "50g pareve margarine or 2 tbsp olive oil" },
+      "17003": { "quantity": 1, "original_quantity": "1 tsp salt" },
+      "17004": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "17005": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "17006": { "quantity": 750, "original_quantity": "750g ground lamb" },
+      "17007": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "17008": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "17009": { "quantity": 2, "original_quantity": "2 celery stalks, chopped" },
+      "17010": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "17011": { "quantity": 2, "original_quantity": "2 tbsp tomato paste" },
+      "17012": { "quantity": 500, "original_quantity": "500ml beef broth" },
+      "17013": { "quantity": 200, "original_quantity": "200g peas, frozen" },
+      "17014": { "quantity": 200, "original_quantity": "200g corn, frozen or canned, drained" },
+      "17015": { "quantity": 0.75, "original_quantity": "3/4 tsp salt, or to taste" },
+      "17016": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper, or to taste" },
+      "17017": { "quantity": 1, "original_quantity": "1 tsp dried thyme" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 18,
+    "name": "Chicken Stir-fry with Vegetables",
+    "instructions": "1. Cut chicken into bite-sized pieces. Marinate chicken with soy sauce and cornstarch for 15 minutes. 2. Chop vegetables (broccoli, bell peppers, carrots, snap peas). Mince garlic and ginger. 3. Heat vegetable oil in a wok or large skillet over high heat. Stir-fry chicken until browned and cooked through. Remove chicken from wok. 4. Add more oil to the wok. Stir-fry vegetables until tender-crisp. Add garlic and ginger, cook for 30 seconds. 5. Return chicken to the wok. Add stir-fry sauce (soy sauce, hoisin sauce, sesame oil, cornstarch slurry). Stir-fry until sauce thickens and coats everything. Serve hot over rice or noodles.",
+    "approx_time": 40,
+    "ingredients": {
+      "18001": { "quantity": 500, "original_quantity": "500g chicken breasts or thighs, boneless, skinless" },
+      "18002": { "quantity": 2, "original_quantity": "2 tbsp soy sauce" },
+      "18003": { "quantity": 1, "original_quantity": "1 tbsp cornstarch" },
+      "18004": { "quantity": 1, "original_quantity": "1 head broccoli, cut into florets" },
+      "18005": { "quantity": 2, "original_quantity": "2 bell peppers (any color), sliced" },
+      "18006": { "quantity": 2, "original_quantity": "2 carrots, sliced" },
+      "18007": { "quantity": 150, "original_quantity": "150g snap peas, trimmed" },
+      "18008": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "18009": { "quantity": 1, "original_quantity": "1 tbsp ginger, minced" },
+      "18010": { "quantity": 4, "original_quantity": "4 tbsp vegetable oil" },
+      "18011": { "quantity": 3, "original_quantity": "3 tbsp soy sauce" },
+      "18012": { "quantity": 2, "original_quantity": "2 tbsp hoisin sauce (kosher)" },
+      "18013": { "quantity": 1, "original_quantity": "1 tsp sesame oil" },
+      "18014": { "quantity": 1, "original_quantity": "1 tbsp cornstarch" },
+      "18015": { "quantity": 2, "original_quantity": "2 tbsp water" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 19,
+    "name": "Beef Empanadas (baked)",
+    "instructions": "1. Prepare empanada dough (or use store-bought kosher pareve empanada discs). 2. Heat olive oil in a skillet. Brown ground beef. Drain excess fat. 3. Add chopped onions, bell peppers, and olives, sauté until softened. Add ground cumin, paprika, dried oregano, salt, and pepper, cook for 1 minute. 4. Let filling cool slightly. Preheat oven to 375°F (190°C). 5. Assemble empanadas: place a spoonful of filling in the center of each dough disc. Fold dough over filling to form a half-moon shape, crimp edges with a fork to seal. 6. Brush empanadas with beaten egg (optional - for golden color, omit for strict pareve/vegan). 7. Bake for 20-25 minutes, or until golden brown. Serve warm with chimichurri sauce (optional).",
+    "approx_time": 90,
+    "ingredients": {
+      "19001": { "quantity": 1, "original_quantity": "1 package empanada dough discs (kosher pareve) OR homemade dough from recipe" },
+      "19002": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "19003": { "quantity": 500, "original_quantity": "500g ground beef" },
+      "19004": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "19005": { "quantity": 1, "original_quantity": "1 bell pepper (any color), chopped" },
+      "19006": { "quantity": 100, "original_quantity": "100g olives, chopped" },
+      "19007": { "quantity": 1, "original_quantity": "1 tsp ground cumin" },
+      "19008": { "quantity": 1, "original_quantity": "1 tsp paprika" },
+      "19009": { "quantity": 1, "original_quantity": "1 tsp dried oregano" },
+      "19010": { "quantity": 0.75, "original_quantity": "3/4 tsp salt" },
+      "19011": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "19012": { "quantity": 1, "original_quantity": "1 egg, beaten (optional, for egg wash)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 20,
+    "name": "Potato Latkes",
+    "instructions": "1. Peel and grate potatoes and onions. Place grated mixture in a clean kitchen towel or cheesecloth and squeeze out as much liquid as possible. 2. Transfer drained potato mixture to a bowl. Add egg, matzah meal or flour, salt, and pepper. Mix well to combine. 3. Heat vegetable oil in a large skillet over medium-high heat. Drop spoonfuls of potato mixture into hot oil, flatten slightly with a spatula. 4. Fry latkes for 3-4 minutes per side, or until golden brown and crispy. Drain on paper towels. Serve hot with applesauce or pareve sour cream (optional).",
+    "approx_time": 45,
+    "ingredients": {
+      "20001": { "quantity": 1, "original_quantity": "1 kg potatoes, peeled" },
+      "20002": { "quantity": 1, "original_quantity": "1 onion, peeled" },
+      "20003": { "quantity": 1, "original_quantity": "1 egg" },
+      "20004": { "quantity": 50, "original_quantity": "50g matzah meal or all-purpose flour" },
+      "20005": { "quantity": 1, "original_quantity": "1 tsp salt" },
+      "20006": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper" },
+      "20007": { "quantity": 120, "original_quantity": "1/2 cup vegetable oil, for frying" },
+      "20008": { "quantity": 200, "original_quantity": "200g applesauce or pareve sour cream, for serving (optional)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 21,
+    "name": "Hummus with Pita Bread",
+    "instructions": "1. If using dried chickpeas, soak them overnight. Cook chickpeas until very tender. If using canned, drain and rinse. 2. In a food processor, combine chickpeas, tahini, lemon juice, garlic, salt, and ice water. 3. Process until very smooth and creamy, scraping down sides as needed. Add more ice water if needed to achieve desired consistency. 4. Drizzle hummus with olive oil and sprinkle with paprika (optional). Serve with warm pita bread, vegetables (cucumbers, carrots, bell peppers), and olives.",
+    "approx_time": 20,
+    "ingredients": {
+      "21001": { "quantity": 250, "original_quantity": "250g dried chickpeas OR 2 cans (400g each) chickpeas" },
+      "21002": { "quantity": 120, "original_quantity": "1/2 cup tahini" },
+      "21003": { "quantity": 60, "original_quantity": "1/4 cup lemon juice, freshly squeezed" },
+      "21004": { "quantity": 2, "original_quantity": "2 cloves garlic, minced" },
+      "21005": { "quantity": 0.75, "original_quantity": "3/4 tsp salt, or to taste" },
+      "21006": { "quantity": 60, "original_quantity": "1/4 cup ice water, or more as needed" },
+      "21007": { "quantity": 2, "original_quantity": "2 tbsp olive oil, for drizzling" },
+      "21008": { "quantity": 0.5, "original_quantity": "1/2 tsp paprika, for sprinkling (optional)" },
+      "21009": { "quantity": 1, "original_quantity": "1 package pita bread, warmed, for serving" },
+      "21010": { "quantity": 300, "original_quantity": "300g assorted vegetables, for serving (cucumbers, carrots, bell peppers)" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 22,
+    "name": "Falafel",
+    "instructions": "1. Soak dried chickpeas overnight. Drain and rinse. 2. In a food processor, combine chickpeas, onions, parsley, cilantro, garlic, cumin, coriander, salt, and pepper. Process until coarsely ground but not completely smooth. 3. Form mixture into small balls or patties. Let rest for 30 minutes in the refrigerator. 4. Heat vegetable oil for deep frying to 350°F (175°C). Carefully fry falafel in batches for 3-4 minutes, or until golden brown and crispy. Drain on paper towels. Serve hot in pita bread with hummus, tahini sauce, Israeli salad, and pickles.",
+    "approx_time": 90,
+    "ingredients": {
+      "22001": { "quantity": 250, "original_quantity": "250g dried chickpeas" },
+      "22002": { "quantity": 1, "original_quantity": "1 onion, quartered" },
+      "22003": { "quantity": 0.5, "original_quantity": "1/2 cup chopped parsley" },
+      "22004": { "quantity": 0.5, "original_quantity": "1/2 cup chopped cilantro" },
+      "22005": { "quantity": 4, "original_quantity": "4 cloves garlic, minced" },
+      "22006": { "quantity": 1, "original_quantity": "1 tsp ground cumin" },
+      "22007": { "quantity": 1, "original_quantity": "1 tsp ground coriander" },
+      "22008": { "quantity": 1, "original_quantity": "1 tsp salt" },
+      "22009": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper" },
+      "22010": { "quantity": 750, "original_quantity": "3 cups vegetable oil, for frying" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 23,
+    "name": "Shakshuka",
+    "instructions": "1. Heat olive oil in a skillet over medium heat. Add chopped onions and bell peppers, sauté until softened. 2. Add minced garlic and paprika, cook for 1 minute. 3. Stir in crushed tomatoes, tomato paste, cumin, and chili flakes (optional). Simmer for 5-7 minutes, stirring occasionally. 4. Make wells in the tomato sauce with a spoon. Crack eggs into each well. 5. Cover skillet and cook for 5-10 minutes, or until egg whites are set and yolks are cooked to your liking. Garnish with fresh parsley or cilantro before serving. Serve with crusty bread for dipping.",
+    "approx_time": 30,
+    "ingredients": {
+      "23001": { "quantity": 2, "original_quantity": "2 tbsp olive oil" },
+      "23002": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "23003": { "quantity": 1, "original_quantity": "1 bell pepper (any color), chopped" },
+      "23004": { "quantity": 3, "original_quantity": "3 cloves garlic, minced" },
+      "23005": { "quantity": 1, "original_quantity": "1 tsp paprika" },
+      "23006": { "quantity": 2, "original_quantity": "2 cans (400g each) crushed tomatoes" },
+      "23007": { "quantity": 2, "original_quantity": "2 tbsp tomato paste" },
+      "23008": { "quantity": 0.5, "original_quantity": "1/2 tsp ground cumin" },
+      "23009": { "quantity": 0.25, "original_quantity": "1/4 tsp chili flakes (optional)" },
+      "23010": { "quantity": 6, "original_quantity": "6 eggs" },
+      "23011": { "quantity": 0.25, "original_quantity": "1/4 cup fresh parsley or cilantro, chopped, for garnish" }
+    },
+    "size": 4
+  },
+  {
+    "_id": 24,
+    "name": "Matzah Ball Soup (Pareve)",
+    "instructions": "1. Prepare matzah balls: In a bowl, combine matzah meal, pareve schmaltz or vegetable oil, eggs, and seltzer or water. Season with salt and pepper. Mix gently and refrigerate for at least 30 minutes. 2. Prepare soup broth: Heat vegetable oil in a large pot. Add chopped onions, carrots, and celery, sauté until softened. Add vegetable broth and bring to a simmer. 3. Wet hands with cold water and form matzah ball mixture into balls. Gently drop matzah balls into simmering broth. 4. Cover pot and simmer for 25-30 minutes, or until matzah balls are cooked through and fluffy. Garnish with fresh dill before serving.",
+    "approx_time": 60,
+    "ingredients": {
+      "24001": { "quantity": 120, "original_quantity": "1 cup matzah meal" },
+      "24002": { "quantity": 60, "original_quantity": "1/4 cup pareve schmaltz or vegetable oil" },
+      "24003": { "quantity": 3, "original_quantity": "3 eggs, large" },
+      "24004": { "quantity": 60, "original_quantity": "1/4 cup seltzer or water" },
+      "24005": { "quantity": 0.75, "original_quantity": "3/4 tsp salt" },
+      "24006": { "quantity": 0.25, "original_quantity": "1/4 tsp black pepper" },
+      "24007": { "quantity": 2, "original_quantity": "2 tbsp vegetable oil" },
+      "24008": { "quantity": 1, "original_quantity": "1 onion, chopped" },
+      "24009": { "quantity": 2, "original_quantity": "2 carrots, chopped" },
+      "24010": { "quantity": 2, "original_quantity": "2 celery stalks, chopped" },
+      "24011": { "quantity": 1500, "original_quantity": "1500ml vegetable broth" },
+      "24012": { "quantity": 0.25, "original_quantity": "1/4 cup fresh dill, chopped, for garnish" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 25,
+    "name": "Pareve Cholent (Bean and Barley Stew)",
+    "instructions": "1. Soak beans overnight. Drain and rinse. 2. In a large pot or slow cooker, combine soaked beans, barley, potatoes, sweet potatoes, onions, garlic, and vegetable broth. 3. Add paprika, cumin, salt, pepper, and bay leaf. 4. Bring to a boil (if using stovetop pot), then reduce heat to very low, cover, and simmer for at least 3-4 hours, or cook in slow cooker on low for 6-8 hours, or until beans and barley are very tender. 5. Check liquid levels during cooking and add more broth or water if needed. Adjust seasoning to taste before serving.",
+    "approx_time": 240,
+    "ingredients": {
+      "25001": { "quantity": 250, "original_quantity": "250g mixed dried beans (kidney, pinto, etc.)" },
+      "25002": { "quantity": 120, "original_quantity": "1 cup pearl barley" },
+      "25003": { "quantity": 2, "original_quantity": "2 potatoes, cubed" },
+      "25004": { "quantity": 2, "original_quantity": "2 sweet potatoes, cubed" },
+      "25005": { "quantity": 2, "original_quantity": "2 onions, quartered" },
+      "25006": { "quantity": 4, "original_quantity": "4 cloves garlic, minced" },
+      "25007": { "quantity": 2000, "original_quantity": "2000ml vegetable broth, or more as needed" },
+      "25008": { "quantity": 1, "original_quantity": "1 tbsp paprika" },
+      "25009": { "quantity": 1, "original_quantity": "1 tsp ground cumin" },
+      "25010": { "quantity": 1, "original_quantity": "1 tsp salt, or to taste" },
+      "25011": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper, or to taste" },
+      "25012": { "quantity": 2, "original_quantity": "2 bay leaves" }
+    },
+    "size": 8
+  },
+  {
+    "_id": 26,
+    "name": "Pareve Chocolate Babka",
+    "instructions": "1. Prepare dough: In a large bowl, combine flour, sugar, yeast, and salt. In a separate bowl, whisk together warm water, oil, and vanilla extract. Add wet ingredients to dry ingredients and mix until a shaggy dough forms. Knead for 8-10 minutes until smooth and elastic. Place dough in a greased bowl, cover, and let rise in a warm place for 1.5-2 hours, or until doubled in size. 2. Prepare filling: In a bowl, combine melted pareve chocolate, sugar, cocoa powder, and oil. Mix well. 3. Assemble babka: Roll out dough into a large rectangle. Spread chocolate filling evenly over dough, leaving a small border. Roll dough tightly into a log, starting from one long side. Cut log lengthwise in half. Twist two halves together, cut sides facing up, to form babka. Place babka in a greased loaf pan. Cover and let rise for 45-60 minutes. 4. Preheat oven to 350°F (175°C). Bake babka for 30-35 minutes, or until golden brown and cooked through. Let cool slightly before slicing and serving.",
+    "approx_time": 180,
+    "ingredients": {
+      "26001": { "quantity": 375, "original_quantity": "3 cups all-purpose flour, plus more for dusting" },
+      "26002": { "quantity": 75, "original_quantity": "1/3 cup granulated sugar" },
+      "26003": { "quantity": 7, "original_quantity": "7g (1 packet) active dry yeast" },
+      "26004": { "quantity": 0.5, "original_quantity": "1/2 tsp salt" },
+      "26005": { "quantity": 180, "original_quantity": "3/4 cup warm water" },
+      "26006": { "quantity": 90, "original_quantity": "1/3 cup vegetable oil" },
+      "26007": { "quantity": 1, "original_quantity": "1 tsp vanilla extract" },
+      "26008": { "quantity": 200, "original_quantity": "200g pareve chocolate, melted" },
+      "26009": { "quantity": 50, "original_quantity": "1/4 cup granulated sugar" },
+      "26010": { "quantity": 30, "original_quantity": "1/4 cup cocoa powder, unsweetened" },
+      "26011": { "quantity": 30, "original_quantity": "2 tbsp vegetable oil" }
+    },
+    "size": 8
+  },
+  {
+    "_id": 27,
+    "name": "Pareve Apple Crumble",
+    "instructions": "1. Preheat oven to 375°F (190°C). Prepare apple filling: Peel, core, and slice apples. In a bowl, toss apples with lemon juice, sugar, cinnamon, and nutmeg. Spread apple mixture in a baking dish. 2. Prepare crumble topping: In a separate bowl, combine flour, brown sugar, oats, and salt. Cut in cold pareve margarine or vegetable shortening using a pastry blender or your fingers until mixture resembles coarse crumbs. 3. Sprinkle crumble topping evenly over apple filling. 4. Bake for 35-40 minutes, or until topping is golden brown and apples are tender. Serve warm, with pareve vanilla ice cream (optional).",
+    "approx_time": 60,
+    "ingredients": {
+      "27001": { "quantity": 6, "original_quantity": "6 apples (Granny Smith or Honeycrisp), peeled, cored, and sliced" },
+      "27002": { "quantity": 1, "original_quantity": "1 tbsp lemon juice" },
+      "27003": { "quantity": 50, "original_quantity": "1/4 cup granulated sugar" },
+      "27004": { "quantity": 1, "original_quantity": "1 tsp ground cinnamon" },
+      "27005": { "quantity": 0.25, "original_quantity": "1/4 tsp ground nutmeg" },
+      "27006": { "quantity": 125, "original_quantity": "1 cup all-purpose flour" },
+      "27007": { "quantity": 100, "original_quantity": "1/2 cup packed brown sugar" },
+      "27008": { "quantity": 50, "original_quantity": "1/2 cup rolled oats" },
+      "27009": { "quantity": 0.25, "original_quantity": "1/4 tsp salt" },
+      "27010": { "quantity": 120, "original_quantity": "1/2 cup cold pareve margarine or vegetable shortening, cut into cubes" }
+    },
+    "size": 6
+  },
+  {
+    "_id": 28,
+    "name": "Pareve Chocolate Cake",
+    "instructions": "1. Preheat oven to 350°F (175°C). Grease and flour a cake pan. 2. In a large bowl, whisk together flour, sugar, cocoa powder, baking soda, baking powder, and salt. 3. In a separate bowl, whisk together vegetable oil, eggs, buttermilk (pareve or use soy milk with lemon juice), and vanilla extract. 4. Gradually add wet ingredients to dry ingredients, mixing until just combined. Stir in hot coffee or water. Batter will be thin. 5. Pour batter into prepared cake pan. Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean. Let cool in pan for 10 minutes before inverting onto a wire rack to cool completely. Frost with pareve chocolate frosting (optional).",
+    "approx_time": 75,
+    "ingredients": {
+      "28001": { "quantity": 300, "original_quantity": "2 1/2 cups all-purpose flour" },
+      "28002": { "quantity": 300, "original_quantity": "1 3/4 cups granulated sugar" },
+      "28003": { "quantity": 90, "original_quantity": "3/4 cup unsweetened cocoa powder" },
+      "28004": { "quantity": 1.5, "original_quantity": "1 1/2 tsp baking soda" },
+      "28005": { "quantity": 1.5, "original_quantity": "1 1/2 tsp baking powder" },
+      "28006": { "quantity": 1, "original_quantity": "1 tsp salt" },
+      "28007": { "quantity": 120, "original_quantity": "1/2 cup vegetable oil" },
+      "28008": { "quantity": 2, "original_quantity": "2 eggs, large" },
+      "28009": { "quantity": 240, "original_quantity": "1 cup buttermilk (pareve or soy milk with 1 tbsp lemon juice)" },
+      "28010": { "quantity": 2, "original_quantity": "2 tsp vanilla extract" },
+      "28011": { "quantity": 240, "original_quantity": "1 cup hot coffee or hot water" }
+    },
+    "size": 12
+  },
+  {
+    "_id": 29,
+    "name": "Fruit Salad",
+    "instructions": "1. Wash and cut fruits into bite-sized pieces. Choose a variety of seasonal fruits like melon, berries, grapes, oranges, apples, pears, etc. 2. Combine all cut fruits in a large bowl. 3. Optional: dress fruit salad with a light dressing of lemon juice and honey or maple syrup. Toss gently. 4. Chill in the refrigerator for at least 30 minutes before serving. Garnish with fresh mint leaves (optional).",
+    "approx_time": 20,
+    "ingredients": {
+      "29001": { "quantity": 500, "original_quantity": "500g mixed melon (watermelon, cantaloupe, honeydew), cubed" },
+      "29002": { "quantity": 250, "original_quantity": "250g mixed berries (strawberries, blueberries, raspberries)" },
+      "29003": { "quantity": 250, "original_quantity": "250g grapes, halved" },
+      "29004": { "quantity": 2, "original_quantity": "2 oranges, peeled and segmented" },
+      "29005": { "quantity": 2, "original_quantity": "2 apples, cored and diced" },
+      "29006": { "quantity": 2, "original_quantity": "2 pears, cored and diced" },
+      "29007": { "quantity": 2, "original_quantity": "2 tbsp lemon juice (optional, for dressing)" },
+      "29008": { "quantity": 2, "original_quantity": "2 tbsp honey or maple syrup (optional, for dressing)" },
+      "29009": { "quantity": 0.25, "original_quantity": "1/4 cup fresh mint leaves, for garnish (optional)" }
+    },
+    "size": 8
+  },
+  {
+    "_id": 30,
+    "name": "Gazpacho",
+    "instructions": "1. Roughly chop tomatoes, cucumbers, bell peppers, and red onion. Mince garlic. 2. In a blender, combine chopped vegetables, garlic, tomato juice, olive oil, vinegar, salt, and pepper. 3. Blend until smooth. Taste and adjust seasoning as needed. 4. Chill in the refrigerator for at least 2 hours before serving, or preferably overnight, to allow flavors to meld. Serve cold, garnished with diced cucumber, bell pepper, or croutons (optional, pareve).",
+    "approx_time": 15,
+    "ingredients": {
+      "30001": { "quantity": 1, "original_quantity": "1 kg ripe tomatoes, roughly chopped" },
+      "30002": { "quantity": 2, "original_quantity": "2 cucumbers, peeled and roughly chopped" },
+      "30003": { "quantity": 2, "original_quantity": "2 bell peppers (green or red), roughly chopped" },
+      "30004": { "quantity": 1, "original_quantity": "1 red onion, roughly chopped" },
+      "30005": { "quantity": 2, "original_quantity": "2 cloves garlic, minced" },
+      "30006": { "quantity": 500, "original_quantity": "500ml tomato juice" },
+      "30007": { "quantity": 3, "original_quantity": "3 tbsp olive oil" },
+      "30008": { "quantity": 2, "original_quantity": "2 tbsp red wine vinegar or sherry vinegar" },
+      "30009": { "quantity": 1, "original_quantity": "1 tsp salt, or to taste" },
+      "30010": { "quantity": 0.5, "original_quantity": "1/2 tsp black pepper, or to taste" },
+      "30011": { "quantity": 100, "original_quantity": "100g diced cucumber, bell pepper, or croutons, for garnish (optional)" }
+    },
+    "size": 6
+  }
+ ]
