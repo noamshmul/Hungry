@@ -10,8 +10,10 @@ class Ingredient(Base):
     __tablename__ = "ingredients"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), nullable=False)
+    name = Column(String(100), nullable=False, unique=True)
     unit_size = Column(Float, nullable=False)
+
+    items = relationship("Items", back_populates="ingredient")
 
 class Inventory(Base):
     __tablename__ = "inventories"
@@ -26,6 +28,7 @@ class Items(Base):
     id = Column(Integer, primary_key=True, index=True)
     Inventory_id = Column(Integer, ForeignKey("inventories.id", ondelete="CASCADE"))
     Ingredient_id = Column(Integer, ForeignKey("ingredients.id", ondelete="CASCADE"))
+    quantity = Column(Integer, nullable=False)
 
     inventory_owner = relationship("Inventory", back_populates="items")
-    ingredient = relationship("Ingredient")
+    ingredient = relationship("Ingredient", back_populates="items")
