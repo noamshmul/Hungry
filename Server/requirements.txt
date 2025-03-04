@@ -1,6 +1,0 @@
-fastapi[standard]==0.115.8
-Markdown==3.7
-pymongo==4.11.1
-docker==7.1.0
-SQLAlchemy==2.0.38
-PyMySQL==1.1.1

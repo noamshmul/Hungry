@@ -1,57 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-    <TextView
-        android:id="@+id/welcomeView"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:layout_marginBottom="120dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fridgeButton"/>
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="120dp"
-        android:text="logout"
-        app:layout_constraintBottom_toTopOf="@+id/fridgeButton"
-        app:layout_constraintHorizontal_bias="0.051"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+    android:layout_height="match_parent">
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="fridge"
-        android:id="@+id/fridgeButton"
-        android:layout_marginBottom="800dp"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/hungryButton"/>
+        android:layout_height="50dp"
+        android:text="Test Connection"
+        android:id="@+id/testButton"/>
 
-    <Button
-        android:id="@+id/hungryButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="500dp"
-        android:text="I'm Hungry"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fridgeButton" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -1,11 +1,9 @@
-from fastapi import FastAPI, Depends
-from fastapi.responses import HTMLResponse
+import gateway
+import log
 
-from log import logger
-from gateway import router
-from Databases.Recipes import MongoDB_Setup
-import auth
-import readme
+def main():
+    gateway.bind_and_listen()
+
 
 ascii_art = '''
  /$$   /$$                                                  
@@ -21,18 +19,10 @@ ascii_art = '''
                                \______/            \______/ 
 '''
 
-app = FastAPI(dependencies=[Depends(auth.security)])
-
-app.include_router(router)
-
-
-@app.get("/")
-def show_readme():
-    html_content = readme.get_readme()
-    return HTMLResponse(content=html_content, status_code=200)
-
-
 if __name__ == '__main__':
     print(ascii_art)
     
+    logger = log.logging.getLogger(__name__)
     logger.info("Starting Server")
+
+    main()
