@@ -10,4 +10,6 @@ public interface FastApiService {
     @DELETE("/inventory")
     Call<Map<String, Object>> removeItem();
 
+    
+
 }
