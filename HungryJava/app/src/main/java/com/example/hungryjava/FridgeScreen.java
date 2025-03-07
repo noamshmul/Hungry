@@ -1,5 +1,7 @@
 package com.example.hungryjava;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,10 +29,14 @@ import android.util.Log;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 
 public class FridgeScreen extends AppCompatActivity {
     static List<String> items = new ArrayList<>();
     private static final String TAG = "FridgeScreen";
+
     static ItemAdapter adapter;
 
     @Override
@@ -38,8 +44,7 @@ public class FridgeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_activity);
 
-
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
 
         // Step 2: Create an instance of the API service
         FastApiService apiService = retrofit.create(FastApiService.class);
