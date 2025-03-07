@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker, Session, joinedload
 from tables import Inventory, Ingredient, Items, Base
 import pymysql
 
 
-config = {"host": "localhost", "user": "root", "password": "admin", "port": "2025"}
+config = {"host": "localhost", "user": "root", "password": "admin", "port": "3306"}
 DB_NAME = "HungryDB"
 SQL_DB_URL = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{DB_NAME}"
 
@@ -43,7 +43,39 @@ class DB_Manager:
     def get_obj_by_id(self, db: Session, obj, obj_id: int):
         return db.query(obj).filter(obj.id == obj_id).first()
     
-  
+    
+    def get_ingredient_id_by_name(self, db: Session, ing_name):
+        return db.query(Ingredient).filter(Ingredient.name == ing_name).first().id
+    
+
+
+
+    def increase_inv_item_amount(self, db: Session, inv_id, item_id, amount):
+        item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()
+        if item:
+            item.quantity += amount
+            db.commit()
+            db.refresh(item)
+            return item
+        return None
+
+
+    def decrease_inv_item_amount(self, db: Session, inv_id, item_id, amount):
+        item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()
+        if item:
+            item.quantity -= amount
+            db.commit()
+            db.refresh(item)
+            return item.quantity
+        return 0
+
+
+    def check_if_inventory_has_item(self, db: Session, inv_id, ing_name):
+        item = db.query(Items).join(Ingredient).filter(Items.Inventory_id == inv_id, Ingredient.name == ing_name).first()
+        if item:
+            return item
+        return None
+
 
     def delete_Ingredient(self, db: Session, ing_id):
         ingredient = self.get_obj_by_id(db, Ingredient, ing_id)
@@ -66,7 +98,8 @@ class DB_Manager:
         return db.query(Inventory.password).filter(Inventory.id == inv_id).first()    
     
     def get_inventory_items(self, db: Session, inv_id):
-        return db.query(Items).filter(Items.Inventory_id == inv_id).all()
+        items = (db.query(Items).filter(Items.Inventory_id == inv_id).options(joinedload(Items.ingredient))).all()
+        return [{"id": item.id, "Ingredient_id": item.Ingredient_id, "Inventory_id": item.Inventory_id , "ingredient_name": item.ingredient.name, "quantity": item.quantity} for item in items]
     
     def get_custom_recipes(self, db: Session, inv_id):
         return db.query(Inventory.custom_recipes).filter(Inventory.id == inv_id).all()

@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 
 from log import logger
 from gateway import router
-from MongoDB.Recipes import MongoDB_Setup
+from Databases.Recipes import MongoDB_Setup
 import auth
 import readme
 
