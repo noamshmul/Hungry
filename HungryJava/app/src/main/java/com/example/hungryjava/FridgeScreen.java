@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import kotlin.text.UStringsKt;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
@@ -44,7 +45,9 @@ public class FridgeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_activity);
 
+
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
+
 
         // Step 2: Create an instance of the API service
         FastApiService apiService = retrofit.create(FastApiService.class);
@@ -65,7 +68,11 @@ public class FridgeScreen extends AppCompatActivity {
                     // Handle the response
                     Map<String, Object> responseBody = response.body();
                     if (responseBody != null) {
-                        Log.d(TAG, "Inventory: " + responseBody);
+                        ArrayList<Map<String, Object>> inv = (ArrayList<Map<String, Object>>)responseBody.get("items");
+                        for (int i = 0; i < inv.size(); i++)
+                        {
+                            items.add(inv.get(i).get("name") + " " + inv.get(i).get("amount"));
+                        }
                     } else {
                         Log.e(TAG, "Response body is null");
                     }
@@ -73,6 +80,14 @@ public class FridgeScreen extends AppCompatActivity {
                     // Handle the error response
                     Log.e(TAG, "Error: " + response.message());
                 }
+
+                RecyclerView list = findViewById(R.id.fridge_list);
+
+
+                // Set up RecyclerView
+                list.setLayoutManager(new LinearLayoutManager(FridgeScreen.this));
+                adapter = new ItemAdapter(FridgeScreen.this, items);
+                list.setAdapter(adapter);
             }
 
             @Override
@@ -82,19 +97,7 @@ public class FridgeScreen extends AppCompatActivity {
             }
         });
 
-        RecyclerView list = findViewById(R.id.fridge_list);
-        // Sample data: List of strings (your fridge items)
 
-        items.add("Milk");
-        items.add("Eggs");
-        items.add("Butter");
-        items.add("Cheese");
-        items.add("Yogurt");
-
-        // Set up RecyclerView
-        list.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ItemAdapter(this, items);
-        list.setAdapter(adapter);
 
         Button add = findViewById(R.id.add_item);
         add.setOnClickListener(new View.OnClickListener() {

@@ -5,22 +5,61 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
     android:background="?attr/selectableItemBackground">
 
+    <!-- Item Image -->
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@mipmap/ic_launcher"/>
 
-    <TextView
-        android:id="@+id/item_text"
+    <!-- Text Container -->
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:text="Sample Item"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:orientation="vertical"
+        android:layout_marginStart="8dp">
 
+        <!-- Item Name -->
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Name"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Item Quantity -->
+        <TextView
+            android:id="@+id/item_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity: 1"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"/>
+    </LinearLayout>
+
+    <!-- Minus Button -->
+    <ImageButton
+        android:id="@+id/btn_minus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_button"
+        android:src="@android:drawable/ic_delete"
+        android:contentDescription="Decrease Quantity"
+        android:tint="@android:color/black"
+        android:layout_marginEnd="4dp"/>
+
+    <!-- Plus Button -->
+    <ImageButton
+        android:id="@+id/btn_plus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_button"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="Increase Quantity"
+        android:tint="@android:color/black"/>
 </LinearLayout>
