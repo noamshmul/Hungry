@@ -4,7 +4,7 @@ from tables import Inventory, Ingredient, Items, Base
 import pymysql
 
 
-config = {"host": "localhost", "user": "root", "password": "admin", "port": "2025"}
+config = {"host": "localhost", "user": "root", "password": "admin", "port": "3306"}
 DB_NAME = "HungryDB"
 SQL_DB_URL = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{DB_NAME}"
 
