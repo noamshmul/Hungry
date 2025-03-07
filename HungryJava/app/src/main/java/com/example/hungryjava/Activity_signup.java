@@ -90,7 +90,6 @@ public class Activity_signup extends AppCompatActivity {
                                     // Store the inventory_id in SharedPreferences
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("inventory_id", inventory_id_text);
-                                    editor.apply(); // Commit the changes asynchronously
                                     editor.putString("password", password_text);
                                     editor.apply(); // Commit the changes asynchronously
 
