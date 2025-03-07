@@ -4,7 +4,6 @@ from auth import authentication
 from SQL_DB_Manager import DB_Manager
 import inventory_manager
 from log import logger
-import logging
 
 
 router = APIRouter()
