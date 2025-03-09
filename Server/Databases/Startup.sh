@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Database variables
-MYSQL_PASSWORD="admin"
-MYSQL_DATABASE="hungrydb"
+MYSQL_PASSWORD="root"
+MYSQL_DATABASE="HungryDB"
 MYSQL_USER="root"
 MONGO_USERNAME="admin"
 MONGO_PASSWORD="password123"
