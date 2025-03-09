@@ -12,30 +12,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-public class PopupAddItem extends DialogFragment {
-    private EditText editTextIngredient, editTextAmount;
+public class PopupRemoveItem extends DialogFragment {
+    private EditText editTextAmount;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pop_up_add_item_screen, container, false);
+        View view = inflater.inflate(R.layout.pop_up_remove_item, container, false);
 
-        editTextIngredient = view.findViewById(R.id.editText_ingredient);
         editTextAmount = view.findViewById(R.id.editText_amount);
-        Button addItemButton = view.findViewById(R.id.button_addItem);
+        Button addItemButton = view.findViewById(R.id.button_remove);
 
         addItemButton.setOnClickListener(v -> {
-            String ingredient = editTextIngredient.getText().toString().trim();
+
             String amountStr = editTextAmount.getText().toString().trim();
 
-            if (ingredient.isEmpty() || amountStr.isEmpty()) {
+            if (amountStr.isEmpty()) {
                 Toast.makeText(getContext(), "Please enter both ingredient and amount.", Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     double amount = Double.parseDouble(amountStr);
-                    Toast.makeText(getContext(), "Ingredient: " + ingredient + ", Amount: " + amount, Toast.LENGTH_SHORT).show();
-                    FridgeScreen.items.add(ingredient + " " + amountStr);
+                    FridgeScreen.items.add(amountStr);
                     FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
                     dismiss(); // Close the dialog
                 } catch (NumberFormatException e) {
@@ -54,3 +51,4 @@ public class PopupAddItem extends DialogFragment {
         return dialog;
     }
 }
+

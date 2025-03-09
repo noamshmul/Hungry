@@ -9,18 +9,27 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 
 
 public class HomeScreen extends AppCompatActivity {
-    String username = "/user/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
 
+        // Get the SharedPreferences instance
+        SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
+
+        // Retrieve the inventory_id and password
+        String inventory_id = sharedPreferences.getString("inventory_id", "default_value");
+        String password = sharedPreferences.getString("password", "default_value");
+
         // Hello textview
         TextView wellcome = findViewById(R.id.welcomeView);
-        wellcome.setText("Hello " + username);
+        wellcome.setText("inventory id: " + inventory_id);
 
         // logout button
         Button logout = findViewById(R.id.logoutButton);
