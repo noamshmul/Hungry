@@ -37,7 +37,7 @@ if [ "$SKIP_MONGO" = true ] && [ "$SKIP_MYSQL" = true ]; then
 fi
 
 if [ "$SKIP_MONGO" = false ]; then
-    if [ ! "$(docker ps -q -f name=^/${MONGO_CONTAINER}$)" ]; then
+    if [ ! "$(docker ps -q -f name=^/${MONGO_CONTAINER}$)$" ]; then
         echo "Error: MongoDB container is not running."
         echo "Please make sure the container named '$MONGO_CONTAINER' is up and running."
         SKIP_MONGO=true
@@ -55,14 +55,14 @@ if [ "$SKIP_MONGO" = false ]; then
             --authenticationDatabase "admin" \
             --db "$MONGO_DATABASE" \
             --collection "$MONGO_COLLECTION" \
-            --file "/$MONGO_JSON_FILE" \
+            --file "$MONGO_JSON_FILE" \
             --jsonArray
 
         if [ $? -eq 0 ]; then
             echo "MongoDB data import completed successfully!"
             echo "Your data has been imported into the '$MONGO_DATABASE' database, collection '$MONGO_COLLECTION'."
 
-            docker exec "$MONGO_CONTAINER" rm "/$MONGO_JSON_FILE"
+            # docker exec "$MONGO_CONTAINER" rm "$MONGO_JSON_FILE"
         else
             echo "MongoDB data import failed."
             echo "Please check your JSON file format and MongoDB connection settings."
