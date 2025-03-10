@@ -14,11 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 public class PopupRemoveItem extends DialogFragment {
     private EditText editTextAmount;
+    private boolean isRemove = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pop_up_remove_item, container, false);
+        View view = inflater.inflate(R.layout.pop_up_change_amount, container, false);
 
         editTextAmount = view.findViewById(R.id.editText_amount);
         Button addItemButton = view.findViewById(R.id.button_remove);
