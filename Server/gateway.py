@@ -7,7 +7,6 @@ from SQL_DB_Manager import DB_Manager
 import inventory_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
-import logging
 
 IMAGES_PATH = 'images'
 
