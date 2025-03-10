@@ -17,7 +17,7 @@ MONGODB_USER = "admin"
 MONGODB_PASSWORD = "password123"
 
 # Database and Collection Names
-DATABASE_NAME = "database"
+DATABASE_NAME = "hungrydb"
 COLLECTION_NAME = "recipes"
 # Database test search name
 TEST_RECIPE = "Vegetable Soup"
@@ -102,7 +102,7 @@ def main():
     base = MongoDB_Base
     func = MongoDB_Functions(base)
     print("Hello from Recipes")
-    print(func.get_recipe_by_id(2))
+    print(func.get_recipe_by_id("54a40a396529d92b2c003c20").get('name'))
 
 if __name__ == "__main__":
     main()
