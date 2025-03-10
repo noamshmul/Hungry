@@ -61,7 +61,8 @@ def add_custom_recipes(name : str, instructions : list, approx_time : int, ingre
 
 @router.get("/hungry")
 def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    recipes = recipe_manager.hungry() # inventory_id, db_instance, db
+    items = inventory_manager.get_inventory(inventory_id, db_instance, db)
+    recipes = recipe_manager.hungry(items)
 
     return {"status": "ok", "items": recipes}
 
