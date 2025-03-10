@@ -1,14 +1,7 @@
 import logging
 
-import docker
-import time
-import json
-import os
 from pymongo import MongoClient
-from docker.errors import NotFound
-from pymongo.errors import ServerSelectionTimeoutError
-from logging import log
-logger = logging.getLogger(__name__)
+from log import logger
 
 # Database Settings
 MONGODB_HOST = "localhost"

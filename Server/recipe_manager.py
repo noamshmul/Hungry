@@ -1,12 +1,7 @@
+import Recipes
 
-recipes = [{"sandwich" : [{'name': 'tomato', 'amount':1}, {'name': 'bread', 'amount':1}]}]
-
-def get_recipe_ingredients_by_name(name : str):
-    
-    if name in recipes:
-        return recipes[name]
-    else:
-        return [{"ERR" : "No such recipe"}]
+base = Recipes.MongoDB_Base
+func = Recipes.MongoDB_Functions(base)
         
 def hungry():
     # the big algorithm
