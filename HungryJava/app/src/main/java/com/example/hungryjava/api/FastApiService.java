@@ -15,6 +15,10 @@ public interface FastApiService {
     @DELETE("/inventory")
     Call<Map<String, Object>> removeItem();
 
+    @GET("/recipe")
+    Call<Map<String,Object>> get_single_recipe(
+            @Query("selected_recipe_name") String selected_recipe_name
+    );
     
     @POST("/signup")
     Call<Map<String, String>> postSignup(

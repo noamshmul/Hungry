@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".SingleRecipeScreen"
+            android:exported="false" />
+        <activity
             android:name=".Activity_signup"
             android:exported="false" />
         <activity
