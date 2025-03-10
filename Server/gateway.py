@@ -1,10 +1,13 @@
-from fastapi import Depends, APIRouter
+from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi.responses import FileResponse
+import os
 
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
 import inventory_manager
 from log import logger
 
+IMAGES_PATH = 'images'
 
 router = APIRouter()
 db_instance = DB_Manager()
@@ -14,6 +17,19 @@ db_instance = DB_Manager()
 def test_connection(inventory_id = Depends(authentication)):
     '''Used to test if server is alive and if auth is valid'''
     return {"Hello": "World", "inventory_id": inventory_id}
+
+@router.get("/images/{image_id}.jpg")
+def get_image(image_id ,inventory_id = Depends(authentication)):
+    path = os.path.join(IMAGES_PATH, image_id + '.jpg')
+
+    if not os.path.exists(path):
+        logger.error("File Not Exists")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found - wrong image_id"
+        )
+        
+    return FileResponse(path,media_type="image/jpeg")
 
 @router.get("/inventory")
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
