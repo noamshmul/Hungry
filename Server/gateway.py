@@ -4,7 +4,7 @@ import os
 
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
-import inventory_manager
+import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 
@@ -59,6 +59,11 @@ def add_custom_recipes(name : str, instructions : list, approx_time : int, ingre
     inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id, db_instance, db)
     return {"status": "ok"}
 
+@router.get("/hungry")
+def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    recipes = recipe_manager.hungry() # inventory_id, db_instance, db
+
+    return {"status": "ok", "items": recipes}
 
 @router.post("/signup")
 def signup(username: str, password: str, db=Depends(db_instance.get_db)):
