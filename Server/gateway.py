@@ -5,7 +5,9 @@ import os
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
 import inventory_manager
+from tables import Ingredient, Inventory, Items
 from log import logger
+import logging
 
 IMAGES_PATH = 'images'
 
@@ -35,7 +37,7 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
 
-    return {"items" : items}
+    return {"status": "ok", "items": items}
 
 @router.post("/inventory")
 def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -60,5 +62,9 @@ def add_custom_recipes(name : str, instructions : list, approx_time : int, ingre
 
 
 @router.post("/signup")
-def signup(inventory_id: str, password: str):
-    return {"status": "ok"}
+def signup(username: str, password: str, db=Depends(db_instance.get_db)):
+    inventory = Inventory(username=username, password=password, custom_recipes="{}")
+    db_instance.add(db, inventory)
+    id = inventory.id
+
+    return {"status": "ok", "id": id}

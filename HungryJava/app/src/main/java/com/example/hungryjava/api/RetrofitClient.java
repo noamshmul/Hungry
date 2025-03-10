@@ -17,9 +17,9 @@ import android.util.Log;
 public class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:8000";
     private static Retrofit retrofit = null;
-    public static Retrofit getRetrofitInstance(String inventory_id, String password) {
-
-        if (retrofit == null) {
+    public static Retrofit getRetrofitInstance(String inventory_id, String password, boolean flag) {
+        if (retrofit == null || flag) {
+            Log.d("MyAppTag", inventory_id);
             //create OkHttpClient with Interceptor to add the Authorization header
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new Interceptor() {

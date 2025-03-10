@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
+        float id = sharedPreferences.getFloat("id", 0.0f);
 
         // submit button
         btnTestConnection = findViewById(R.id.submit);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 String inventory_id_text = inventory_id.getText().toString();
                 String password_text = password.getText().toString();
 
-                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text);
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
 
                 // Step 2: Create an instance of the API service
                 FastApiService apiService = retrofit.create(FastApiService.class);
