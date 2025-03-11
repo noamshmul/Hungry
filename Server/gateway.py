@@ -3,7 +3,9 @@ from fastapi import Depends, APIRouter
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
 import inventory_manager
+from tables import Ingredient, Inventory, Items
 from log import logger
+IMAGES_PATH = 'images'
 import Databases.Recipes as DBR
 
 router = APIRouter()
@@ -15,11 +17,24 @@ def test_connection(inventory_id = Depends(authentication)):
     '''Used to test if server is alive and if auth is valid'''
     return {"Hello": "World", "inventory_id": inventory_id}
 
+@router.get("/images/{image_id}.jpg")
+def get_image(image_id ,inventory_id = Depends(authentication)):
+    path = os.path.join(IMAGES_PATH, image_id + '.jpg')
+
+    if not os.path.exists(path):
+        logger.error("File Not Exists")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found - wrong image_id"
+        )
+
+    return FileResponse(path,media_type="image/jpeg")
+
 @router.get("/inventory")
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
 
-    return {"items" : items}
+    return {"status": "ok", "items": items}
 
 @router.post("/inventory")
 def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -44,8 +59,12 @@ def add_custom_recipes(name : str, instructions : list, approx_time : int, ingre
 
 
 @router.post("/signup")
-def signup(inventory_id: str, password: str):
-    return {"status": "ok"}
+def signup(username: str, password: str, db=Depends(db_instance.get_db)):
+    inventory = Inventory(username=username, password=password, custom_recipes="{}")
+    db_instance.add(db, inventory)
+    id = inventory.id
+
+    return {"status": "ok", "id": id}
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
