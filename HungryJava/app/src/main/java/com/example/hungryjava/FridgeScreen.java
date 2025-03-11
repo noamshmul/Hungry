@@ -46,7 +46,7 @@ public class FridgeScreen extends AppCompatActivity {
         setContentView(R.layout.fridge_activity);
 
 
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
 
 
         // Step 2: Create an instance of the API service

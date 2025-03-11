@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session, joinedload
 from tables import Inventory, Ingredient, Items, Base
 import pymysql
+import json
 
 
 config = {"host": "localhost", "user": "root", "password": "root", "port": "3306"}
@@ -16,6 +17,8 @@ class DB_Manager:
         self.engine = create_engine(SQL_DB_URL)
         self.LocalSession = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
         self.create_Tables()
+
+        self.init_ingredients_table()
         
     def get_db(self):
         db = self.LocalSession()
@@ -32,6 +35,17 @@ class DB_Manager:
     
     def create_Tables(self): 
         Base.metadata.create_all(bind=self.engine)
+
+    def init_ingredients_table(self):
+        db_session = self.LocalSession()
+        if db_session.query(Ingredient).first() is None:
+            f = open("Databases\\ingredients.json")
+            data = json.load(f)
+            for ing in data['ingredients']:
+                ingredient = Ingredient(id=ing['id'], name=ing["name"], unit_size=ing["unit_size"])  
+                self.add(db_session, ingredient)
+            f.close()
+        db_session.close()
 
     def create_DB(self):
         temp_url = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/"
@@ -95,7 +109,10 @@ class DB_Manager:
     
 
     def get_password(self, db: Session, inv_id):
-        return db.query(Inventory.password).filter(Inventory.id == inv_id).first()    
+        return db.query(Inventory.password).filter(Inventory.id == inv_id).first() 
+       
+    def get_username(self, db: Session, inv_id):
+         return db.query(Inventory.username).filter(Inventory.id == inv_id).first()
     
     def get_inventory_items(self, db: Session, inv_id):
         items = (db.query(Items).filter(Items.Inventory_id == inv_id).options(joinedload(Items.ingredient))).all()

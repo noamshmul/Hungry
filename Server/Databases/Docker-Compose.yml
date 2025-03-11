@@ -6,8 +6,8 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: hungrydb
-      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: HungryDB
+      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:

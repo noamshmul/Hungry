@@ -17,8 +17,8 @@ public interface FastApiService {
 
     
     @POST("/signup")
-    Call<Map<String, String>> postSignup(
-            @Query("inventory_id") String inventory_id,
+    Call<Map<String, Object>> postSignup(
+            @Query("username") String inventory_id,
             @Query("password") String password
     );
 

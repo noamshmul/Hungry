@@ -30,8 +30,6 @@ public class Activity_signup extends AppCompatActivity {
     EditText password;
     EditText cnf_password;
 
-    //private static final String TAG = "MyActivity";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,33 +62,34 @@ public class Activity_signup extends AppCompatActivity {
                 }
 
                 else {
-                    Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text);
+                    Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
 
                     // Step 2: Create an instance of the API service
                     FastApiService apiService = retrofit.create(FastApiService.class);
 
                     // Step 3: Make the API call
-                    Call<Map<String, String>> call = apiService.postSignup(inventory_id_text, password_text);
-
-                    // Log the API request
-                    // Log.d(TAG, "API call started...");
+                    Call<Map<String, Object>> call = apiService.postSignup(inventory_id_text, password_text);
 
                     // Execute the request synchronously or asynchronously
-
-                    call.enqueue(new Callback<Map<String, String>>() {
+                    call.enqueue(new Callback<Map<String, Object>>() {
                         @Override
-                        public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                        public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 // get the response dictionary into "body"
-                                Map<String, String> body = response.body();
-                                String status = body.get("status");
+                                Map<String, Object> body = response.body();
+                                String status = (String) body.get("status");
+                                double id = (double) body.get("id");
 
-                                Toast.makeText(Activity_signup.this, status, Toast.LENGTH_SHORT).show();
+                                // update the retrofis instance with the inventory id
+                                Retrofit retrofit = RetrofitClient.getRetrofitInstance(String.valueOf(id), password_text, true);
+
+                                Toast.makeText(Activity_signup.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
                                 if (status.equals("ok")) {
                                     // Store the inventory_id in SharedPreferences
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("inventory_id", inventory_id_text);
                                     editor.putString("password", password_text);
+                                    editor.putFloat("id", (float) id);
                                     editor.apply(); // Commit the changes asynchronously
 
                                     Toast.makeText(Activity_signup.this, "GREAT!", Toast.LENGTH_SHORT).show();
@@ -107,7 +106,7 @@ public class Activity_signup extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                        public void onFailure(Call<Map<String, Object>> call, Throwable t) {
                             t.printStackTrace();
                         }
                     });

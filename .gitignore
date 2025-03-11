@@ -5,6 +5,11 @@
 /.vscode
 /Server/.vscode
 
+# Dataset Normalization
+/Server/normalize-dataset/*.json
+/Server/normalize-dataset/images/*
+/Server/normalize-dataset/images/photos/*
+
 ### Android ###
 # Gradle files
 .gradle/
