@@ -67,3 +67,28 @@ def signup(username: str, password: str, db=Depends(db_instance.get_db)):
     id = inventory.id
 
     return {"status": "ok", "id": id}
+
+@router.get("/ingredients")
+def get_all_ingredients(db=Depends(db_instance.get_db)):
+    ingredients = db_instance.get_all_ingredients(db)
+    return {"status": "ok", "ingredients": ingredients}
+
+@router.get("/ingredients/name/{name}")
+def get_ingredient_by_name(name: str, db=Depends(db_instance.get_db)):
+    ingredient = db_instance.get_ingredient_by_name(db, name)
+    if not ingredient:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ingredient not found"
+        )
+    return {"status": "ok", "ingredient": ingredient}
+
+@router.get("/ingredients/id/{ingredient_id}")
+def get_ingredient_by_id(ingredient_id: int, db=Depends(db_instance.get_db)):
+    ingredient = db_instance.get_ingredient_by_id(db, ingredient_id)
+    if not ingredient:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ingredient not found"
+        )
+    return {"status": "ok", "ingredient": ingredient}

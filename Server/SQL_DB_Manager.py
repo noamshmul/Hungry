@@ -124,6 +124,22 @@ class DB_Manager:
     def update_inventory_recipes(self, inv_id, recipe):
         pass
 
+    def get_all_ingredients(self, db: Session):
+        ingredients = db.query(Ingredient).all()
+        return [{"id": ing.id, "name": ing.name, "unit_size": ing.unit_size} for ing in ingredients]
+
+    def get_ingredient_by_name(self, db: Session, name: str):
+        ingredient = db.query(Ingredient).filter(Ingredient.name == name).first()
+        if ingredient:
+            return {"id": ingredient.id, "name": ingredient.name, "unit_size": ingredient.unit_size}
+        return None
+
+    def get_ingredient_by_id(self, db: Session, ingredient_id: int):
+        ingredient = db.query(Ingredient).filter(Ingredient.id == ingredient_id).first()
+        if ingredient:
+            return {"id": ingredient.id, "name": ingredient.name, "unit_size": ingredient.unit_size}
+        return None
+
 
 
 
