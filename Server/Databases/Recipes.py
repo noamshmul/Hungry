@@ -47,6 +47,13 @@ class MongoDB_Base:
         except Exception as e:
             logger.error("Failed with query: " + query)
             return None
+        
+    def get_all(self, query, projection=None, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
+        try:
+            self.connect_to_mongodb(self)
+            return (CONNECTION[database_name])[collection_name].find(query, projection)
+        except Exception as e:
+            return None
 
     def set(self, query, new_data, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME, upsert=True):
         try:
@@ -97,12 +104,27 @@ class MongoDB_Functions:
                 return None
         except Exception as e:
             return None
+    def get_all_recipes(self):
+        try:
+            recipes = self.mongodb_base.get_all(self.mongodb_base, {}, {"name": 1, "image": 1})
+            if recipes:
+                return recipes
+            else:
+                print(f"No Recipes found")
+                return None
+        except Exception as e:
+            return None
+
 
 def main():
     base = MongoDB_Base
     func = MongoDB_Functions(base)
     print("Hello from Recipes")
     print(func.get_recipe_by_id("54a40a396529d92b2c003c20").get('name'))
+    recipes = func.get_all_recipes()
+    for recipe in recipes:
+        print(recipe)
+    
 
 if __name__ == "__main__":
     main()
