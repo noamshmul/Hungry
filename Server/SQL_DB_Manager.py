@@ -59,6 +59,7 @@ class DB_Manager:
         return db.query(obj).filter(obj.id == obj_id).first()
 
     
+    
     def get_ingredient_id_by_name(self, db: Session, ing_name):
         return db.query(Ingredient).filter(Ingredient.name == ing_name).first().id
     

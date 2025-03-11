@@ -8,8 +8,10 @@ import inventory_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
+import Databases.Recipes as DBR
 
 IMAGES_PATH = 'images'
+
 
 router = APIRouter()
 
@@ -106,3 +108,10 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
             detail="Ingredient with this name already exists"
         )
     return {"status": "ok", "ingredient": result}
+
+@router.get("/recipes")
+def get_all_recipes():
+    base = DBR.MongoDB_Base
+    mdb_functions = DBR.MongoDB_Functions(base)
+    recipes = mdb_functions.get_all_recipes()
+    return {"recipes" : recipes}
