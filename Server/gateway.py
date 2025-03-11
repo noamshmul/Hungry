@@ -5,6 +5,7 @@ from SQL_DB_Manager import DB_Manager
 import inventory_manager
 from log import logger
 
+import Databases.Recipes as DBR
 
 router = APIRouter()
 db_instance = DB_Manager()
@@ -46,3 +47,10 @@ def add_custom_recipes(name : str, instructions : list, approx_time : int, ingre
 @router.post("/signup")
 def signup(inventory_id: str, password: str):
     return {"status": "ok"}
+
+@router.get("/recipes")
+def get_all_recipes():
+    base = DBR.MongoDB_Base
+    mdb_functions = DBR.MongoDB_Functions(base)
+    recipes = mdb_functions.get_all_recipes()
+    return recipes   
