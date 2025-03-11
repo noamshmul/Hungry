@@ -17,7 +17,7 @@
 
     <!-- Add to Inventory Button -->
     <Button
-        android:id="@+id/button_remove"
+        android:id="@+id/button_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Remove"/>

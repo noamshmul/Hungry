@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -16,11 +19,11 @@ import java.util.List;
 // ItemAdapter.java
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private List<String> items;  // List to hold the data (strings)
+    private List<Item> items;  // List to hold the data (strings)
     private Context context;
 
     // Constructor
-    public ItemAdapter(Context context, List<String> items) {
+    public ItemAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
     }
@@ -35,9 +38,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     // Bind the data to the view (called by the layout manager)
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String item = items.get(position);
-        holder.name.setText(item.split(" ")[0]);
-        holder.amount.setText(item.split(" ")[1]);// Set the data on the TextView
+        Item item = items.get(position);
+        holder.name.setText(item.getName());
+        holder.amount.setText(String.valueOf(item.getQuantity()));// Set the data on the TextView
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+
+        holder.add.setOnClickListener(v -> {
+            int clickedPosition = holder.getAdapterPosition(); // Get position
+            if (clickedPosition != RecyclerView.NO_POSITION) {
+                PopupChangeItem popup = PopupChangeItem.newInstance(false, clickedPosition);
+                popup.show(fragmentManager, "PopupChangeItem");
+            }
+        });
+        holder.remove.setOnClickListener(v -> {
+            int clickedPosition = holder.getAdapterPosition(); // Get position
+            if (clickedPosition != RecyclerView.NO_POSITION) {
+                PopupChangeItem popup = PopupChangeItem.newInstance(true, clickedPosition);
+                popup.show(fragmentManager, "PopupChangeItem");
+            }
+        });
     }
 
     // Return the size of the data list
@@ -51,10 +70,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         TextView name;
         TextView amount;
 
+        ImageButton add;
+        ImageButton remove;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.item_name);
             amount = itemView.findViewById(R.id.item_quantity);
+            add = itemView.findViewById(R.id.btn_plus);
+            remove = itemView.findViewById(R.id.btn_minus);
+
         }
+
     }
 }

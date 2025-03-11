@@ -12,9 +12,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-public class PopupRemoveItem extends DialogFragment {
+
+import java.util.List;
+
+public class PopupChangeItem extends DialogFragment {
     private EditText editTextAmount;
-    private boolean isRemove = false;
+    private boolean isRemove;
+    private int itemPosition;
+
+    public static PopupChangeItem newInstance(boolean isRemove, int position) {
+        PopupChangeItem fragment = new PopupChangeItem();
+        Bundle args = new Bundle();
+        args.putBoolean("isRemove", isRemove);
+        args.putInt("position", position);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            isRemove = getArguments().getBoolean("isRemove");
+            itemPosition = getArguments().getInt("position");
+
+        }
+    }
 
     @Nullable
     @Override
@@ -22,22 +45,43 @@ public class PopupRemoveItem extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_change_amount, container, false);
 
         editTextAmount = view.findViewById(R.id.editText_amount);
-        Button addItemButton = view.findViewById(R.id.button_remove);
-
+        Button addItemButton = view.findViewById(R.id.button_change);
+        if (!isRemove)
+        {
+            addItemButton.setText("Add");
+        }
         addItemButton.setOnClickListener(v -> {
-
             String amountStr = editTextAmount.getText().toString().trim();
 
             if (amountStr.isEmpty()) {
-                Toast.makeText(getContext(), "Please enter both ingredient and amount.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Please enter amount.", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    double amount = Double.parseDouble(amountStr);
-                    FridgeScreen.items.add(amountStr);
-                    FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
+                    int amount = Integer.parseInt(amountStr);
+
+                    // Handle addition or removal logic
+                    if (isRemove) {
+                        FridgeScreen.items.get(itemPosition).setQuantity(FridgeScreen.items.get(itemPosition).getQuantity() - amount);
+                        if (FridgeScreen.items.get(itemPosition).getQuantity() <= 0)
+                        {
+                            FridgeScreen.items.remove(itemPosition);
+                            FridgeScreen.adapter.notifyItemRemoved(itemPosition);
+                        }
+                        else
+                        {
+                            FridgeScreen.adapter.notifyItemChanged(itemPosition);
+                        }
+
+                    } else {
+                        FridgeScreen.items.get(itemPosition).setQuantity(
+                                FridgeScreen.items.get(itemPosition).getQuantity() + amount);
+                                FridgeScreen.adapter.notifyItemChanged(itemPosition);
+                    }
+
+
                     dismiss(); // Close the dialog
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getContext(), "Please enter a valid number for the amount.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please enter a valid number.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -48,8 +92,9 @@ public class PopupRemoveItem extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setCanceledOnTouchOutside(true); // Close when clicking outside
+        dialog.setCanceledOnTouchOutside(true);
         return dialog;
     }
 }
+
 
