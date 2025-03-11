@@ -78,7 +78,7 @@ class MongoDB_Functions:
 
     def get_recipe_by_name(self, recipe_name):
         try:
-            recipe = self.mongodb_base.get({"name": recipe_name})
+            recipe = self.mongodb_base.get(self.mongodb_base , {"name": recipe_name})
             if recipe:
                 return recipe
             else:
@@ -102,7 +102,7 @@ def main():
     base = MongoDB_Base
     func = MongoDB_Functions(base)
     print("Hello from Recipes")
-    print(func.get_recipe_by_id("54a40a396529d92b2c003c20").get('name'))
+    print(func.get_recipe_by_name("Peppery Fig and Cider Compote"))
 
 if __name__ == "__main__":
     main()
