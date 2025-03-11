@@ -92,3 +92,13 @@ def get_ingredient_by_id(ingredient_id: int, db=Depends(db_instance.get_db)):
             detail="Ingredient not found"
         )
     return {"status": "ok", "ingredient": ingredient}
+
+@router.post("/ingredients/add")
+def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
+    result = db_instance.add_ingredient(db, name, unit_size)
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ingredient with this name already exists"
+        )
+    return {"status": "ok", "ingredient": result}

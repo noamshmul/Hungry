@@ -140,6 +140,21 @@ class DB_Manager:
             return {"id": ingredient.id, "name": ingredient.name, "unit_size": ingredient.unit_size}
         return None
 
+    def add_ingredient(self, db: Session, name: str, unit_size: str):
+        # Check if ingredient with same name already exists
+        existing = db.query(Ingredient).filter(Ingredient.name == name).first()
+        if existing:
+            return None
+            
+        # Get the highest current ID to assign next ID
+        max_id = db.query(Ingredient).order_by(Ingredient.id.desc()).first()
+        next_id = 1 if not max_id else max_id.id + 1
+        
+        # Create and add new ingredient
+        new_ingredient = Ingredient(id=next_id, name=name, unit_size=unit_size)
+        self.add(db, new_ingredient)
+        return {"id": new_ingredient.id, "name": new_ingredient.name, "unit_size": new_ingredient.unit_size}
+
 
 
 
