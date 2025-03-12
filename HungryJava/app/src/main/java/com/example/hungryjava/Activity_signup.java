@@ -42,7 +42,7 @@ public class Activity_signup extends AppCompatActivity {
         });*/
 
         // create the username and password textbox
-        username = findViewById(R.id.inventory_id);
+        username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         cnf_password = findViewById(R.id.cnf_password);
 
@@ -84,15 +84,13 @@ public class Activity_signup extends AppCompatActivity {
                                     Map<String, Object> body = response.body();
                                     String status = (String) body.get("status");
 
-                                    Toast.makeText(Activity_signup.this, username_text, Toast.LENGTH_SHORT).show();
                                     if (status.equals("ok")) {
                                         // Store the username and password in SharedPreferences
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("inventory_id", username_text);
+                                        editor.putString("username", username_text);
                                         editor.putString("password", password_text);
                                         editor.apply(); // Commit the changes asynchronously
 
-                                        Toast.makeText(Activity_signup.this, "GREAT!", Toast.LENGTH_SHORT).show();
                                         // move to next homescreen
                                         Intent intent = new Intent(Activity_signup.this, HomeScreen.class);
                                         startActivity(intent);
@@ -100,7 +98,7 @@ public class Activity_signup extends AppCompatActivity {
                                         Toast.makeText(Activity_signup.this, "Username is already taken", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(Activity_signup.this, "fucked up", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Activity_signup.this, "An error has occurred", Toast.LENGTH_SHORT).show();
                                 }
 
 

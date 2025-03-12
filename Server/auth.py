@@ -3,10 +3,6 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from log import logger
 
-import inventory_manager
-from SQL_DB_Manager import DB_Manager
-from tables import Ingredient, Inventory, Items
-
 from SQL_DB_Manager import db_instance
 
 

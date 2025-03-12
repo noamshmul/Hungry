@@ -29,7 +29,7 @@ import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
     Button btnTestConnection;
-    EditText inventory_id;
+    EditText username;
     EditText password;
 
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         // create the username and password textbox
-        inventory_id = findViewById(R.id.inventory_id);
+        username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
         // Get the SharedPreferences instance
@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         btnTestConnection = findViewById(R.id.submit);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String inventory_id_text = inventory_id.getText().toString();
+                String username_text = username.getText().toString();
                 String password_text = password.getText().toString();
 
-                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, true);
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(username_text, password_text, true);
 
                 // Step 2: Create an instance of the API service
                 FastApiService apiService = retrofit.create(FastApiService.class);
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
                             // TODO: parse the response when we will know his type
 
-                            // Store the inventory_id in SharedPreferences
+                            // Store the username in SharedPreferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("inventory_id", inventory_id_text); // "inventory_id" is the key, inventory_id is the value
+                            editor.putString("username", username_text);
                             editor.apply(); // Commit the changes asynchronously
 
                             // move to next homescreen

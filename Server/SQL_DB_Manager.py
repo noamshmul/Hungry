@@ -1,4 +1,3 @@
-import logging
 from log import logger
 
 from sqlalchemy import create_engine, text
@@ -30,7 +29,6 @@ class DB_Manager:
             db.close()
 
     def add(self, db: Session, obj):
-        logger.info("NEW INVENTORY!!!!!!!!!!!!!!!!!!")
         db.add(obj)
         db.commit()
         db.refresh(obj)       
