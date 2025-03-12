@@ -1,3 +1,5 @@
+from log import logger
+
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session, joinedload
 from tables import Inventory, Ingredient, Items, Base
@@ -8,7 +10,6 @@ import json
 config = {"host": "localhost", "user": "root", "password": "root", "port": "3306"}
 DB_NAME = "HungryDB"
 SQL_DB_URL = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{DB_NAME}"
-
 
 class DB_Manager:
     
@@ -56,7 +57,7 @@ class DB_Manager:
 
     def get_obj_by_id(self, db: Session, obj, obj_id: int):
         return db.query(obj).filter(obj.id == obj_id).first()
-    
+
     
     def get_ingredient_id_by_name(self, db: Session, ing_name):
         return db.query(Ingredient).filter(Ingredient.name == ing_name).first().id
@@ -113,6 +114,9 @@ class DB_Manager:
        
     def get_username(self, db: Session, inv_id):
          return db.query(Inventory.username).filter(Inventory.id == inv_id).first()
+
+    def get_inventory_by_username(self, db: Session, username):
+         return db.query(Inventory).filter(Inventory.username == username).first()
     
     def get_inventory_items(self, db: Session, inv_id):
         items = (db.query(Items).filter(Items.Inventory_id == inv_id).options(joinedload(Items.ingredient))).all()
@@ -156,9 +160,5 @@ class DB_Manager:
         return {"id": new_ingredient.id, "name": new_ingredient.name, "unit_size": new_ingredient.unit_size}
 
 
-
-
-    
-
-
+db_instance = DB_Manager()
 
