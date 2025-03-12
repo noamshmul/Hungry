@@ -71,3 +71,38 @@ def signup(username: str, password: str, db=Depends(db_instance.get_db)):
         return {"status": "ok"}
     else:
         return {"status": "conflict"}
+
+@router.get("/ingredients")
+def get_all_ingredients(db=Depends(db_instance.get_db)):
+    ingredients = db_instance.get_all_ingredients(db)
+    return {"status": "ok", "ingredients": ingredients}
+
+@router.get("/ingredients/name/{name}")
+def get_ingredient_by_name(name: str, db=Depends(db_instance.get_db)):
+    ingredient = db_instance.get_ingredient_by_name(db, name)
+    if not ingredient:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ingredient not found"
+        )
+    return {"status": "ok", "ingredient": ingredient}
+
+@router.get("/ingredients/id/{ingredient_id}")
+def get_ingredient_by_id(ingredient_id: int, db=Depends(db_instance.get_db)):
+    ingredient = db_instance.get_ingredient_by_id(db, ingredient_id)
+    if not ingredient:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ingredient not found"
+        )
+    return {"status": "ok", "ingredient": ingredient}
+
+@router.post("/ingredients/add")
+def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
+    result = db_instance.add_ingredient(db, name, unit_size)
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ingredient with this name already exists"
+        )
+    return {"status": "ok", "ingredient": result}
