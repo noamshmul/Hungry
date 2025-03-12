@@ -59,16 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 String inventory_id_text = inventory_id.getText().toString();
                 String password_text = password.getText().toString();
 
-                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, true);
 
                 // Step 2: Create an instance of the API service
                 FastApiService apiService = retrofit.create(FastApiService.class);
 
                 // Step 3: Make the API call
                 Call<Map<String, Object>> call = apiService.getInventory();
-
-                // Log the API request
-                // Log.d(TAG, "API call started...");
 
                 // Execute the request synchronously or asynchronously
                 call.enqueue(new Callback<Map<String, Object>>() {
@@ -77,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             // get the response dictionary into "body"
                             Map<String, Object> body = response.body();
+                            String status = (String) body.get("status");
+
                             // TODO: parse the response when we will know his type
 
                             // Store the inventory_id in SharedPreferences
@@ -87,9 +86,10 @@ public class MainActivity extends AppCompatActivity {
                             // move to next homescreen
                             Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                             startActivity(intent);
+
                         }
                         else {
-                            Toast.makeText(MainActivity.this, "fucked up", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
                         }
                     }
 
