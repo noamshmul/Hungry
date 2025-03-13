@@ -64,10 +64,10 @@ public class Activity_signup extends AppCompatActivity {
                 else {
                     // Checks if valid password
                     if (password_text.length() < 8) {
-                        Toast.makeText(Activity_signup.this, "Password must be al least 8 characters", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_signup.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Retrofit retrofit = RetrofitClient.getRetrofitInstance(username_text, username_text, false);
+                        Retrofit retrofit = RetrofitClient.getRetrofitInstance(username_text, password_text, false);
 
                         // Step 2: Create an instance of the API service
                         FastApiService apiService = retrofit.create(FastApiService.class);
