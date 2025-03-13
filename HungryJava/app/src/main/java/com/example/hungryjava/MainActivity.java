@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
-        float id = sharedPreferences.getFloat("id", 0.0f);
 
         // submit button
         btnTestConnection = findViewById(R.id.submit);
