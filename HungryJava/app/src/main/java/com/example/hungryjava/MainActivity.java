@@ -27,97 +27,43 @@ import retrofit2.Retrofit;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class MainActivity extends AppCompatActivity {
-    Button btnTestConnection;
-    EditText inventory_id;
-    EditText password;
 
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ViewPager2 viewPager;
+    private TabLayout tabLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_loginscreen);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
+        setContentView(R.layout.activity_main);
 
-        // create the username and password textbox
-        inventory_id = findViewById(R.id.inventory_id);
-        password = findViewById(R.id.password);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
 
-        // Get the SharedPreferences instance
-        SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
-        float id = sharedPreferences.getFloat("id", 0.0f);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(adapter);
 
-        // submit button
-        btnTestConnection = findViewById(R.id.submit);
-        btnTestConnection.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String inventory_id_text = inventory_id.getText().toString();
-                String password_text = password.getText().toString();
-
-                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
-
-                // Step 2: Create an instance of the API service
-                FastApiService apiService = retrofit.create(FastApiService.class);
-
-                // Step 3: Make the API call
-                Call<Map<String, Object>> call = apiService.getInventory();
-
-                // Log the API request
-                // Log.d(TAG, "API call started...");
-
-                // Execute the request synchronously or asynchronously
-                call.enqueue(new Callback<Map<String, Object>>() {
-                    @Override
-                    public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            // get the response dictionary into "body"
-                            Map<String, Object> body = response.body();
-                            // TODO: parse the response when we will know his type
-
-                            // Store the inventory_id in SharedPreferences
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("inventory_id", inventory_id_text); // "inventory_id" is the key, inventory_id is the value
-                            editor.apply(); // Commit the changes asynchronously
-
-                            // move to next homescreen
-                            Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            Toast.makeText(MainActivity.this, "fucked up", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-
-
-                /*
-                new AlertDialog.Builder(MainActivity.this)
-                        .setView(R.layout.pop_up_add_item_screen)
-                        .setCancelable(false)
-                        .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
-                        .show();
-                */
+        // Connect tabs with ViewPager2
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Inventory");
+                    break;
+                case 1:
+                    tab.setText("Home");
+                    break;
+                case 2:
+                    tab.setText("Catalog");
+                    break;
             }
-        });
-
-        // fridge button
-        Button fridge = findViewById(R.id.signup);
-        fridge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Activity_signup.class);
-                startActivity(intent);
-            }
-        });
+        }).attach();
     }
 }
