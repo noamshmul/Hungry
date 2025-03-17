@@ -12,6 +12,7 @@ import Databases.Recipes as DBR
 
 IMAGES_PATH = 'images'
 
+import Databases.Recipes as DBR
 
 router = APIRouter()
 
