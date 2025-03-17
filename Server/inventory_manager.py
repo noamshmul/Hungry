@@ -21,7 +21,7 @@ def add_item(name, amount, inv_id: int, db_instance: SQL_DB_Manager.DB_Manager, 
     else:
         # if item isn't in the list
         ing_id = db_instance.get_ingredient_id_by_name(db_session, name)
-        new_item = SQL_DB_Manager.Items(Inventory_id=inv_id, ingredient_id=ing_id, quantity=amount)
+        new_item = SQL_DB_Manager.Items(Inventory_id=inv_id, Ingredient_id=ing_id, quantity=amount)
         db_instance.add(db_session, new_item)
 
 
