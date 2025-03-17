@@ -48,6 +48,14 @@ public class FridgeScreen extends AppCompatActivity {
         setContentView(R.layout.fridge_activity);
 
 
+        // Get the SharedPreferences instance
+        SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
+        // Retrieve data from SharedPreferences
+        String username = sharedPreferences.getString("username", "default_value");
+        String password = sharedPreferences.getString("password", "default_value");
+        Log.d("username: ", username);
+
+
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
 
 

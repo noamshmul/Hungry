@@ -19,7 +19,7 @@
             android:name=".Activity_signup"
             android:exported="false" />
         <activity
-            android:name=".HomeScreen"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".FridgeScreen"
@@ -31,7 +31,7 @@
             android:name=".PopupAddItem"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

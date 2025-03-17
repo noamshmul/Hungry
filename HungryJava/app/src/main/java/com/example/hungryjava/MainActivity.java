@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             // Store the username in SharedPreferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("username", username_text);
+                            editor.putString("password", password_text);
                             editor.apply(); // Commit the changes asynchronously
 
                             // move to next homescreen
