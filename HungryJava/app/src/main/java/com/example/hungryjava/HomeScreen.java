@@ -23,13 +23,13 @@ public class HomeScreen extends AppCompatActivity {
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
 
-        // Retrieve the inventory_id and password
-        String inventory_id = sharedPreferences.getString("inventory_id", "default_value");
+        // Retrieve the username and password
+        String username = sharedPreferences.getString("username", "default_value");
         String password = sharedPreferences.getString("password", "default_value");
 
         // Hello textview
         TextView wellcome = findViewById(R.id.welcomeView);
-        wellcome.setText("inventory id: " + inventory_id);
+        wellcome.setText("Username: " + username);
 
         // logout button
         Button logout = findViewById(R.id.logoutButton);

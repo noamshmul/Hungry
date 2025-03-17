@@ -9,10 +9,10 @@
 
 
     <EditText
-        android:id="@+id/inventory_id"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Inventory_id"
+        android:hint="Username"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"

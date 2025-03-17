@@ -14,6 +14,8 @@ public interface FastApiService {
     @POST("/inventory")
     Call<Map<String, Object>> addToItem(@Query("name") String itemName, @Query("amount") int amount);
 
+    @GET("/ingredients")
+    Call<Map<String, Object>> getIngredients();
 
     @DELETE("/inventory")
     Call<Map<String, Object>> removeItem(@Query("name") String itemName, @Query("amount") int amount);

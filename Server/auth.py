@@ -3,21 +3,27 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from log import logger
 
+from SQL_DB_Manager import db_instance
+
+
 security = HTTPBasic()
 
+
 # User Authentication Function
-def authentication(creds: HTTPBasicCredentials = Depends(security)):
-    id = creds.username
+def authentication(creds: HTTPBasicCredentials = Depends(security), db=Depends(db_instance.get_db)):
+    username = creds.username
     password = creds.password
 
-    # TODO: add authentication check
-    if id and password: 
-        logger.info("%s has authenticated", id)
-        return id
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect id or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
+    if username and password:
+        logger.info("%s has authenticated", username)
+
+        inventory = db_instance.get_inventory_by_username(db,username)
+        if inventory and inventory.password == password:
+            return inventory.id
+
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Incorrect id or password",
+        headers={"WWW-Authenticate": "Basic"},
+    )
 

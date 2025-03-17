@@ -29,7 +29,7 @@ import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
     Button btnTestConnection;
-    EditText inventory_id;
+    EditText username;
     EditText password;
 
 
@@ -45,30 +45,26 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         // create the username and password textbox
-        inventory_id = findViewById(R.id.inventory_id);
+        username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
-        float id = sharedPreferences.getFloat("id", 0.0f);
 
         // submit button
         btnTestConnection = findViewById(R.id.submit);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String inventory_id_text = inventory_id.getText().toString();
+                String username_text = username.getText().toString();
                 String password_text = password.getText().toString();
 
-                Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(username_text, password_text, true);
 
                 // Step 2: Create an instance of the API service
                 FastApiService apiService = retrofit.create(FastApiService.class);
 
                 // Step 3: Make the API call
                 Call<Map<String, Object>> call = apiService.getInventory();
-
-                // Log the API request
-                // Log.d(TAG, "API call started...");
 
                 // Execute the request synchronously or asynchronously
                 call.enqueue(new Callback<Map<String, Object>>() {
@@ -77,19 +73,22 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             // get the response dictionary into "body"
                             Map<String, Object> body = response.body();
+                            String status = (String) body.get("status");
+
                             // TODO: parse the response when we will know his type
 
-                            // Store the inventory_id in SharedPreferences
+                            // Store the username in SharedPreferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("inventory_id", inventory_id_text); // "inventory_id" is the key, inventory_id is the value
+                            editor.putString("username", username_text);
                             editor.apply(); // Commit the changes asynchronously
 
                             // move to next homescreen
                             Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                             startActivity(intent);
+
                         }
                         else {
-                            Toast.makeText(MainActivity.this, "fucked up", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
                         }
                     }
 
