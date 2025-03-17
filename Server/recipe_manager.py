@@ -7,7 +7,6 @@ func = Recipes.MongoDB_Functions(base)
 def hungry(items):
     '''# the big algorithm'''
     existing_items = {str(item["Ingredient_id"]) : item["quantity"] for item in items}
-    existing_items_ids = [str(item["Ingredient_id"]) for item in items]
 
     recipes = []
     i = 0
@@ -15,10 +14,11 @@ def hungry(items):
         if i > 3:
             raise RuntimeError("Not enough items in your inventory")
 
-        recipes_less_accurate = func.get_closest_recipe_with_ids(existing_items_ids, i)
-        for r in recipes_less_accurate:
-            if r not in recipes:
-                recipes.append(r)
+        recipes_less_accurate = func.get_closest_recipe_with_ids(existing_items, i)
+        if recipes_less_accurate:
+            for r in recipes_less_accurate:
+                if r not in recipes:
+                    recipes.append(r)
         i += 1
     
     recipes = recipes[:3]

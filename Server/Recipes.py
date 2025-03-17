@@ -106,57 +106,79 @@ class MongoDB_Functions:
         except Exception as e:
             return None
 
-    def get_closest_recipe_with_ids(self, ingredient_ids, diff):
+    def get_closest_recipe_with_ids(self, ingredients, diff):
         try:
             # Aggregation pipeline to compute the number of extra ingredients
             pipeline = [
-                # Convert ingredients object into an array of keys.
+                # 1. Convert the ingredients object into an array of keys.
                 {
                     "$addFields": {
                         "ingredientKeys": {
                             "$map": {
-                                "input": { "$objectToArray": "$ingredients" },
+                                "input": {"$objectToArray": "$ingredients"},
                                 "as": "ing",
                                 "in": "$$ing.k"
                             }
                         }
                     }
                 },
-                # Compute how many ingredients are extra (not in provided list)
+                # 2. Compute the number of extra ingredients (keys not in required_dict).
                 {
                     "$addFields": {
                         "extraCount": {
                             "$size": {
-                                "$setDifference": [ "$ingredientKeys", ingredient_ids ]
+                                "$setDifference": ["$ingredientKeys", list(ingredients.keys())]
                             }
                         }
                     }
                 },
-                # Only include recipes with at most 1 extra ingredient.
+                # 3. For each ingredient that is in required_dict, check that the quantity is enough.
                 {
-                    "$match": {
-                        "extraCount": { "$lte": diff }
+                    "$addFields": {
+                        "quantityCheck": {
+                            "$allElementsTrue": {
+                                "$map": {
+                                    "input": {
+                                        "$filter": {
+                                            "input": {"$objectToArray": "$ingredients"},
+                                            "as": "ing",
+                                            "cond": {"$in": ["$$ing.k", list(ingredients.keys())]}
+                                        }
+                                    },
+                                    "as": "ing",
+                                    "in": {
+                                        "$lte": [
+                                            "$$ing.v.quantity",
+                                            {
+                                                "$function": {
+                                                    "body": "function(key, req) { return req[key]; }",
+                                                    "args": ["$$ing.k", ingredients],
+                                                    "lang": "js"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
-                # Sort by the extra ingredient count (lowest first)
+                # 4. Only match recipes with at most 1 extra ingredient and that pass the quantity check.
                 {
-                    "$sort": { "extraCount": 1 }
+                    "$match": {
+                        "extraCount": {"$lte": diff},
+                        "quantityCheck": True
+                    }
                 },
-                # Limit to the top 3 closest recipes
-                # {
-                #     "$limit": 3
-                # },
-                # # Return only the _id field
-                # {
-                #     "$project": { "_id": 1 }
-                # }
+                # 5. Sort by extraCount (lowest first) and limit to the top 3.
+                { "$sort": { "extraCount": 1 } }
             ]
             
             recipes = list(self.mongodb_base.aggregate(self.mongodb_base ,pipeline))
             if recipes:
                 return recipes
             else:
-                logger.error(f"Recipes with the ingredients {ingredient_ids} not found")
+                logger.error(f"Recipes with the ingredients {ingredients} not found")
                 return None
         except Exception as e:
             return None
