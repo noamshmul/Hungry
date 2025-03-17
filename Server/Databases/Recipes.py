@@ -51,7 +51,7 @@ class MongoDB_Base:
     def get_all(self, query, projection=None, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
         try:
             self.connect_to_mongodb(self)
-            return (CONNECTION[database_name])[collection_name].find(query, projection)
+            return CONNECTION.get_database(database_name).get_collection(collection_name).find(query, projection)
         except Exception as e:
             return None
 
@@ -108,7 +108,7 @@ class MongoDB_Functions:
         try:
             recipes = self.mongodb_base.get_all(self.mongodb_base, {}, {"name": 1, "image": 1})
             if recipes:
-                return recipes
+                return list(recipes)
             else:
                 print(f"No Recipes found")
                 return None
@@ -121,7 +121,7 @@ def main():
     func = MongoDB_Functions(base)
     print("Hello from Recipes")
     print(func.get_recipe_by_id("54a40a396529d92b2c003c20").get('name'))
-    recipes = func.get_all_recipes()
+    recipes = list(func.get_all_recipes())
     for recipe in recipes:
         print(recipe)
     
