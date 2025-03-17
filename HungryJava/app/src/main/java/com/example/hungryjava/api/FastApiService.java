@@ -11,6 +11,8 @@ public interface FastApiService {
     @GET("/inventory")
     Call<Map<String, Object>> getInventory();
 
+    @GET("/ingredients")
+    Call<Map<String, Object>> getIngredients();
 
     @DELETE("/inventory")
     Call<Map<String, Object>> removeItem();

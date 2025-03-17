@@ -5,16 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 // ItemAdapter.java
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<String> items;  // List to hold the data (strings)
     private Context context;
@@ -27,17 +22,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item, parent, false);
-        return new ItemViewHolder(view);
+        return new ViewHolder(view);
     }
 
     // Bind the data to the view (called by the layout manager)
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         String item = items.get(position);
-        holder.name.setText(item.split(" ")[0]);
-        holder.amount.setText(item.split(" ")[1]);// Set the data on the TextView
+        String[] parts = item.split("\n");
+        
+        // Set the ingredient name
+        holder.nameTextView.setText(parts[0]);
+        
+        // Set the amount
+        if (parts.length > 1) {
+            holder.amountTextView.setText(parts[1]);
+        }
     }
 
     // Return the size of the data list
@@ -47,14 +49,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     // ViewHolder class to hold references to item views
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
-        TextView amount;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        TextView amountTextView;
 
-        public ItemViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.item_name);
-            amount = itemView.findViewById(R.id.item_quantity);
+            nameTextView = itemView.findViewById(R.id.text_ingredient_name);
+            amountTextView = itemView.findViewById(R.id.text_amount);
         }
     }
 }
