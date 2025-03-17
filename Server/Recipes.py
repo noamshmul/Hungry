@@ -143,9 +143,9 @@ class MongoDB_Functions:
                     "$sort": { "extraCount": 1 }
                 },
                 # Limit to the top 3 closest recipes
-                {
-                    "$limit": 3
-                },
+                # {
+                #     "$limit": 3
+                # },
                 # # Return only the _id field
                 # {
                 #     "$project": { "_id": 1 }

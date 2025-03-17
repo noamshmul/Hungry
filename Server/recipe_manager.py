@@ -10,7 +10,7 @@ def hungry(items):
     existing_items_ids = [str(item["Ingredient_id"]) for item in items]
 
     recipes = []
-    i = 1
+    i = 0
     while len(recipes) < 3:
         if i > 3:
             raise RuntimeError("Not enough items in your inventory")
