@@ -77,9 +77,28 @@ public class PopupAddItem extends DialogFragment {
             }
 
             int amount = numberPicker.getValue();
-            // Add ingredient name and amount separately
-            FridgeScreen.items.add(selectedIngredient + "\n" + amount);
-            FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
+            boolean itemFound = false;
+
+            // Check if item already exists
+            for (int i = 0; i < FridgeScreen.items.size(); i++) {
+                String[] parts = FridgeScreen.items.get(i).split("\n");
+                if (parts[0].equals(selectedIngredient)) {
+                    // Item exists, update the amount
+                    int currentAmount = Integer.parseInt(parts[1]);
+                    int newAmount = currentAmount + amount;
+                    FridgeScreen.items.set(i, selectedIngredient + "\n" + newAmount);
+                    FridgeScreen.adapter.notifyItemChanged(i);
+                    itemFound = true;
+                    break;
+                }
+            }
+
+            // If item doesn't exist, add it as new
+            if (!itemFound) {
+                FridgeScreen.items.add(selectedIngredient + "\n" + amount);
+                FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
+            }
+
             dismiss(); // Close the dialog
         });
 
