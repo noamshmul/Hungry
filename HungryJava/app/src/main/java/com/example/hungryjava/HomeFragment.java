@@ -1,4 +1,5 @@
 package com.example.hungryjava;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,8 +19,15 @@ public class HomeFragment extends Fragment {
 
         FloatingActionButton btnHungry = view.findViewById(R.id.fabHungry);
         btnHungry.setOnClickListener(v -> {
+            // Start the second activity with the shared element transition
             Intent intent = new Intent(getActivity(), HungryPopupActivity.class);
-            startActivity(intent);
+            // Add a shared element transition for the FAB
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    getActivity(),
+                    btnHungry, // View in the first activity
+                    "fab_transition" // Transition name (used in the second activity)
+            );
+            startActivity(intent, options.toBundle());
         });
 
         return view;
