@@ -5,7 +5,15 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.hungryjava.api.FastApiService;
+import com.example.hungryjava.api.RetrofitClient;
+
 import java.util.ArrayList;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class RecipesScreen extends AppCompatActivity {
 
@@ -20,6 +28,16 @@ public class RecipesScreen extends AppCompatActivity {
         // Initialize RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
+
+
+        // Step 2: Create an instance of the API service
+        FastApiService apiService = retrofit.create(FastApiService.class);
+
+        // Step 3: Make the API call
+        Call<Map<String, Object>> call = apiService.getInventory();
 
         // Initialize Image List
         RecipesList = new ArrayList<>();

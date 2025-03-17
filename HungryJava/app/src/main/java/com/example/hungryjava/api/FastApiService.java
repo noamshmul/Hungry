@@ -22,4 +22,7 @@ public interface FastApiService {
             @Query("password") String password
     );
 
+    @GET("/recipes")
+    Call<Map<String, Object>> getRecipes();
+
 }

@@ -53,4 +53,4 @@ def get_all_recipes():
     base = DBR.MongoDB_Base
     mdb_functions = DBR.MongoDB_Functions(base)
     recipes = mdb_functions.get_all_recipes()
-    return recipes   
+    return {"recipes" : recipes}
