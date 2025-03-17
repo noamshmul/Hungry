@@ -1,5 +1,3 @@
-import logging
-
 from pymongo import MongoClient
 from log import logger
 
@@ -40,6 +38,23 @@ class MongoDB_Base:
         except Exception as e:
             logger.error("Failed with query: " + query)
             return None
+    
+    def get_all(self, query, projection=None, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
+        try:
+            self.connect_to_mongodb(self)
+            return CONNECTION.get_database(database_name).get_collection(collection_name).find(query, projection)
+        except Exception as e:
+            logger.error("Failed with query: " + query)
+            return None
+        
+    def aggregate(self, pipeline, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
+        try:
+            self.connect_to_mongodb(self)  # Ensure the connection is established
+            collection = CONNECTION.get_database(database_name).get_collection(collection_name)
+            return collection.aggregate(pipeline)
+        except Exception as e:
+            logger.error("Failed to aggregate with pipeline: " + str(pipeline) + " Error: " + str(e))
+            return None
 
     def set(self, query, new_data, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME, upsert=True):
         try:
@@ -75,7 +90,7 @@ class MongoDB_Functions:
             if recipe:
                 return recipe
             else:
-                print(f"Recipe '{recipe_name}' not found")
+                logger.error(f"Recipe '{recipe_name}' not found")
                 return None
         except Exception as e:
             return None
@@ -86,7 +101,85 @@ class MongoDB_Functions:
             if recipe:
                 return recipe
             else:
-                print(f"Recipe '{recipe_id}' not found")
+                logger.error(f"Recipe '{recipe_id}' not found")
+                return None
+        except Exception as e:
+            return None
+
+    def get_closest_recipe_with_ids(self, ingredient_ids, diff):
+        try:
+            # Aggregation pipeline to compute the number of extra ingredients
+            pipeline = [
+                # Convert ingredients object into an array of keys.
+                {
+                    "$addFields": {
+                        "ingredientKeys": {
+                            "$map": {
+                                "input": { "$objectToArray": "$ingredients" },
+                                "as": "ing",
+                                "in": "$$ing.k"
+                            }
+                        }
+                    }
+                },
+                # Compute how many ingredients are extra (not in provided list)
+                {
+                    "$addFields": {
+                        "extraCount": {
+                            "$size": {
+                                "$setDifference": [ "$ingredientKeys", ingredient_ids ]
+                            }
+                        }
+                    }
+                },
+                # Only include recipes with at most 1 extra ingredient.
+                {
+                    "$match": {
+                        "extraCount": { "$lte": diff }
+                    }
+                },
+                # Sort by the extra ingredient count (lowest first)
+                {
+                    "$sort": { "extraCount": 1 }
+                },
+                # Limit to the top 3 closest recipes
+                {
+                    "$limit": 3
+                },
+                # # Return only the _id field
+                # {
+                #     "$project": { "_id": 1 }
+                # }
+            ]
+            
+            recipes = list(self.mongodb_base.aggregate(self.mongodb_base ,pipeline))
+            if recipes:
+                return recipes
+            else:
+                logger.error(f"Recipes with the ingredients {ingredient_ids} not found")
+                return None
+        except Exception as e:
+            return None
+
+    def get_recipe_with_ids(self, ingredient_ids):
+        try:
+            query = {
+                "$expr": {
+                    "$setIsSubset": [
+                        { "$map": {
+                            "input": { "$objectToArray": "$ingredients" },
+                            "as": "ing",
+                            "in": "$$ing.k"
+                        } },
+                        ingredient_ids
+                    ]
+                }
+            }
+            recipes = self.mongodb_base.get_all(self.mongodb_base ,query)
+            if recipes:
+                return list(recipes)
+            else:
+                logger.error(f"Recipes with the ingredients {ingredient_ids} not found")
                 return None
         except Exception as e:
             return None

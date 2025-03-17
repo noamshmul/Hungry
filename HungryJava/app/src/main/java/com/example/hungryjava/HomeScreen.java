@@ -18,6 +18,7 @@ import com.example.hungryjava.api.RetrofitClient;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,8 +68,6 @@ public class HomeScreen extends AppCompatActivity {
         btnHungry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to execute when the button is clicked}
-                Toast.makeText(HomeScreen.this, "i'm Hungry clicked", Toast.LENGTH_SHORT).show();
                 hungry();
             }
         });
@@ -94,10 +93,14 @@ public class HomeScreen extends AppCompatActivity {
                     // get the response dictionary into "body"
                     Map<String, Object> body = response.body();
                     // TODO: parse the response when we will know his type
-                    Log.d("hungry", "Response: " + response.code() + " " + response.body());
+                    Log.d("hungry", "Response: " + response.code() + " " + body);
+                }
+                else if (response.code() == 400) {
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                    Toast.makeText(HomeScreen.this, "Not enough items in your inventory", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(HomeScreen.this, "Hungry is fucked up", Toast.LENGTH_SHORT).show();
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
                 }
             }
 
