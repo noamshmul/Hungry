@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,17 @@ public class FridgeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_activity);
+
+
+        // Add NavFragment to the top of the activity
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            NavFragment navFragment = new NavFragment();
+
+            // Add the NavFragment to the top of the activity (in a FrameLayout container)
+            transaction.replace(R.id.navBarContainer, navFragment);  // Using navBarContainer as a placeholder for NavFragment
+            transaction.commit();
+        }
 
 
         // Get the SharedPreferences instance

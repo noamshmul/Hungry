@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Container for the NavFragment (This will be placed at the top) -->
+    <FrameLayout
+        android:id="@+id/navBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
     <!-- RecyclerView takes available space -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fridge_list"
