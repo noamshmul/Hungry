@@ -1,6 +1,7 @@
 package com.example.hungryjava;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ import retrofit2.Response;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 
 public class FridgeScreen extends AppCompatActivity {
@@ -44,6 +46,14 @@ public class FridgeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_activity);
+
+
+        // Get the SharedPreferences instance
+        SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
+        // Retrieve data from SharedPreferences
+        String username = sharedPreferences.getString("username", "default_value");
+        String password = sharedPreferences.getString("password", "default_value");
+        Log.d("username: ", username);
 
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
@@ -76,9 +86,14 @@ public class FridgeScreen extends AppCompatActivity {
                     } else {
                         Log.e(TAG, "Response body is null");
                     }
-                } else {
+                }
+                else {
                     // Handle the error response
                     Log.e(TAG, "Error: " + response.message());
+
+                    Toast.makeText(FridgeScreen.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(FridgeScreen.this, MainActivity.class);
+                    startActivity(intent);
                 }
 
                 RecyclerView list = findViewById(R.id.fridge_list);

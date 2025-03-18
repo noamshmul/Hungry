@@ -22,6 +22,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.example.hungryjava.api.RetrofitClient;
 import retrofit2.Retrofit;
 
 
@@ -35,21 +36,42 @@ public class HomeScreen extends AppCompatActivity {
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
 
-        // Retrieve the inventory_id and password
-        String inventory_id = sharedPreferences.getString("inventory_id", "default_value");
+        boolean is_user_exist = sharedPreferences.contains("username");
+        boolean is_password_exist = sharedPreferences.contains("password");
+
+        // checks if the user has already signed in from this account before
+        if (!(is_user_exist && is_password_exist)){
+            // Retrieve the username and password
+            String username = sharedPreferences.getString("username", "default_value");
+            String password = sharedPreferences.getString("password", "default_value");
+
+            // move to next login screen
+            Intent intent = new Intent(HomeScreen.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        String username = sharedPreferences.getString("username", "default_value");
         String password = sharedPreferences.getString("password", "default_value");
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(username, password, false);
 
         // Hello textview
         TextView wellcome = findViewById(R.id.welcomeView);
-        wellcome.setText("inventory id: " + inventory_id);
+        wellcome.setText("Username: " + username);
 
         // logout button
         Button logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to execute when the button is clicked}
-                Toast.makeText(HomeScreen.this, "Logout clicked", Toast.LENGTH_SHORT).show();
+                // Code to execute when the button is clicked
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("username");
+                editor.remove("password");
+                editor.apply();
+
+                // move to next login screen
+                Intent intent = new Intent(HomeScreen.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

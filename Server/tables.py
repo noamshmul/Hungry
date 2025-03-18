@@ -19,7 +19,7 @@ class Inventory(Base):
     __tablename__ = "inventories"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(100), nullable=False)
+    username = Column(String(100), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
     custom_recipes = Column(JSON, nullable=False)
     items = relationship("Items", back_populates="inventory_owner", cascade="all, delete")

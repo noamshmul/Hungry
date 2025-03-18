@@ -26,7 +26,7 @@ import android.content.SharedPreferences;
 
 public class Activity_signup extends AppCompatActivity {
     Button btnTestConnection;
-    EditText inventory_id;
+    EditText username;
     EditText password;
     EditText cnf_password;
 
@@ -42,7 +42,7 @@ public class Activity_signup extends AppCompatActivity {
         });*/
 
         // create the username and password textbox
-        inventory_id = findViewById(R.id.inventory_id);
+        username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         cnf_password = findViewById(R.id.cnf_password);
 
@@ -53,7 +53,7 @@ public class Activity_signup extends AppCompatActivity {
         btnTestConnection = findViewById(R.id.submit);
         btnTestConnection.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String inventory_id_text = inventory_id.getText().toString();
+                String username_text = username.getText().toString();
                 String password_text = password.getText().toString();
                 String cnf_pasword_text = cnf_password.getText().toString();
 
@@ -62,56 +62,55 @@ public class Activity_signup extends AppCompatActivity {
                 }
 
                 else {
-                    Retrofit retrofit = RetrofitClient.getRetrofitInstance(inventory_id_text, password_text, false);
+                    // Checks if valid password
+                    if (password_text.length() < 8) {
+                        Toast.makeText(Activity_signup.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Retrofit retrofit = RetrofitClient.getRetrofitInstance(username_text, password_text, true);
 
-                    // Step 2: Create an instance of the API service
-                    FastApiService apiService = retrofit.create(FastApiService.class);
+                        // Step 2: Create an instance of the API service
+                        FastApiService apiService = retrofit.create(FastApiService.class);
 
-                    // Step 3: Make the API call
-                    Call<Map<String, Object>> call = apiService.postSignup(inventory_id_text, password_text);
+                        // Step 3: Make the API call
+                        Call<Map<String, Object>> call = apiService.postSignup(username_text, password_text);
 
-                    // Execute the request synchronously or asynchronously
-                    call.enqueue(new Callback<Map<String, Object>>() {
-                        @Override
-                        public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                // get the response dictionary into "body"
-                                Map<String, Object> body = response.body();
-                                String status = (String) body.get("status");
-                                double id = (double) body.get("id");
+                        // Execute the request synchronously or asynchronously
+                        call.enqueue(new Callback<Map<String, Object>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    // get the response dictionary into "body"
+                                    Map<String, Object> body = response.body();
+                                    String status = (String) body.get("status");
 
-                                // update the retrofis instance with the inventory id
-                                Retrofit retrofit = RetrofitClient.getRetrofitInstance(String.valueOf(id), password_text, true);
+                                    if (status.equals("ok")) {
+                                        // Store the username and password in SharedPreferences
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("username", username_text);
+                                        editor.putString("password", password_text);
+                                        editor.apply(); // Commit the changes asynchronously
 
-                                Toast.makeText(Activity_signup.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
-                                if (status.equals("ok")) {
-                                    // Store the inventory_id in SharedPreferences
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("inventory_id", inventory_id_text);
-                                    editor.putString("password", password_text);
-                                    editor.putFloat("id", (float) id);
-                                    editor.apply(); // Commit the changes asynchronously
-
-                                    Toast.makeText(Activity_signup.this, "GREAT!", Toast.LENGTH_SHORT).show();
-                                    // move to next homescreen
-                                    Intent intent = new Intent(Activity_signup.this, HomeScreen.class);
-                                    startActivity(intent);
+                                        // move to next homescreen
+                                        Intent intent = new Intent(Activity_signup.this, HomeScreen.class);
+                                        startActivity(intent);
+                                    } else if (status.equals("conflict")) {
+                                        Toast.makeText(Activity_signup.this, "Username is already taken", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(Activity_signup.this, "An error has occurred", Toast.LENGTH_SHORT).show();
                                 }
+
+
                             }
-                            else {
-                                Toast.makeText(Activity_signup.this, "fucked up", Toast.LENGTH_SHORT).show();
+
+                            @Override
+                            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                                t.printStackTrace();
                             }
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                            t.printStackTrace();
-                        }
-                    });
+                        });
+                    }
                 }
-
 
                 /*
                 new AlertDialog.Builder(MainActivity.this)
