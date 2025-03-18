@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9F9F9"
     tools:context=".SingleRecipeScreen">
 
     <ScrollView
@@ -13,77 +14,90 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:overScrollMode="always">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/recipe_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="280dp"
                 android:scaleType="centerCrop"
                 android:contentDescription="recipe_image"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/ic_launcher_background"
+                android:clipToOutline="true"/>
 
             <TextView
                 android:id="@+id/recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
+                android:textColor="#1D1D1F"
+                android:fontFamily="sans-serif-medium"
                 android:text="Recipe Name"/>
 
             <TextView
                 android:id="@+id/recipe_approx_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
+                android:textSize="17sp"
+                android:layout_marginBottom="24dp"
+                android:textColor="#8E8E93"
                 android:text="Approx Time:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredients:"
-                android:textSize="18sp"
+                android:text="Ingredients"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+                android:textColor="#1D1D1F"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="12dp"/>
 
             <TextView
                 android:id="@+id/recipe_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
-                android:text=""/>
+                android:textSize="17sp"
+                android:layout_marginBottom="24dp"
+                android:textColor="#1D1D1F"
+                android:lineSpacingExtra="4dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Instructions:"
-                android:textSize="18sp"
+                android:text="Instructions"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+                android:textColor="#1D1D1F"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="12dp"/>
 
             <TextView
                 android:id="@+id/recipe_instructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
-                android:text=""/>
+                android:textSize="17sp"
+                android:layout_marginBottom="24dp"
+                android:textColor="#1D1D1F"
+                android:lineSpacingExtra="4dp"/>
 
             <TextView
                 android:id="@+id/recipe_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
+                android:textSize="17sp"
+                android:layout_marginBottom="24dp"
+                android:textColor="#8E8E93"
                 android:text="Size:"/>
 
         </LinearLayout>
