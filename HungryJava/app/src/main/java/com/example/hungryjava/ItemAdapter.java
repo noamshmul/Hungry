@@ -75,8 +75,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.item_name);
-            amount = itemView.findViewById(R.id.item_quantity);
+            name = itemView.findViewById(R.id.text_ingredient_name);
+            amount = itemView.findViewById(R.id.text_amount);
             add = itemView.findViewById(R.id.btn_plus);
             remove = itemView.findViewById(R.id.btn_minus);
 

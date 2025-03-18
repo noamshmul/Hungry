@@ -79,7 +79,7 @@ public class PopupChangeItem extends DialogFragment {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 if (response.isSuccessful()) {
-                                    FridgeScreen.items.get(itemPosition).setQuantity(FridgeScreen.items.get(itemPosition).getQuantity() - amount);
+                                    FridgeScreen.items.get(itemPosition).setQuantity((int) (FridgeScreen.items.get(itemPosition).getQuantity() - amount));
                                     if (FridgeScreen.items.get(itemPosition).getQuantity() <= 0)
                                     {
                                         FridgeScreen.items.remove(itemPosition);
@@ -117,7 +117,7 @@ public class PopupChangeItem extends DialogFragment {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 if (response.isSuccessful()) {
-                                    FridgeScreen.items.get(itemPosition).setQuantity(FridgeScreen.items.get(itemPosition).getQuantity() + amount);
+                                    FridgeScreen.items.get(itemPosition).setQuantity((FridgeScreen.items.get(itemPosition).getQuantity() + amount));
                                     FridgeScreen.adapter.notifyItemChanged(itemPosition);
                                 }
                                 else {
