@@ -36,19 +36,6 @@ public class HomeScreen extends AppCompatActivity {
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
 
-        boolean is_user_exist = sharedPreferences.contains("username");
-        boolean is_password_exist = sharedPreferences.contains("password");
-
-        // checks if the user has already signed in from this account before
-        if (!(is_user_exist && is_password_exist)){
-            // Retrieve the username and password
-            String username = sharedPreferences.getString("username", "default_value");
-            String password = sharedPreferences.getString("password", "default_value");
-
-            // move to next login screen
-            Intent intent = new Intent(HomeScreen.this, MainActivity.class);
-            startActivity(intent);
-        }
 
         String username = sharedPreferences.getString("username", "default_value");
         String password = sharedPreferences.getString("password", "default_value");

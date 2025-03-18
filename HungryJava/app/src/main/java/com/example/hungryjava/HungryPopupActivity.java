@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.ViewAnimationUtils;
-import com.google.android.material.button.MaterialButton;
 
 public class HungryPopupActivity extends AppCompatActivity {
 

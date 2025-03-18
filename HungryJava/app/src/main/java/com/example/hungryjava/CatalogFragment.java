@@ -1,6 +1,7 @@
 package com.example.hungryjava;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ public class CatalogFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("CatalogFragment", "onCreateView called");
         return inflater.inflate(R.layout.fragment_catalog, container, false);
     }
 }
