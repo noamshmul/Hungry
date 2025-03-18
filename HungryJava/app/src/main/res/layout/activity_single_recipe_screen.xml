@@ -98,7 +98,7 @@
                 android:textSize="17sp"
                 android:layout_marginBottom="24dp"
                 android:textColor="#8E8E93"
-                android:text="Size:"/>
+                android:text="Recipe Size:"/>
 
         </LinearLayout>
 
