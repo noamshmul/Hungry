@@ -51,7 +51,7 @@
                 android:textSize="17sp"
                 android:layout_marginBottom="24dp"
                 android:textColor="#8E8E93"
-                android:text="Approx Time:"/>
+                android:text="Recipe Approx Time:"/>
 
             <TextView
                 android:layout_width="wrap_content"
