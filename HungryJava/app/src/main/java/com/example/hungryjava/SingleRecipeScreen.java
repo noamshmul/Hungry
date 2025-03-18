@@ -2,7 +2,6 @@ package com.example.hungryjava;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -13,12 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,13 +44,18 @@ public class SingleRecipeScreen extends AppCompatActivity {
         recipeInstructions = findViewById(R.id.recipe_instructions);
         recipeSize = findViewById(R.id.recipe_size);
 
-        // Make API call
-        getRecipe("Peppery Fig and Cider Compote"); // Hardcoded recipe name for now
-
+        //get recipe name from intent
+        String recipeNameStr = getIntent().getStringExtra("recipeName");
+        if (recipeNameStr != null && !recipeNameStr.isEmpty()) {
+            //gake api call
+            getRecipe(recipeNameStr);
+        } else {
+            Log.e(TAG, "Recipe name is null or empty");
+        }
     }
 
     private void getRecipe(String recipeNameStr) {
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
         FastApiService apiService = retrofit.create(FastApiService.class);
         Call<Map<String, Object>> call = apiService.get_single_recipe(recipeNameStr);
 
@@ -98,7 +100,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
         if (recipe.containsKey("image")) {
             String imageUrl = (String) recipe.get("image");
             if (imageUrl != null && !imageUrl.isEmpty()) {
-                new DownloadImageTask(recipeImage).execute(imageUrl);
+                loadImage(imageUrl, recipeImage); // call load image function instead of AsyncTask
             }
         }
 
@@ -106,8 +108,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
             Map<String, Map<String, Object>> ingredientsMap = (Map<String, Map<String, Object>>) recipe.get("ingredients");
             StringBuilder ingredientsText = new StringBuilder();
             for (Map<String, Object> ingredient : ingredientsMap.values()) {
-                if(ingredient.containsKey("original_quantity"))
-                {
+                if (ingredient.containsKey("original_quantity")) {
                     ingredientsText.append(ingredient.get("original_quantity")).append("\n");
                 }
             }
@@ -124,32 +125,28 @@ public class SingleRecipeScreen extends AppCompatActivity {
         }
     }
 
-    private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+    private void loadImage(String imageUrl, ImageView xmlObject) {
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+        String imageId = imageUrl;
+        Call<ResponseBody> call = apiService.get_image(imageId);
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                URL url = new URL(urldisplay);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                    xmlObject.setImageBitmap(bitmap);
+                } else {
+                    Log.e(TAG, "Failed to load image: " + (response.errorBody() != null ? response.errorBody().toString() : "Unknown error"));
+                }
             }
-            return mIcon11;
-        }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "Image load failure: " + t.getMessage());
+            }
+        });
     }
 }
