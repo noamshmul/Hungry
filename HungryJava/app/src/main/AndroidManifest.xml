@@ -19,9 +19,6 @@
             android:name=".Activity_signup"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".FridgeScreen"
             android:exported="false" />
         <activity
