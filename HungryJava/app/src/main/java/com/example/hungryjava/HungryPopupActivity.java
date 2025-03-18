@@ -61,38 +61,34 @@ public class HungryPopupActivity extends AppCompatActivity {
         });
 
         // Button to close the activity and trigger the exit transition
-        fabHungry.setOnClickListener(v -> finish());
+        fabHungry.setOnClickListener(v -> startExitAnimation());
 
-        // Ensure exit transition happens after the view is attached
+        // Exit transition setup
         rootView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                rootView.getViewTreeObserver().removeOnPreDrawListener(this); // Remove listener after it's used
-                setupExitTransition();
+                rootView.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
             }
         });
     }
 
-    private void setupExitTransition() {
-        // Set the exit transition to trigger circular hide effect on the root view
-        View rootView = findViewById(R.id.popupContainer); // Replace with the actual root layout ID
-        int cx = rootView.getRight();
-        int cy = rootView.getBottom();
-        int initialRadius = (int) Math.hypot(rootView.getWidth(), rootView.getHeight());
+    private void startExitAnimation() {
+        final View rootView = findViewById(R.id.popupContainer);
 
-        // Create a circular reveal animation to shrink back to the starting position
-        Animator exitAnim = ViewAnimationUtils.createCircularReveal(rootView, cx, cy, initialRadius, 0f);
-        exitAnim.setDuration(500);
-        exitAnim.setInterpolator(new AccelerateInterpolator());
-
-        // Start the exit animation when finishing the activity
-        exitAnim.start();
+        // Fade out the popup activity
+        rootView.animate()
+                .alpha(0f)
+                .setDuration(100)
+                .withEndAction(() -> {
+                    setResult(RESULT_OK); // Notify the previous activity
+                    finishAfterTransition(); // Finish after fade out
+                })
+                .start();
     }
 
     @Override
     public void onBackPressed() {
-        // Trigger the exit animation manually when pressing back
-        super.onBackPressed();
+        startExitAnimation(); // Play exit animation before closing
     }
 }
