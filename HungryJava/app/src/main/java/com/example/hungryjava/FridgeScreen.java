@@ -73,7 +73,7 @@ public class FridgeScreen extends AppCompatActivity {
                         ArrayList<Map<String, Object>> inv = (ArrayList<Map<String, Object>>)responseBody.get("items");
                         for (int i = 0; i < inv.size(); i++)
                         {
-                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (int)inv.get(i).get("quantity"));
+                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"));
                             items.add(item);
                         }
                     } else {

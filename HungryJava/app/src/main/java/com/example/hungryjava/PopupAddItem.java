@@ -40,7 +40,8 @@ public class PopupAddItem extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pop_up_add_item_screen, container, false);
-
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
         // Initialize views
         autoCompleteTextView = view.findViewById(R.id.autoCompleteTextView_ingredient);
         numberPicker = view.findViewById(R.id.numberPicker_amount);
@@ -77,27 +78,49 @@ public class PopupAddItem extends DialogFragment {
             }
 
             int amount = numberPicker.getValue();
-            boolean itemFound = false;
 
-            // Check if item already exists
-            for (int i = 0; i < FridgeScreen.items.size(); i++) {
-                Item item = FridgeScreen.items.get(i);
-                if (item.getName().equals(selectedIngredient)) {
-                    // Item exists, update the amount
-                    int currentAmount = item.getQuantity();
-                    int newAmount = currentAmount + amount;
-                    FridgeScreen.items.set( i, new Item(selectedIngredient, amount));
-                    FridgeScreen.adapter.notifyItemChanged(i);
-                    itemFound = true;
-                    break;
+
+            Call<Map<String, Object>> call = apiService.addToItem(selectedIngredient, amount);
+            call.enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    boolean itemFound = false;
+                    if (response.isSuccessful()) {
+                        // Check if item already exists
+                        for (int i = 0; i < FridgeScreen.items.size(); i++) {
+                            Item item = FridgeScreen.items.get(i);
+                            if (item.getName().equals(selectedIngredient)) {
+                                // Item exists, update the amount
+                                double currentAmount = item.getQuantity();
+                                double newAmount = currentAmount + amount;
+                                FridgeScreen.items.get(i).setQuantity(newAmount);
+                                FridgeScreen.adapter.notifyItemChanged(i);
+                                itemFound = true;
+                                break;
+                            }
+                        }
+
+                        // If item doesn't exist, add it as new
+                        if (!itemFound) {
+                            FridgeScreen.items.add(new Item(selectedIngredient, amount));
+                            FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
+                        }
+                    }
+                    else {
+                        // Handle the error response
+                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                    }
+                    dismiss();
                 }
-            }
 
-            // If item doesn't exist, add it as new
-            if (!itemFound) {
-                FridgeScreen.items.add(new Item(selectedIngredient, amount));
-                FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
-            }
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Toast.makeText(getContext(), "Request failed", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+
+            });
+
 
             dismiss(); // Close the dialog
         });

@@ -2,20 +2,20 @@ package com.example.hungryjava;
 
 public class Item {
     private String name;
-    private int quantity;
+    private double quantity;
 
-    public Item(String name, int quantity)
+    public Item(String name, double quantity)
     {
         this.name = name;
         this.quantity = quantity;
     }
 
-    public void setQuantity(int newAmount)
+    public void setQuantity(double newAmount)
     {
         this.quantity=newAmount;
     }
 
-    public int getQuantity()
+    public double getQuantity()
     {
         return quantity;
     }
