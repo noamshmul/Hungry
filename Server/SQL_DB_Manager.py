@@ -31,7 +31,7 @@ class DB_Manager:
     def add(self, db: Session, obj):
         db.add(obj)
         db.commit()
-        db.refresh(obj)       
+        db.refresh(obj)
     
     
     def create_Tables(self): 
@@ -122,8 +122,39 @@ class DB_Manager:
         items = (db.query(Items).filter(Items.Inventory_id == inv_id).options(joinedload(Items.ingredient))).all()
         return [{"id": item.id, "Ingredient_id": item.Ingredient_id, "Inventory_id": item.Inventory_id , "ingredient_name": item.ingredient.name, "quantity": item.quantity} for item in items]
     
-    def get_custom_recipes(self, db: Session, inv_id):
-        return db.query(Inventory.custom_recipes).filter(Inventory.id == inv_id).all()
+    def get_favorites(self, db: Session, inventory_id):
+        inv = self.get_obj_by_id(db, Inventory, inventory_id)
+        fav = json.loads(inv.favorites)
+        return fav
+
+    def add_favorites(self, db: Session, inventory_id, recipe_id):
+        # TODO
+        inv = self.get_obj_by_id(db, Inventory, inventory_id)
+
+        if inv:
+            fav = json.loads(inv.favorites)
+            fav.append(recipe_id)
+            json_fav = json.dumps(fav)
+            logger.info("list: %s", json_fav)
+            inv.favorites = json_fav
+            db.commit()
+            db.refresh(inv)
+            return True
+        return None
+
+    def delete_favorites(self, db: Session, inventory_id, recipe_id):
+        # TODO
+        inv = self.get_obj_by_id(db, Inventory, inventory_id)
+
+        if inv:
+            fav = json.loads(inv.favorites)
+            fav.remove(recipe_id)
+            json_fav = json.dumps(fav)
+            inv.favorites = json_fav
+            db.commit()
+            db.refresh(inv)
+            return True
+        return None
     
     def update_inventory_recipes(self, inv_id, recipe):
         pass
