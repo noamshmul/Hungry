@@ -128,32 +128,36 @@ class DB_Manager:
         return fav
 
     def add_favorites(self, db: Session, inventory_id, recipe_id):
-        # TODO
+        # add recipe id to favorites
         inv = self.get_obj_by_id(db, Inventory, inventory_id)
-
         if inv:
             fav = json.loads(inv.favorites)
-            fav.append(recipe_id)
-            json_fav = json.dumps(fav)
-            logger.info("list: %s", json_fav)
-            inv.favorites = json_fav
-            db.commit()
-            db.refresh(inv)
-            return True
+
+            if recipe_id in fav:
+                return 1
+            else:
+                fav.append(recipe_id)
+                json_fav = json.dumps(fav)
+                inv.favorites = json_fav
+                db.commit()
+                db.refresh(inv)
+                return True
         return None
 
     def delete_favorites(self, db: Session, inventory_id, recipe_id):
-        # TODO
         inv = self.get_obj_by_id(db, Inventory, inventory_id)
-
+        # delete recipe id from favorites
         if inv:
             fav = json.loads(inv.favorites)
-            fav.remove(recipe_id)
-            json_fav = json.dumps(fav)
-            inv.favorites = json_fav
-            db.commit()
-            db.refresh(inv)
-            return True
+            if recipe_id in fav:
+                fav.remove(recipe_id)
+                json_fav = json.dumps(fav)
+                inv.favorites = json_fav
+                db.commit()
+                db.refresh(inv)
+                return True
+            else:
+                return 1
         return None
     
     def update_inventory_recipes(self, inv_id, recipe):
