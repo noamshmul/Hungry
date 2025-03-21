@@ -1,5 +1,3 @@
-import logging
-
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.responses import FileResponse
 import os
@@ -68,15 +66,11 @@ def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends
 @router.get("/favorites")
 def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
     favorites = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
-    if favorites == None:
-        logger.info("****************")
     return favorites
 
 @router.post("/signup")
 def signup(username: str, password: str, db=Depends(db_instance.get_db)):
-    logging.info("***************")
     inventory = Inventory(username=username, password=password, favorites="[]")
-    logging.info("***************")
 
     # Check if the username is already exist
     search_username = db_instance.get_inventory_by_username(db, username)
