@@ -5,23 +5,40 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- EditText for entering the ingredient name -->
-    <EditText
-        android:id="@+id/editText_ingredient"
+    <!-- AutoCompleteTextView for ingredient selection -->
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView_ingredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Ingredient"
+        android:hint="Select ingredient..."
         android:inputType="text"
+        android:completionThreshold="1"
+        android:background="@android:drawable/edit_text"
+        android:padding="12dp"
         android:layout_marginBottom="16dp"/>
 
-    <!-- EditText for entering the amount -->
-    <EditText
-        android:id="@+id/editText_amount"
+    <!-- Container for NumberPicker -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Amount"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <NumberPicker
+            android:id="@+id/numberPicker_amount"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
+    </LinearLayout>
 
     <!-- Add to Inventory Button -->
     <Button

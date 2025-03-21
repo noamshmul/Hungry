@@ -37,7 +37,7 @@ import android.widget.Toast;
 
 
 public class FridgeScreen extends AppCompatActivity {
-    static List<String> items = new ArrayList<>();
+    static List<Item> items = new ArrayList<>();
     private static final String TAG = "FridgeScreen";
 
     static ItemAdapter adapter;
@@ -81,7 +81,8 @@ public class FridgeScreen extends AppCompatActivity {
                         ArrayList<Map<String, Object>> inv = (ArrayList<Map<String, Object>>)responseBody.get("items");
                         for (int i = 0; i < inv.size(); i++)
                         {
-                            items.add(inv.get(i).get("name") + " " + inv.get(i).get("amount"));
+                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"));
+                            items.add(item);
                         }
                     } else {
                         Log.e(TAG, "Response body is null");
