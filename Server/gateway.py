@@ -10,6 +10,7 @@ from log import logger
 from SQL_DB_Manager import db_instance
 
 IMAGES_PATH = 'images'
+INGREDIENT_IMAGES_PATH = 'ingredient-images'
 
 router = APIRouter()
 
@@ -32,11 +33,24 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
         
     return FileResponse(path,media_type="image/jpeg")
 
+@router.get("/ingredient-images/{ingredient_id}.jpg")
+def get_ingredient_image(ingredient_id ,inventory_id = Depends(authentication)):
+    path = os.path.join(INGREDIENT_IMAGES_PATH, ingredient_id + '.jpg')
+
+    if not os.path.exists(path):
+        logger.error("File Not Exists")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found - wrong image_id"
+        )
+    
+    return FileResponse(path,media_type="image/jpeg")
+
 @router.get("/inventory")
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
-    return {"status": "ok", "items": items}
 
+    return {"status": "ok", "items": items}
 
 @router.post("/inventory")
 def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -127,3 +141,8 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
             detail="Ingredient with this name already exists"
         )
     return {"status": "ok", "ingredient": result}
+
+@router.get("/recipe")
+def get_single_recipe(selected_recipe_name : str):
+    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
+    return single_recipe
