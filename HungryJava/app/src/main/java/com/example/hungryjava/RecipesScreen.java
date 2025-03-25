@@ -1,57 +1,109 @@
 package com.example.hungryjava;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.ImageView;
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class RecipesScreen extends AppCompatActivity {
 
     private RecipeAdapter adapter;
-    private List<RecipeItem> RecipesList;
+    private static final String TAG = "RecipesScreen";
+    private List<RecipeItem> RecipesList = new ArrayList<>();
     private List<RecipeItem> filteredList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipes_screen);
 
-        // Initialize RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(RecipesScreen.this, 2));
 
-
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null);
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance("yosi123", "1234", true);
 
 
         // Step 2: Create an instance of the API service
         FastApiService apiService = retrofit.create(FastApiService.class);
 
         // Step 3: Make the API call
-        Call<Map<String, Object>> call = apiService.getInventory();
+        Call<Map<String, Object>> call = apiService.getRecipes();
 
-        // Initialize Image List
-        RecipesList = new ArrayList<>();
-        RecipesList.add(new RecipeItem("recipe1", "Pasta"));
-        RecipesList.add(new RecipeItem("recipe2", "Pizza"));
-        RecipesList.add(new RecipeItem("recipe3", "Salad"));
-        RecipesList.add(new RecipeItem("recipe4", "Soup"));
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                // Log the response
+                Log.d(TAG, "Response: " + response.code() + " " + response.message());
 
-        // Create a filtered list
-        filteredList = new ArrayList<>(RecipesList);
+                if (response.isSuccessful()) {
+                    // Handle the response
+                    Map<String, Object> responseBody = response.body();
+                    if (responseBody != null) {
+                        ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
+                        for (int i = 0; i < recipes.size(); i++)
+                        {
+                            String recipe_id = (String) recipes.get(i).get("_id");
+                            String name = (String) recipes.get(i).get("name");
+                            String Image_url = (String) recipes.get(i).get("image");
+                            RecipesList.add(new RecipeItem(
+                                    recipe_id,Image_url, name
+                            ));
+
+                        }
+                        // Create a filtered list
+                        filteredList = new ArrayList<>(RecipesList);
+
+                        adapter = new RecipeAdapter(RecipesScreen.this, filteredList);
+                        recyclerView.setAdapter(adapter);
+
+                    }
+                    else {
+                        Log.e(TAG, "Response body is null");
+                    }
+                }
+                else {
+                    // Handle the error response
+                    Log.e(TAG, "Error: " + response.message());
+
+                    Toast.makeText(RecipesScreen.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RecipesScreen.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+                // Initialize RecyclerView
+
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                // Log failure
+                Log.e(TAG, "Failure: " + t.getMessage());
+            }
+        });
+
 
         // Initialize Adapter
-        adapter = new RecipeAdapter(this, filteredList);
-        recyclerView.setAdapter(adapter);
+
         SearchView searchBar = findViewById(R.id.searchView);
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -78,5 +130,5 @@ public class RecipesScreen extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
     }
-
 }
+
