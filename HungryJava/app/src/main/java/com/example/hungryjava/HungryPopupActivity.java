@@ -11,6 +11,8 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.ViewTreeObserver;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
@@ -18,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -28,6 +32,9 @@ import retrofit2.Retrofit;
 public class HungryPopupActivity extends AppCompatActivity {
 
     private FloatingActionButton fabHungry;
+    private List<RecipeItem> RecipesList = new ArrayList<>();
+    private RecipeAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +90,8 @@ public class HungryPopupActivity extends AppCompatActivity {
             }
         });
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(HungryPopupActivity.this, 1));
         hungry();
     }
 
@@ -118,10 +127,21 @@ public class HungryPopupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // get the response dictionary into "body"
-                    Map<String, Object> body = response.body();
-                    // TODO: parse the response when we will know his type
-                    Log.d("hungry", "Response: " + response.code() + " " + body);
+                    var responseBody = response.body();
+                    ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
+                    for (int i = 0; i < recipes.size(); i++)
+                    {
+                        String recipe_id = (String) recipes.get(i).get("_id");
+                        String name = (String) recipes.get(i).get("name");
+                        String Image_url = (String) recipes.get(i).get("image");
+                        RecipesList.add(new RecipeItem(
+                                recipe_id,Image_url, name
+                        ));
+
+                    }
+
+                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList);
+                    recyclerView.setAdapter(adapter);
                 }
                 else if (response.code() == 400) {
                     Log.d("hungry", "Response: " + response.code() + " " + response.message());

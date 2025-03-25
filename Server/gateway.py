@@ -87,7 +87,7 @@ def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.
             detail=str(err)
         )
 
-    return {"status": "ok", "items": recipes}
+    return {"status": "ok", "recipes": recipes}
 
 
 @router.post("/signup")
