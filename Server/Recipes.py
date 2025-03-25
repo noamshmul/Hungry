@@ -221,7 +221,6 @@ class MongoDB_Functions:
         try:
             query = {"_id": {"$in": favorites}}
             projection = {"name": 1, "image": 1}  # Fetch only name & image
-            logger.info("test0 %s", query)
 
             recipes = self.mongodb_base.get_all(self.mongodb_base,query,projection)
             if recipes:
