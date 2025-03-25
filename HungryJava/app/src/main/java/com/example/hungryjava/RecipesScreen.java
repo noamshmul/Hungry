@@ -40,7 +40,7 @@ public class RecipesScreen extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(RecipesScreen.this, 2));
 
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance("yosi123", "1234", true);
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance("yosi123", "12345678", true);
 
 
         // Step 2: Create an instance of the API service

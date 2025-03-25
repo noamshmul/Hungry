@@ -4,7 +4,7 @@ import os
 
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
-import inventory_manager
+import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
@@ -38,8 +38,8 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
 @router.get("/inventory")
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
-    return {"status": "ok", "items": items}
 
+    return {"status": "ok", "items": items}
 
 @router.post("/inventory")
 def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -51,21 +51,42 @@ def remove_item(name : str, amount : int, inventory_id = Depends(authentication)
     inventory_manager.remove_item(name, amount, inventory_id, db_instance, db)
     return {"status": "ok"}
 
-@router.get("/custom-recipes")
-def get_custom_recipes(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id, db_instance, db)
-    return custom_recipes
+@router.put("/favorites")
+def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends(authentication)):
+    inventory = db_instance.get_obj_by_id(db, Inventory, inventory_id)
+    add = inventory_manager.add_favorites(recipe_id, inventory_id, db_instance, db)
+    if add:
+        return {"status": "ok"}
+    return {"status": "failed"}
 
+@router.delete("/favorites")
+def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends(authentication)):
+    inventory = db_instance.get_obj_by_id(db, Inventory, inventory_id)
+    add = inventory_manager.delete_favorites(recipe_id, inventory_id, db_instance, db)
+    if add:
+        return {"status": "ok"}
 
-@router.post("/custom-recipes")
-def add_custom_recipes(name : str, instructions : list, approx_time : int, ingredients : list, size : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id, db_instance, db)
-    return {"status": "ok"}
+@router.get("/hungry")
+def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    items = inventory_manager.get_inventory(inventory_id, db_instance, db)
+    try:
+        recipes = recipe_manager.hungry(items)
+    except RuntimeError as err:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(err)
+        )
 
+    return {"status": "ok", "items": recipes}
+
+@router.get("/favorites")
+def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
+    favorites = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
+    return favorites
 
 @router.post("/signup")
 def signup(username: str, password: str, db=Depends(db_instance.get_db)):
-    inventory = Inventory(username=username, password=password, custom_recipes="{}")
+    inventory = Inventory(username=username, password=password, favorites="[]")
 
     # Check if the username is already exist
     search_username = db_instance.get_inventory_by_username(db, username)
@@ -112,7 +133,10 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
 
 @router.get("/recipes")
 def get_all_recipes():
-    base = DBR.MongoDB_Base
-    mdb_functions = DBR.MongoDB_Functions(base)
-    recipes = mdb_functions.get_all_recipes()
+    recipes = recipe_manager.get_all_recipes()
     return {"recipes" : recipes}
+
+@router.get("/recipe")
+def get_single_recipe(selected_recipe_name : str):
+    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
+    return single_recipe
