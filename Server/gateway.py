@@ -10,7 +10,7 @@ from log import logger
 from SQL_DB_Manager import db_instance
 
 IMAGES_PATH = 'images'
-INGREDIENT_IMAGES_PATH = 'images'
+INGREDIENT_IMAGES_PATH = 'ingredient-images'
 
 router = APIRouter()
 
@@ -35,7 +35,7 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
 
 @router.get("/ingredient-images/{ingredient_id}.jpg")
 def get_ingredient_image(ingredient_id ,inventory_id = Depends(authentication)):
-    path = os.path.join(IMAGES_PATH, ingredient_id + '.jpg')
+    path = os.path.join(INGREDIENT_IMAGES_PATH, ingredient_id + '.jpg')
 
     if not os.path.exists(path):
         logger.error("File Not Exists")
