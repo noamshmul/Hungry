@@ -71,7 +71,7 @@ public class InventoryFragment extends Fragment {
                     Log.e(TAG, "Error: " + response.message());
                 }
 
-                RecyclerView list = view.findViewById(R.id.fridge_list);
+                RecyclerView list = view.findViewById(R.id.inventory_list);
                 list.setLayoutManager(new LinearLayoutManager(requireContext()));
                 adapter = new ItemAdapter(requireContext(), items);
                 list.setAdapter(adapter);

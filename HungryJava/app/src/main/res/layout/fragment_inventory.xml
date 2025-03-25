@@ -7,7 +7,7 @@
 
     <!-- RecyclerView takes available space -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fridge_list"
+        android:id="@+id/inventory_list"
         android:layout_width="match_parent"
         android:layout_height="650dp"/>
 
