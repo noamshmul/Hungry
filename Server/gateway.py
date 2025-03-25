@@ -10,10 +10,8 @@ from log import logger
 from SQL_DB_Manager import db_instance
 
 IMAGES_PATH = 'images'
-import Databases.Recipes as DBR
 
 router = APIRouter()
-db_instance = DB_Manager()
 
 
 @router.get("/test-connection")
@@ -132,7 +130,5 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
-    base = DBR.MongoDB_Base
-    mdb_functions = DBR.MongoDB_Functions(base)
-    single_recipe = mdb_functions.get_recipe_by_name(selected_recipe_name)
+    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
     return single_recipe

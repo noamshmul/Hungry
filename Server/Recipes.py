@@ -86,7 +86,7 @@ class MongoDB_Functions:
 
     def get_recipe_by_name(self, recipe_name):
         try:
-            recipe = self.mongodb_base.get({"name": recipe_name})
+            recipe = self.mongodb_base.get(self.mongodb_base,{"name": recipe_name})
             if recipe:
                 return recipe
             else:
