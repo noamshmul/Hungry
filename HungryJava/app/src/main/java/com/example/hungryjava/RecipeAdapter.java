@@ -1,5 +1,7 @@
 package com.example.hungryjava;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import okhttp3.ResponseBody;
 
+import android.content.Intent;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
@@ -51,7 +54,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.captionText.setText(item.getCaption());
 
         holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(context, "Clicked: " + item.getCaption(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, SingleRecipeScreen.class);
+            intent.putExtra("recipeName", item.getCaption()); // Pass the recipe name
+            context.startActivity(intent);
         });
 
     }
