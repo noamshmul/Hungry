@@ -208,7 +208,6 @@ class MongoDB_Functions:
 
     def get_favorite_recipes(self, favorites):
         try:
-            from bson import ObjectId
             query = {"_id": {"$in": favorites}}
             projection = {"name": 1, "image": 1}  # Fetch only name & image
             logger.info("test0 %s", query)
