@@ -35,8 +35,8 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
 @router.get("/inventory")
 def get_inventory(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
-    return {"status": "ok", "items": items}
 
+    return {"status": "ok", "items": items}
 
 @router.post("/inventory")
 def add_item(name : str, amount : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -127,3 +127,8 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
             detail="Ingredient with this name already exists"
         )
     return {"status": "ok", "ingredient": result}
+
+@router.get("/recipe")
+def get_single_recipe(selected_recipe_name : str):
+    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
+    return single_recipe
