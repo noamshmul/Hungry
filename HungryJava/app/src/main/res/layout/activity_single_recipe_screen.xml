@@ -89,7 +89,7 @@
                 android:textSize="17sp"
                 android:layout_marginBottom="24dp"
                 android:textColor="#1D1D1F"
-                android:lineSpacingExtra="4dp"/>
+                android:lineSpacingExtra="5dp"/>
 
             <TextView
                 android:id="@+id/recipe_size"
