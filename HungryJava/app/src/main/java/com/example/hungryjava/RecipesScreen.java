@@ -1,18 +1,12 @@
 package com.example.hungryjava;
-import android.app.ActivityOptions;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import androidx.appcompat.widget.SearchView;
@@ -20,8 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
 
@@ -34,33 +26,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HomeFragment extends Fragment {
+public class RecipesScreen extends AppCompatActivity {
 
     private RecipeAdapter adapter;
     private static final String TAG = "RecipesScreen";
     private List<RecipeItem> RecipesList = new ArrayList<>();
     private List<RecipeItem> filteredList;
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        FloatingActionButton btnHungry = view.findViewById(R.id.fabHungry);
-        btnHungry.setOnClickListener(v -> {
-            // Start the second activity with the shared element transition
-            Intent intent = new Intent(getActivity(), HungryPopupActivity.class);
-            // Add a shared element transition for the FAB
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                    getActivity(),
-                    btnHungry, // View in the first activity
-                    "fab_transition" // Transition name (used in the second activity)
-            );
-            startActivity(intent, options.toBundle());
-        });
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.recipes_screen);
 
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(RecipesScreen.this, 2));
+
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance("yosi123", "12345678", true);
 
 
         // Step 2: Create an instance of the API service
@@ -93,7 +73,7 @@ public class HomeFragment extends Fragment {
                         // Create a filtered list
                         filteredList = new ArrayList<>(RecipesList);
 
-                        adapter = new RecipeAdapter(view.getContext(), filteredList);
+                        adapter = new RecipeAdapter(RecipesScreen.this, filteredList);
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -105,11 +85,9 @@ public class HomeFragment extends Fragment {
                     // Handle the error response
                     Log.e(TAG, "Error: " + response.message());
 
-                    Toast.makeText(view.getContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    Toast.makeText(RecipesScreen.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RecipesScreen.this, MainActivity.class);
                     startActivity(intent);
-
-
                 }
 
                 // Initialize RecyclerView
@@ -126,7 +104,7 @@ public class HomeFragment extends Fragment {
 
         // Initialize Adapter
 
-        SearchView searchBar = view.findViewById(R.id.searchView);
+        SearchView searchBar = findViewById(R.id.searchView);
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -139,11 +117,8 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-
-
-
-        return view;
     }
+
     private void filter(String text)
     {
         filteredList.clear();
@@ -156,3 +131,4 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 }
+

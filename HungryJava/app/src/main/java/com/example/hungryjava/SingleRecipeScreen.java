@@ -125,7 +125,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
         }
     }
 
-    private void loadImage(String imageUrl, ImageView xmlObject) {
+    static public void loadImage(String imageUrl, ImageView xmlObject) {
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
         FastApiService apiService = retrofit.create(FastApiService.class);

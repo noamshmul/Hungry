@@ -2,17 +2,21 @@ from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.responses import FileResponse
 import os
 
+import Recipes
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
 import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
+import Recipes as DBR
 
 IMAGES_PATH = 'images'
 INGREDIENT_IMAGES_PATH = 'ingredient-images'
 
+
 router = APIRouter()
+
 
 
 @router.get("/test-connection")
@@ -70,12 +74,21 @@ def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends
         return {"status": "ok"}
     return {"status": "failed"}
 
+
 @router.delete("/favorites")
 def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends(authentication)):
     inventory = db_instance.get_obj_by_id(db, Inventory, inventory_id)
     add = inventory_manager.delete_favorites(recipe_id, inventory_id, db_instance, db)
     if add:
         return {"status": "ok"}
+
+
+@router.get("/favorites")
+def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
+    fav_id = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
+    favorites = recipe_manager.get_favorite_recipes(fav_id)
+    return {"favorites": favorites}
+
 
 @router.get("/hungry")
 def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -88,12 +101,8 @@ def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.
             detail=str(err)
         )
 
-    return {"status": "ok", "items": recipes}
+    return {"status": "ok", "recipes": recipes}
 
-@router.get("/favorites")
-def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
-    favorites = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
-    return favorites
 
 @router.post("/signup")
 def signup(username: str, password: str, db=Depends(db_instance.get_db)):
@@ -141,6 +150,11 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
             detail="Ingredient with this name already exists"
         )
     return {"status": "ok", "ingredient": result}
+
+@router.get("/recipes")
+def get_all_recipes():
+    recipes = recipe_manager.get_all_recipes()
+    return {"recipes" : recipes}
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
