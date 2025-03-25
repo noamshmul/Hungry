@@ -40,7 +40,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Item item = items.get(position);
         holder.name.setText(item.getName());
-        holder.amount.setText(String.valueOf(item.getQuantity()));// Set the data on the TextView
+        holder.amount.setText(String.valueOf((int)item.getQuantity()));// Convert to int to remove decimal points
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 
         holder.add.setOnClickListener(v -> {
