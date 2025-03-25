@@ -69,12 +69,6 @@ def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends
         return {"status": "ok"}
 
 
-#router.get("/favorites")
-#def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
-#   favorites = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
-#    return favorites
-
-
 @router.get("/favorites")
 def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
     fav_id = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
