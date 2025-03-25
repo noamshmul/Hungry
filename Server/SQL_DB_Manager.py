@@ -81,6 +81,9 @@ class DB_Manager:
         item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()
         if item:
             item.quantity -= amount
+            if item.quantity <= 0:
+                self.delete_Item(self, db, item_id)
+                return 1
             db.commit()
             db.refresh(item)
             return item.quantity

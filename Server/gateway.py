@@ -1,4 +1,4 @@
-from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status, FastAPI
 from fastapi.responses import FileResponse
 import os
 
@@ -12,8 +12,11 @@ import Recipes as DBR
 
 IMAGES_PATH = 'images'
 
-
+app = FastAPI()
 router = APIRouter()
+
+# Include the router in the app
+app.include_router(router)
 
 
 @router.get("/test-connection")
@@ -137,5 +140,11 @@ def get_all_recipes():
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
-    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
+    single_recipe = recipe_manager.get_single_recipe_name(selected_recipe_name)
     return single_recipe
+
+@router.delete("/remove-ingredients-by-recipe")
+def remove_ingredients_by_recipe(recipe_id : str, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    recipe = recipe_manager.get_single_recipe_id(recipe_id)
+    inventory_manager.remove_ingredients_by_recipe(recipe, inventory_id, db_instance, db)
+    return {"status": "ok"}

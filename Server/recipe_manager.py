@@ -4,8 +4,11 @@ from log import logger
 base = Recipes.MongoDB_Base
 func = Recipes.MongoDB_Functions(base)
 
-def get_single_recipe(selected_recipe_name):
+def get_single_recipe_name(selected_recipe_name):
     return func.get_recipe_by_name(selected_recipe_name)
+
+def get_single_recipe_id(selected_recipe_id):
+    return func.get_recipe_by_id(selected_recipe_id)
 
 def get_all_recipes():
     return func.get_all_recipes()

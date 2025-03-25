@@ -1,6 +1,5 @@
 import SQL_DB_Manager
 
-
 ITEMS = [{'name': 'tomato', 'amount': 4}, {'name': 'cucumber', 'amount': 2}, {'name': 'onion', 'amount': 3}]
 PASSWORD = "password"
 FAVORITES = []
@@ -51,3 +50,8 @@ def add_favorites(recipe_id, inventory_id: int, db_instance: SQL_DB_Manager.DB_M
 
 def delete_favorites(recipe_id, inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     return db_instance.delete_favorites(db_session, inventory_id, recipe_id)
+
+def remove_ingredients_by_recipe(recipe, inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
+    ingredients = recipe.get('ingredients')
+    for id in ingredients:
+        db_instance.decrease_inv_item_amount(db_session, inventory_id, id, ingredients.get(id).get('quantity'))
