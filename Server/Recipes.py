@@ -86,7 +86,7 @@ class MongoDB_Functions:
 
     def get_recipe_by_name(self, recipe_name):
         try:
-            recipe = self.mongodb_base.get({"name": recipe_name})
+            recipe = self.mongodb_base.get(self.mongodb_base,{"name": recipe_name})
             if recipe:
                 return recipe
             else:
@@ -202,6 +202,17 @@ class MongoDB_Functions:
                 return list(recipes)
             else:
                 logger.error(f"Recipes with the ingredients {ingredient_ids} not found")
+                return None
+        except Exception as e:
+            return None
+        
+    def get_all_recipes(self):
+        try:
+            recipes = self.mongodb_base.get_all(self.mongodb_base, {}, {"name": 1, "image": 1})
+            if recipes:
+                return list(recipes)
+            else:
+                print(f"No Recipes found")
                 return None
         except Exception as e:
             return None
