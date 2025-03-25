@@ -205,6 +205,17 @@ class MongoDB_Functions:
                 return None
         except Exception as e:
             return None
+        
+    def get_all_recipes(self):
+        try:
+            recipes = self.mongodb_base.get_all(self.mongodb_base, {}, {"name": 1, "image": 1})
+            if recipes:
+                return list(recipes)
+            else:
+                print(f"No Recipes found")
+                return None
+        except Exception as e:
+            return None
 
 def main():
     base = MongoDB_Base

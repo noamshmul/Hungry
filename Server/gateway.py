@@ -8,8 +8,10 @@ import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
+import Recipes as DBR
 
 IMAGES_PATH = 'images'
+
 
 router = APIRouter()
 
@@ -127,6 +129,11 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
             detail="Ingredient with this name already exists"
         )
     return {"status": "ok", "ingredient": result}
+
+@router.get("/recipes")
+def get_all_recipes():
+    recipes = recipe_manager.get_all_recipes()
+    return {"recipes" : recipes}
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
