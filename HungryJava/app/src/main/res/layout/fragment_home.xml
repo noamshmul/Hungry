@@ -22,63 +22,6 @@
         android:layout_margin="32px"
         android:elevation="8dp"/>
 
-    <!-- Full-Screen Popup Overlay -->
-    <FrameLayout
-        android:id="@+id/fullscreenPopup"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary"
-        android:visibility="gone">
-
-        <!-- Close Button at the Top-Right -->
-        <ImageButton
-            android:id="@+id/btnClosePopup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_food"
-            android:contentDescription="Close"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/onPrimary"
-            android:layout_gravity="top|end"
-            android:layout_margin="16dp"/>
-
-        <!-- Container for 3 Centered Texts -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text One"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textColor="@color/onPrimary"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text Two"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textColor="@color/onPrimary"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/text3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text Three"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textColor="@color/onPrimary"/>
-        </LinearLayout>
-    </FrameLayout>
-
 </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
