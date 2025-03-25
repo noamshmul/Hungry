@@ -67,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
         fridge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeScreen.this, FridgeScreen.class);
+                Intent intent = new Intent(HomeScreen.this, InventoryFragment.class);
                 startActivity(intent);
             }
         });

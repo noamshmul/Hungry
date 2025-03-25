@@ -87,14 +87,14 @@ public class PopupAddItem extends DialogFragment {
                     boolean itemFound = false;
                     if (response.isSuccessful()) {
                         // Check if item already exists
-                        for (int i = 0; i < FridgeScreen.items.size(); i++) {
-                            Item item = FridgeScreen.items.get(i);
+                        for (int i = 0; i < InventoryFragment.items.size(); i++) {
+                            Item item = InventoryFragment.items.get(i);
                             if (item.getName().equals(selectedIngredient)) {
                                 // Item exists, update the amount
                                 double currentAmount = item.getQuantity();
                                 double newAmount = currentAmount + amount;
-                                FridgeScreen.items.get(i).setQuantity(newAmount);
-                                FridgeScreen.adapter.notifyItemChanged(i);
+                                InventoryFragment.items.get(i).setQuantity(newAmount);
+                                InventoryFragment.adapter.notifyItemChanged(i);
                                 itemFound = true;
                                 break;
                             }
@@ -102,8 +102,8 @@ public class PopupAddItem extends DialogFragment {
 
                         // If item doesn't exist, add it as new
                         if (!itemFound) {
-                            FridgeScreen.items.add(new Item(selectedIngredient, amount));
-                            FridgeScreen.adapter.notifyItemInserted(FridgeScreen.items.size() - 1);
+                            InventoryFragment.items.add(new Item(selectedIngredient, amount));
+                            InventoryFragment.adapter.notifyItemInserted(InventoryFragment.items.size() - 1);
                         }
                     }
                     else {

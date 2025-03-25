@@ -74,20 +74,20 @@ public class PopupChangeItem extends DialogFragment {
                     int amount = Integer.parseInt(amountStr);
                     // Handle addition or removal logic
                     if (isRemove) {
-                        Call<Map<String, Object>> call = apiService.removeItem(FridgeScreen.items.get(itemPosition).getName(), amount);
+                        Call<Map<String, Object>> call = apiService.removeItem(InventoryFragment.items.get(itemPosition).getName(), amount);
                         call.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 if (response.isSuccessful()) {
-                                    FridgeScreen.items.get(itemPosition).setQuantity((int) (FridgeScreen.items.get(itemPosition).getQuantity() - amount));
-                                    if (FridgeScreen.items.get(itemPosition).getQuantity() <= 0)
+                                    InventoryFragment.items.get(itemPosition).setQuantity((int) (InventoryFragment.items.get(itemPosition).getQuantity() - amount));
+                                    if (InventoryFragment.items.get(itemPosition).getQuantity() <= 0)
                                     {
-                                        FridgeScreen.items.remove(itemPosition);
-                                        FridgeScreen.adapter.notifyItemRemoved(itemPosition);
+                                        InventoryFragment.items.remove(itemPosition);
+                                        InventoryFragment.adapter.notifyItemRemoved(itemPosition);
                                     }
                                     else
                                     {
-                                        FridgeScreen.adapter.notifyItemChanged(itemPosition);
+                                        InventoryFragment.adapter.notifyItemChanged(itemPosition);
                                     }
                                 }
                                 else {
@@ -112,13 +112,13 @@ public class PopupChangeItem extends DialogFragment {
 
 
                     } else {
-                        Call<Map<String, Object>> call = apiService.addToItem(FridgeScreen.items.get(itemPosition).getName(), amount);
+                        Call<Map<String, Object>> call = apiService.addToItem(InventoryFragment.items.get(itemPosition).getName(), amount);
                         call.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 if (response.isSuccessful()) {
-                                    FridgeScreen.items.get(itemPosition).setQuantity((FridgeScreen.items.get(itemPosition).getQuantity() + amount));
-                                    FridgeScreen.adapter.notifyItemChanged(itemPosition);
+                                    InventoryFragment.items.get(itemPosition).setQuantity((InventoryFragment.items.get(itemPosition).getQuantity() + amount));
+                                    InventoryFragment.adapter.notifyItemChanged(itemPosition);
                                 }
                                 else {
                                     // Handle the error response
