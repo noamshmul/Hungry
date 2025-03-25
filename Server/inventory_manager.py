@@ -54,4 +54,4 @@ def delete_favorites(recipe_id, inventory_id: int, db_instance: SQL_DB_Manager.D
 def remove_ingredients_by_recipe(recipe, inventory_id: int, db_instance: SQL_DB_Manager.DB_Manager, db_session: SQL_DB_Manager.Session):
     ingredients = recipe.get('ingredients')
     for id in ingredients:
-        db_instance.decrease_inv_item_amount(db_session, inventory_id, id, ingredients.get(id).get('quantity'))
+        db_instance.decrease_inv_item_amount_by_ingredient(db_session, inventory_id, int(id), ingredients.get(id).get('quantity'))

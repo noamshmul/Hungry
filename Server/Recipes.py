@@ -29,8 +29,7 @@ class MongoDB_Base:
     def connect_to_mongodb(self):
         global CONNECTION
         if not self.is_connected(self):
-            CONNECTION = MongoClient(f"mongodb://localhost:27017/")
-            #CONNECTION = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@localhost:{MONGODB_PORT}/")
+            CONNECTION = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@localhost:{MONGODB_PORT}/")
 
     def get(self, query, projection=None, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
         try:
