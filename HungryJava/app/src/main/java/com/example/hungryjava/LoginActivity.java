@@ -27,7 +27,7 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnTestConnection;
+    Button submitButton;
     EditText username;
     EditText password;
 
@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
 
         // submit button
-        btnTestConnection = findViewById(R.id.submit);
-        btnTestConnection.setOnClickListener(new View.OnClickListener() {
+        submitButton = findViewById(R.id.submit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String username_text = username.getText().toString();
                 String password_text = password.getText().toString();
