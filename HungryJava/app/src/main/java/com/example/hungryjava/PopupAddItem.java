@@ -33,6 +33,7 @@ public class PopupAddItem extends DialogFragment {
     private AutoCompleteTextView autoCompleteTextView;
     private NumberPicker numberPicker;
     private String selectedIngredient = null;
+    private long selectedIngredientID = 0;
     private static final String TAG = "PopupAddItem";
     private static List<String> ingredients = new ArrayList<>(); // Made static to cache the list
 
@@ -102,7 +103,7 @@ public class PopupAddItem extends DialogFragment {
 
                         // If item doesn't exist, add it as new
                         if (!itemFound) {
-                            InventoryFragment.items.add(new Item(selectedIngredient, amount));
+                            InventoryFragment.items.add(new Item(selectedIngredient, amount, selectedIngredientID));
                             InventoryFragment.adapter.notifyItemInserted(InventoryFragment.items.size() - 1);
                         }
                     }
@@ -182,6 +183,7 @@ public class PopupAddItem extends DialogFragment {
         autoCompleteTextView.setThreshold(1);
         autoCompleteTextView.setOnItemClickListener((parent, view1, position, id) -> {
             selectedIngredient = (String) parent.getItemAtPosition(position);
+            selectedIngredientID = position+1;
         });
     }
 
