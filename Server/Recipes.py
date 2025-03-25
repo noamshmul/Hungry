@@ -44,7 +44,7 @@ class MongoDB_Base:
             self.connect_to_mongodb(self)
             return CONNECTION.get_database(database_name).get_collection(collection_name).find(query, projection)
         except Exception as e:
-            logger.error("Failed with query: " + query)
+            logger.error("Failed with query: " + str(query))
             return None
         
     def aggregate(self, pipeline, database_name=DATABASE_NAME, collection_name=COLLECTION_NAME):
@@ -216,6 +216,21 @@ class MongoDB_Functions:
                 return None
         except Exception as e:
             return None
+
+    def get_favorite_recipes(self, favorites):
+        try:
+            query = {"_id": {"$in": favorites}}
+            projection = {"name": 1, "image": 1}  # Fetch only name & image
+
+            recipes = self.mongodb_base.get_all(self.mongodb_base,query,projection)
+            if recipes:
+                return list(recipes)
+            else:
+                return None
+        except Exception as e:
+            logger.error(e)
+            return None
+
 
 def main():
     base = MongoDB_Base

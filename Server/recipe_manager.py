@@ -30,3 +30,12 @@ def hungry(items):
     recipes = recipes[:3]
     return recipes
 
+
+def get_favorite_recipes(favorites):
+    logger.info("Inside %s", favorites)
+    fav_recipes = func.get_favorite_recipes(favorites)
+    logger.info(fav_recipes)
+    if fav_recipes:
+        return fav_recipes
+    else:
+        return None
