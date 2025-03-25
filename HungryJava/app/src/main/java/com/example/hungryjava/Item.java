@@ -2,12 +2,11 @@ package com.example.hungryjava;
 
 public class Item {
     private String name;
-    private long id;
+
     private double quantity;
 
-    public Item(String name, double quantity, long id)
+    public Item(String name, double quantity)
     {
-        this.id = id;
         this.name = name;
         this.quantity = quantity;
     }
@@ -27,8 +26,5 @@ public class Item {
         return name;
     }
 
-    public long getID()
-    {
-        return id;
-    }
+
 }

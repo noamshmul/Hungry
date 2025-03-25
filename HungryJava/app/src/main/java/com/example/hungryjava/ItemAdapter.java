@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,10 @@ import com.example.hungryjava.api.RetrofitClient;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,10 +39,45 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<Item> items;  // List to hold the data (strings)
     private Context context;
 
+    static Map<String, Long> ids = new HashMap<>();
+
     // Constructor
     public ItemAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+        Call<Map<String, Object>> call = apiService.getIngredients();
+
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Map<String, Object> responseBody = response.body();
+                    ArrayList<Map<String, Object>> ingredientsList = (ArrayList<Map<String, Object>>) responseBody.get("ingredients");
+                    if (ingredientsList != null) {
+                        for (Map<String, Object> ingredient : ingredientsList) {
+                            String name = (String) ingredient.get("name");
+                            if (name != null) {
+                                ids.put(name, Math.round((double)ingredient.get("id")));
+                            }
+                        }
+                    } else {
+                        //Log.e(TAG, "Ingredients list is null in response");
+                        //Toast.makeText(getContext(), "Failed to load ingredients", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    //Log.e(TAG, "Error: " + response.message());
+                    //Toast.makeText(getContext(), "Failed to load ingredients", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                //Log.e(TAG, "Failure: " + t.getMessage());
+                //Toast.makeText(getContext(), "Failed to load ingredients", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Create new views (invoked by the layout manager)
@@ -71,7 +110,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             }
         });
 
-        loadImage(Long.toString(item.getID()), holder.itemImage);
+        loadImage(Long.toString(ids.get(item.getName())), holder.itemImage);
     }
 
     // Return the size of the data list

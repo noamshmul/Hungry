@@ -61,7 +61,7 @@ public class InventoryFragment extends Fragment {
                         ArrayList<Map<String, Object>> inv = (ArrayList<Map<String, Object>>)responseBody.get("items");
                         items.clear(); // Clear existing items before adding new ones
                         for (int i = 0; i < inv.size(); i++) {
-                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"), Math.round((double)inv.get(i).get("id")));
+                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"));
                             items.add(item);
                         }
                     } else {
