@@ -19,19 +19,19 @@
             android:name=".SingleRecipeScreen"
             android:exported="false" />
         <activity
-            android:name=".Activity_signup"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeScreen"
+            android:name=".Activity_signup"
             android:exported="false" />
         <activity
             android:name=".FridgeScreen"
             android:exported="false" />
         <activity
-            android:name=".loginscreen"
+            android:name=".PopupAddItem"
             android:exported="false" />
         <activity
-            android:name=".PopupAddItem"
+            android:name=".HungryPopupActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

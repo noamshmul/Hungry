@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
@@ -13,7 +13,7 @@
         android:id="@+id/item_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher" />
 
     <!-- Text Container -->
     <LinearLayout
@@ -25,21 +25,20 @@
 
         <!-- Item Name -->
         <TextView
-            android:id="@+id/item_name"
+            android:id="@+id/text_ingredient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Item Name"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@android:color/black" />
 
-        <!-- Item Quantity -->
+        <!-- Item Amount -->
         <TextView
-            android:id="@+id/item_quantity"
+            android:id="@+id/text_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity: 1"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 
     <!-- Minus Button -->
@@ -50,8 +49,8 @@
         android:background="@drawable/circular_button"
         android:src="@android:drawable/ic_delete"
         android:contentDescription="Decrease Quantity"
-        android:tint="@android:color/black"
-        android:layout_marginEnd="4dp"/>
+        android:layout_marginEnd="4dp"
+        app:tint="@android:color/black" />
 
     <!-- Plus Button -->
     <ImageButton
@@ -61,5 +60,6 @@
         android:background="@drawable/circular_button"
         android:src="@android:drawable/ic_input_add"
         android:contentDescription="Increase Quantity"
-        android:tint="@android:color/black"/>
+        app:tint="@android:color/black" />
+
 </LinearLayout>

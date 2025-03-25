@@ -20,7 +20,7 @@ def init_ingredients():
 
 def test_DB():
     with next(db_instance.get_db()) as db:
-        inventory = Inventory(username="yosi123",password="1234",custom_recipes="{}")
+        inventory = Inventory(username="yosi123",password="1234", favorites="[]")
         db_instance.add(db, inventory)
         for i in range(1,5):
             inventory_item = Items(Inventory_id=1, Ingredient_id=i, quantity=2)
