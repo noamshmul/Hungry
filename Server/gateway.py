@@ -8,11 +8,10 @@ import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
-import Databases.Recipes as DBR
+import Recipes as DBR
 
 IMAGES_PATH = 'images'
 
-import Databases.Recipes as DBR
 
 router = APIRouter()
 
