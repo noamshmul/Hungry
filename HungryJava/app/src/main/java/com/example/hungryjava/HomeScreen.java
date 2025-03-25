@@ -2,6 +2,7 @@ package com.example.hungryjava;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
 
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import com.example.hungryjava.api.RetrofitClient;
 import retrofit2.Retrofit;
 
 
@@ -27,19 +36,6 @@ public class HomeScreen extends AppCompatActivity {
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
 
-        boolean is_user_exist = sharedPreferences.contains("username");
-        boolean is_password_exist = sharedPreferences.contains("password");
-
-        // checks if the user has already signed in from this account before
-        if (!(is_user_exist && is_password_exist)){
-            // Retrieve the username and password
-            String username = sharedPreferences.getString("username", "default_value");
-            String password = sharedPreferences.getString("password", "default_value");
-
-            // move to next login screen
-            Intent intent = new Intent(HomeScreen.this, MainActivity.class);
-            startActivity(intent);
-        }
 
         String username = sharedPreferences.getString("username", "default_value");
         String password = sharedPreferences.getString("password", "default_value");
@@ -77,17 +73,50 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         // I'm Hungry button
-        Button hungry = findViewById(R.id.hungryButton);
-        hungry.setOnClickListener(new View.OnClickListener() {
+        Button btnHungry = findViewById(R.id.hungryButton);
+        btnHungry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to execute when the button is clicked}
-                Toast.makeText(HomeScreen.this, "i'm Hungry clicked", Toast.LENGTH_SHORT).show();
+                hungry();
             }
         });
 
 
 
 
+    }
+
+    private void hungry() {
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+        Call<Map<String, Object>> call = apiService.getHungry();
+
+        // Log the API request
+        Log.d("hungry", "API call started...");
+
+        // Execute the request synchronously or asynchronously
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // get the response dictionary into "body"
+                    Map<String, Object> body = response.body();
+                    // TODO: parse the response when we will know his type
+                    Log.d("hungry", "Response: " + response.code() + " " + body);
+                }
+                else if (response.code() == 400) {
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                    Toast.makeText(HomeScreen.this, "Not enough items in your inventory", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

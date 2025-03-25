@@ -1,7 +1,6 @@
 import SQL_DB_Manager
 
 
-
 ITEMS = [{'name': 'tomato', 'amount': 4}, {'name': 'cucumber', 'amount': 2}, {'name': 'onion', 'amount': 3}]
 PASSWORD = "password"
 FAVORITES = []

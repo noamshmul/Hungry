@@ -4,7 +4,7 @@ import os
 
 from auth import authentication
 from SQL_DB_Manager import DB_Manager
-import inventory_manager
+import inventory_manager, recipe_manager
 from tables import Ingredient, Inventory, Items
 from log import logger
 from SQL_DB_Manager import db_instance
@@ -62,6 +62,19 @@ def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends
     add = inventory_manager.delete_favorites(recipe_id, inventory_id, db_instance, db)
     if add:
         return {"status": "ok"}
+
+@router.get("/hungry")
+def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    items = inventory_manager.get_inventory(inventory_id, db_instance, db)
+    try:
+        recipes = recipe_manager.hungry(items)
+    except RuntimeError as err:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(err)
+        )
+
+    return {"status": "ok", "items": recipes}
 
 @router.get("/favorites")
 def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):

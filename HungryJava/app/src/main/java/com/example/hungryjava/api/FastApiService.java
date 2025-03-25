@@ -27,4 +27,6 @@ public interface FastApiService {
             @Query("password") String password
     );
 
+    @GET("/hungry")
+    Call<Map<String, Object>> getHungry();
 }

@@ -92,7 +92,7 @@ public class Activity_signup extends AppCompatActivity {
                                         editor.apply(); // Commit the changes asynchronously
 
                                         // move to next homescreen
-                                        Intent intent = new Intent(Activity_signup.this, HomeScreen.class);
+                                        Intent intent = new Intent(Activity_signup.this, MainActivity.class);
                                         startActivity(intent);
                                     } else if (status.equals("conflict")) {
                                         Toast.makeText(Activity_signup.this, "Username is already taken", Toast.LENGTH_SHORT).show();
