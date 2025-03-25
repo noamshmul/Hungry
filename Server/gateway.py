@@ -48,16 +48,20 @@ def remove_item(name : str, amount : int, inventory_id = Depends(authentication)
     inventory_manager.remove_item(name, amount, inventory_id, db_instance, db)
     return {"status": "ok"}
 
-@router.get("/custom-recipes")
-def get_custom_recipes(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    custom_recipes = inventory_manager.get_all_custom_recipes(inventory_id, db_instance, db)
-    return custom_recipes
+@router.put("/favorites")
+def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends(authentication)):
+    inventory = db_instance.get_obj_by_id(db, Inventory, inventory_id)
+    add = inventory_manager.add_favorites(recipe_id, inventory_id, db_instance, db)
+    if add:
+        return {"status": "ok"}
+    return {"status": "failed"}
 
-
-@router.post("/custom-recipes")
-def add_custom_recipes(name : str, instructions : list, approx_time : int, ingredients : list, size : int, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
-    inventory_manager.add_custom_recipe(name, instructions, approx_time, ingredients, size, inventory_id, db_instance, db)
-    return {"status": "ok"}
+@router.delete("/favorites")
+def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends(authentication)):
+    inventory = db_instance.get_obj_by_id(db, Inventory, inventory_id)
+    add = inventory_manager.delete_favorites(recipe_id, inventory_id, db_instance, db)
+    if add:
+        return {"status": "ok"}
 
 @router.get("/hungry")
 def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
@@ -72,9 +76,14 @@ def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.
 
     return {"status": "ok", "items": recipes}
 
+@router.get("/favorites")
+def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
+    favorites = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
+    return favorites
+
 @router.post("/signup")
 def signup(username: str, password: str, db=Depends(db_instance.get_db)):
-    inventory = Inventory(username=username, password=password, custom_recipes="{}")
+    inventory = Inventory(username=username, password=password, favorites="[]")
 
     # Check if the username is already exist
     search_username = db_instance.get_inventory_by_username(db, username)
