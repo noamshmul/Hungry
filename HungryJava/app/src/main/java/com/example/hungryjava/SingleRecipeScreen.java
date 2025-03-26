@@ -31,6 +31,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class SingleRecipeScreen extends AppCompatActivity {
@@ -181,6 +183,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(makeIt.getContext(), "Bon appétit!", Toast.LENGTH_SHORT).show(); // Added toast message here
                     Log.d(TAG, "Ingredients deleted successfully for recipe id: " + recipeId);
+                    updateInventoryScreen();
                 } else {
                     Log.e(TAG, "Error: " + response.message());
                 }
@@ -193,6 +196,45 @@ public class SingleRecipeScreen extends AppCompatActivity {
         });
     }
 
+    private void updateInventoryScreen(){
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+
+        // Make the API call
+        Call<Map<String, Object>> call = apiService.getInventory();
+        Log.d(TAG, "API call started...");
+
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                Log.d(TAG, "Response: " + response.code() + " " + response.message());
+
+                if (response.isSuccessful()) {
+                    Map<String, Object> responseBody = response.body();
+                    if (responseBody != null) {
+                        ArrayList<Map<String, Object>> inv = (ArrayList<Map<String, Object>>)responseBody.get("items");
+                        InventoryFragment.items.clear(); // Clear existing items before adding new ones
+                        for (int i = 0; i < inv.size(); i++) {
+                            Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"));
+                            InventoryFragment.items.add(item);
+                        }
+                    } else {
+                        Log.e(TAG, "Response body is null");
+                    }
+                } else {
+                    Log.e(TAG, "Error: " + response.message());
+                }
+
+                InventoryFragment.adapter = new ItemAdapter(InventoryFragment.context, InventoryFragment.items);
+                InventoryFragment.list.setAdapter(InventoryFragment.adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                Log.e(TAG, "Failure: " + t.getMessage());
+            }
+        });
+    }
     static public void loadImage(String imageUrl, ImageView xmlObject) {
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
