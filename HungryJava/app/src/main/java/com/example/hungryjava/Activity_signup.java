@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class Activity_signup extends AppCompatActivity {
     EditText password;
     EditText cnf_password;
 
+    private FloatingActionButton fabBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,12 @@ public class Activity_signup extends AppCompatActivity {
             return insets;
         });*/
 
+
+        fabBack = findViewById(R.id.fabBack);
+        fabBack.setOnClickListener(v -> {
+            // Start the second activity with the shared element transition
+            finish(); // Finish the activity and go back to the previous screen
+        });
         // create the username and password textbox
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
