@@ -73,9 +73,11 @@ public class CatalogFragment extends Fragment {
                 editor.remove("password");
                 editor.apply();
 
-                // move to next login screen
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                // Close the parent activity
+                requireActivity().finish();
             }
         });
       
@@ -138,10 +140,11 @@ public class CatalogFragment extends Fragment {
                     Log.e(TAG, "Error: " + response.message());
 
                     Toast.makeText(view.getContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
-
+                    // Close the parent activity
+                    requireActivity().finish();
                 }
 
                 // Initialize RecyclerView

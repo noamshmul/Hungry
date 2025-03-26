@@ -86,6 +86,10 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     // Handle the response
                     Map<String, Object> responseBody = response.body();
+
+                    // Clear out before adding new recipes
+                    RecipesList.clear();
+
                     if (responseBody != null) {
                         ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
                         for (int i = 0; i < recipes.size(); i++)
@@ -115,10 +119,11 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG, "Error: " + response.message());
 
                     Toast.makeText(view.getContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
-
+                    // Close the parent activity
+                    requireActivity().finish();
                 }
 
             }

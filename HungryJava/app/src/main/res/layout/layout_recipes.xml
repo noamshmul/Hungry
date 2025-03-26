@@ -19,23 +19,32 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
-      
-              <!-- Star Icon on Top Left -->
-        <ImageView
-            android:id="@+id/starIcon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="8dp"
-            android:src="@android:drawable/btn_star_big_off"
-            android:contentDescription="Favorite" />
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Star Icon on Top Left -->
+            <ImageView
+                android:id="@+id/starIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="4dp"
+                android:contentDescription="Favorite"
+                android:src="@android:drawable/btn_star_big_off"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/captionText"

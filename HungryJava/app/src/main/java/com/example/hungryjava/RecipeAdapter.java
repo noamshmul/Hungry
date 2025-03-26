@@ -119,8 +119,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                                     int selectedTabIndex = tabLayout.getSelectedTabPosition();
                                     ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
                                     if (selectedTab != null && selectedTab.getText() != null) {
-                                        if (selectedTab.getText() == "Catalog"){
+                                        if (selectedTab.getText() == "Profile"){
                                             triggerHomeRefresh();
+
+                                            // Remove item from the list
+                                            int index = RecipesList.indexOf(item);
+                                            if (index != -1) {
+                                                RecipesList.remove(index);
+                                                notifyItemRemoved(index);
+                                                notifyItemRangeChanged(index, RecipesList.size()); // Update the indices of remaining items
+                                            }
                                         }
                                         if (selectedTab.getText() == "Home"){
                                             triggerCatalogRefresh();
