@@ -30,7 +30,7 @@ public class InventoryFragment extends Fragment {
     private static final String TAG = "InventoryFragment";
     static List<Item> items = new ArrayList<>();
     static ItemAdapter adapter;
-    private RecyclerView list;
+    static RecyclerView list;
 
     static Context context;
 

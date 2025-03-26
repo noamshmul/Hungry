@@ -224,6 +224,8 @@ public class SingleRecipeScreen extends AppCompatActivity {
                 } else {
                     Log.e(TAG, "Error: " + response.message());
                 }
+                InventoryFragment.adapter = new ItemAdapter(InventoryFragment.context, InventoryFragment.items);
+                InventoryFragment.list.setAdapter(InventoryFragment.adapter);
             }
 
             @Override
