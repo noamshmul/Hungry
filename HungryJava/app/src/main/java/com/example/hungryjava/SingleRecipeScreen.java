@@ -1,25 +1,34 @@
 package com.example.hungryjava;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import androidx.appcompat.widget.Toolbar;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+
 
 public class SingleRecipeScreen extends AppCompatActivity {
 
@@ -30,11 +39,18 @@ public class SingleRecipeScreen extends AppCompatActivity {
     private TextView recipeIngredients;
     private TextView recipeInstructions;
     private TextView recipeSize;
+    private FloatingActionButton fabBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_recipe_screen);
+
+        fabBack = findViewById(R.id.fabBack);
+        fabBack.setOnClickListener(v -> {
+            // Start the second activity with the shared element transition
+            finish(); // Finish the activity and go back to the previous screen
+        });
 
         // Initialize views
         recipeImage = findViewById(R.id.recipe_image);
