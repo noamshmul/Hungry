@@ -52,4 +52,7 @@ public interface FastApiService {
 
     @GET("/hungry")
     Call<Map<String, Object>> getHungry();
+
+    @DELETE("/remove-ingredients-by-recipe")
+    Call<Map<String, Object>> remove_ingredients_by_recipe(@Query("recipe_id") String recipe_id);
 }

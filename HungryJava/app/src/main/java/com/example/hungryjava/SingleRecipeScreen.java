@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +43,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
     private TextView recipeInstructions;
     private TextView recipeSize;
     private FloatingActionButton fabBack;
+    private Button makeIt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class SingleRecipeScreen extends AppCompatActivity {
         recipeIngredients = findViewById(R.id.recipe_ingredients);
         recipeInstructions = findViewById(R.id.recipe_instructions);
         recipeSize = findViewById(R.id.recipe_size);
+        makeIt = findViewById(R.id.make_it);
 
         //get recipe name from intent
         String recipeNameStr = getIntent().getStringExtra("recipeName");
@@ -107,10 +112,20 @@ public class SingleRecipeScreen extends AppCompatActivity {
             recipeName.setText((String) recipe.get("name"));
         }
         if (recipe.containsKey("approx_time")) {
-            recipeApproxTime.setText("Approx Time: " + recipe.get("approx_time"));
+            if(recipe.get("approx_time") != null) {
+                recipeApproxTime.setText("Approx Time: " + recipe.get("approx_time"));
+                recipeApproxTime.setVisibility(View.VISIBLE);
+            }
+            else
+                recipeApproxTime.setVisibility(View.INVISIBLE);
         }
         if (recipe.containsKey("size")) {
-            recipeSize.setText("Size: " + recipe.get("size"));
+            if(recipe.get("size") != null) {
+                recipeSize.setText("Size: " + recipe.get("size"));
+                recipeSize.setVisibility(View.VISIBLE);
+            }
+            else
+                recipeSize.setVisibility(View.INVISIBLE);
         }
 
         if (recipe.containsKey("image")) {
@@ -139,6 +154,43 @@ public class SingleRecipeScreen extends AppCompatActivity {
             }
             recipeInstructions.setText(instructionsText.toString());
         }
+
+        // Get recipe_id and set OnClickListener for the "Make It" button
+        String recipeId = (String) recipe.get("_id"); // Assuming recipe id is stored with key "id"
+        makeIt.setOnClickListener(v -> {
+            if (recipeId != null && !recipeId.isEmpty()) {
+                deleteIngredientsByRecipe(recipeId); // Trigger the deleteIngredientsByRecipe method
+            } else {
+                Log.e(TAG, "Recipe ID is null or empty");
+            }
+        });
+    }
+
+    private void deleteIngredientsByRecipe(String recipeId) {
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+
+        // Make the API call to delete ingredients by recipe id
+        Call<Map<String, Object>> call = apiService.remove_ingredients_by_recipe(recipeId);
+
+        Log.d(TAG, "Delete ingredients API call started for recipe id: " + recipeId);
+
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(makeIt.getContext(), "Bon appétit!", Toast.LENGTH_SHORT).show(); // Added toast message here
+                    Log.d(TAG, "Ingredients deleted successfully for recipe id: " + recipeId);
+                } else {
+                    Log.e(TAG, "Error: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                Log.e(TAG, "Failure: " + t.getMessage());
+            }
+        });
     }
 
     static public void loadImage(String imageUrl, ImageView xmlObject) {
