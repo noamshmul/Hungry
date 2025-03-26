@@ -7,8 +7,14 @@ func = Recipes.MongoDB_Functions(base)
 def get_single_recipe(selected_recipe_name):
     return func.get_recipe_by_name(selected_recipe_name)
 
-def get_all_recipes():
-    return func.get_all_recipes()
+def get_all_recipes(fav):
+    recipes_list = func.get_all_recipes()
+    for recipe in recipes_list:
+        if recipe["_id"] in fav:
+            recipe["favorite"] = True
+        else:
+            recipe["favorite"] = False
+    return recipes_list
 
 def hungry(items):
     '''# the big algorithm'''
@@ -32,9 +38,7 @@ def hungry(items):
 
 
 def get_favorite_recipes(favorites):
-    logger.info("Inside %s", favorites)
     fav_recipes = func.get_favorite_recipes(favorites)
-    logger.info(fav_recipes)
     if fav_recipes:
         return fav_recipes
     else:
