@@ -50,9 +50,6 @@ public interface FastApiService {
     @GET("/recipes")
     Call<Map<String, Object>> getRecipes();
 
-    @GET("/images/{image_id}")
-    Call<ResponseBody> get_image(@Path("image_id") String image_id);
-
     @GET("/hungry")
     Call<Map<String, Object>> getHungry();
 }
