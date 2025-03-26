@@ -31,6 +31,10 @@ public class InventoryFragment extends Fragment {
     static List<Item> items = new ArrayList<>();
     static ItemAdapter adapter;
 
+    static RecyclerView list;
+
+    static Context context;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class InventoryFragment extends Fragment {
         String username = sharedPreferences.getString("username", "default_value");
         String password = sharedPreferences.getString("password", "default_value");
         Log.d("username: ", username);
+
+        context = requireContext();
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
         FastApiService apiService = retrofit.create(FastApiService.class);
@@ -71,8 +77,8 @@ public class InventoryFragment extends Fragment {
                     Log.e(TAG, "Error: " + response.message());
                 }
 
-                RecyclerView list = view.findViewById(R.id.inventory_list);
-                list.setLayoutManager(new LinearLayoutManager(requireContext()));
+                list = view.findViewById(R.id.inventory_list);
+                list.setLayoutManager(new LinearLayoutManager(context));
                 adapter = new ItemAdapter(requireContext(), items);
                 list.setAdapter(adapter);
             }
