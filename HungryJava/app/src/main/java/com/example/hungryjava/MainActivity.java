@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     tab.setText("Home");
                     break;
                 case 2:
-                    tab.setText("Catalog");
+                    tab.setText("Profile");
                     break;
             }
         }).attach();

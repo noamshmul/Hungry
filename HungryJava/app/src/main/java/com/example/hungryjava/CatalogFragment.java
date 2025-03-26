@@ -54,7 +54,7 @@ public class CatalogFragment extends Fragment {
                 editor.apply();
 
                 // move to next login screen
-                Intent intent = new Intent(getActivity(), Activity_signup.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
             }
         });
