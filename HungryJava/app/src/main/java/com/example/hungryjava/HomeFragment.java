@@ -121,8 +121,6 @@ public class HomeFragment extends Fragment {
 
                 }
 
-                // Initialize RecyclerView
-
             }
 
             @Override

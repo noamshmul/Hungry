@@ -1,4 +1,4 @@
-from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status, FastAPI
 from fastapi.responses import FileResponse
 import os
 
@@ -12,9 +12,13 @@ from SQL_DB_Manager import db_instance
 import Recipes as DBR
 
 IMAGES_PATH = 'images'
+INGREDIENT_IMAGES_PATH = 'ingredient-images'
 
-
+app = FastAPI()
 router = APIRouter()
+
+# Include the router in the app
+app.include_router(router)
 
 
 
@@ -34,6 +38,19 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
             detail="Image not found - wrong image_id"
         )
         
+    return FileResponse(path,media_type="image/jpeg")
+
+@router.get("/ingredient-images/{ingredient_id}.jpg")
+def get_ingredient_image(ingredient_id ,inventory_id = Depends(authentication)):
+    path = os.path.join(INGREDIENT_IMAGES_PATH, ingredient_id + '.jpg')
+
+    if not os.path.exists(path):
+        logger.error("File Not Exists")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found - wrong image_id"
+        )
+    
     return FileResponse(path,media_type="image/jpeg")
 
 @router.get("/inventory")
@@ -87,7 +104,7 @@ def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.
             detail=str(err)
         )
 
-    return {"status": "ok", "items": recipes}
+    return {"status": "ok", "recipes": recipes}
 
 
 @router.post("/signup")
@@ -146,5 +163,11 @@ def get_all_recipes(inventory_id=Depends(authentication), db=Depends(db_instance
 
 @router.get("/recipe")
 def get_single_recipe(selected_recipe_name : str):
-    single_recipe = recipe_manager.get_single_recipe(selected_recipe_name)
+    single_recipe = recipe_manager.get_single_recipe_name(selected_recipe_name)
     return single_recipe
+
+@router.delete("/remove-ingredients-by-recipe")
+def remove_ingredients_by_recipe(recipe_id : str, inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
+    recipe = recipe_manager.get_single_recipe_id(recipe_id)
+    inventory_manager.remove_ingredients_by_recipe(recipe, inventory_id, db_instance, db)
+    return {"status": "ok"}

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"       
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    tools:context=".CatalogFragment">
+  
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,8 +17,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="8dp">
-            <!-- Search Bar -->
+          
+            <TextView
+                android:id="@+id/helloText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="@string/hello"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="75dp"
+                android:text="@string/logout" />
+          
+            <!-- Search Bar -->
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
@@ -34,5 +55,6 @@
 
 
     </FrameLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

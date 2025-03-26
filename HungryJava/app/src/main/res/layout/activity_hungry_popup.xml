@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popupContainer"
+    android:layoutDirection="ltr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
@@ -22,29 +25,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="You're Hungry!"
-            android:textSize="24sp"
+            android:textSize="32sp"
             android:textColor="@color/onPrimary"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Looking for food..."
-            android:textSize="18sp"
+            android:text="Matching the best recipe..."
+            android:textSize="24sp"
             android:textColor="@color/onPrimary"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finding best restaurants!"
-            android:textSize="18sp"
-            android:textColor="@color/onPrimary"/>
+        <!-- RecyclerView for displaying images -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="256dp"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/layout_recipes"/>
+
     </LinearLayout>
 
 </FrameLayout>

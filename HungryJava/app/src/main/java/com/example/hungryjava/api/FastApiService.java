@@ -34,6 +34,14 @@ public interface FastApiService {
     Call<Map<String, Object>> get_single_recipe(
             @Query("selected_recipe_name") String selected_recipe_name
     );
+
+    @GET("/images/{image_id}")
+    Call<ResponseBody> get_image(@Path("image_id") String image_id);
+
+    @GET("/ingredient-images/{image_id}")
+    Call<ResponseBody> get_ingredient_image(@Path("image_id") String image_id);
+
+
     @POST("/signup")
     Call<Map<String, Object>> postSignup(
             @Query("username") String inventory_id,
@@ -43,11 +51,9 @@ public interface FastApiService {
     @GET("/recipes")
     Call<Map<String, Object>> getRecipes();
 
-    @GET("/images/{image_id}")
-    Call<ResponseBody> get_image(@Path("image_id") String image_id);
-
     @GET("/hungry")
     Call<Map<String, Object>> getHungry();
+
 
     @GET("/favorites")
     Call<Map<String, Object>> getFavorites();
@@ -61,5 +67,7 @@ public interface FastApiService {
     Call<Map<String, String>> deleteFavorites(
             @Query("recipe_id") String recipe_id
     );
-
+  
+    @DELETE("/remove-ingredients-by-recipe")
+    Call<Map<String, Object>> remove_ingredients_by_recipe(@Query("recipe_id") String recipe_id);
 }

@@ -76,6 +76,17 @@ class DB_Manager:
             return item
         return None
 
+    def decrease_inv_item_amount_by_ingredient(self, db: Session, inv_id, ingredient_id, amount):
+        item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.Ingredient_id == ingredient_id).first()
+        if item:
+            item.quantity -= amount
+            if item.quantity <= 0:
+                self.delete_Item(db, item.id)
+                return 1
+            db.commit()
+            db.refresh(item)
+            return item.quantity
+        return 0
 
     def decrease_inv_item_amount(self, db: Session, inv_id, item_id, amount):
         item = db.query(Items).filter(Items.Inventory_id == inv_id, Items.id == item_id).first()

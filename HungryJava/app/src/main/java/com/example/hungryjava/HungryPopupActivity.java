@@ -2,6 +2,7 @@ package com.example.hungryjava;
 
 import android.animation.Animator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -10,12 +11,30 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.ViewTreeObserver;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.hungryjava.api.FastApiService;
+import com.example.hungryjava.api.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.ViewAnimationUtils;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HungryPopupActivity extends AppCompatActivity {
 
     private FloatingActionButton fabHungry;
+    private List<RecipeItem> RecipesList = new ArrayList<>();
+    private RecipeAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +89,10 @@ public class HungryPopupActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(HungryPopupActivity.this, 1));
+        hungry();
     }
 
     private void startExitAnimation() {
@@ -89,5 +112,50 @@ public class HungryPopupActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startExitAnimation(); // Play exit animation before closing
+    }
+
+    private void hungry() {
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+        FastApiService apiService = retrofit.create(FastApiService.class);
+        Call<Map<String, Object>> call = apiService.getHungry();
+
+        // Log the API request
+        Log.d("hungry", "API call started...");
+
+        // Execute the request synchronously or asynchronously
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    var responseBody = response.body();
+                    ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
+                    for (int i = 0; i < recipes.size(); i++)
+                    {
+                        String recipe_id = (String) recipes.get(i).get("_id");
+                        String name = (String) recipes.get(i).get("name");
+                        String Image_url = (String) recipes.get(i).get("image");
+                        RecipesList.add(new RecipeItem(
+                                recipe_id,Image_url, name
+                        ));
+
+                    }
+
+                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList);
+                    recyclerView.setAdapter(adapter);
+                }
+                else if (response.code() == 400) {
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                    Toast.makeText(HungryPopupActivity.this, "Not enough items in your inventory", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

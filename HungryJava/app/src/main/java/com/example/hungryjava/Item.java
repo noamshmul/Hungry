@@ -2,6 +2,7 @@ package com.example.hungryjava;
 
 public class Item {
     private String name;
+
     private double quantity;
 
     public Item(String name, double quantity)
@@ -24,4 +25,6 @@ public class Item {
     {
         return name;
     }
+
+
 }

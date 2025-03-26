@@ -2,20 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
     android:orientation="vertical"
     android:padding="16dp">
 
-
-    <!-- EditText for entering the amount -->
-    <EditText
-        android:id="@+id/editText_amount"
+    <!-- Container for NumberPicker -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Amount"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
 
-    <!-- Add to Inventory Button -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <NumberPicker
+            android:id="@+id/numberPicker_amount"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
+    </LinearLayout>
+
+    <!-- Change Amount Button -->
     <Button
         android:id="@+id/button_change"
         android:layout_width="match_parent"
@@ -23,3 +37,4 @@
         android:text="Remove"/>
 
 </LinearLayout>
+

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Hom
                     tab.setText("Home");
                     break;
                 case 2:
-                    tab.setText("Catalog");
+                    tab.setText("Profile");
                     break;
             }
         }).attach();
