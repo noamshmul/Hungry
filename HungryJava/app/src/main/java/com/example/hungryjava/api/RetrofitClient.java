@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:8000";
-    private static final String PROD_URL = "http://192.168.211.128:8000";
+    private static final String PROD_URL = "http://192.168.1.107:8000";
     private static Retrofit retrofit = null;
     public static Retrofit getRetrofitInstance(String username, String password, boolean flag) {
         if (retrofit == null || flag) {

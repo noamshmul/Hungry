@@ -90,7 +90,7 @@ def add_favorite(recipe_id, db=Depends(db_instance.get_db), inventory_id=Depends
 def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
     fav_id = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
     favorites = recipe_manager.get_favorite_recipes(fav_id)
-    return {"favorites": favorites}
+    return {"recipes": favorites}
 
 
 @router.get("/hungry")
@@ -155,8 +155,10 @@ def add_ingredient(name: str, unit_size: str, db=Depends(db_instance.get_db)):
     return {"status": "ok", "ingredient": result}
 
 @router.get("/recipes")
-def get_all_recipes():
-    recipes = recipe_manager.get_all_recipes()
+def get_all_recipes(inventory_id=Depends(authentication), db=Depends(db_instance.get_db)):
+    fav_id = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
+    recipes = recipe_manager.get_all_recipes(fav_id)
+
     return {"recipes" : recipes}
 
 @router.get("/recipe")

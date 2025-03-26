@@ -32,9 +32,6 @@
             android:name=".HungryPopupActivity"
             android:exported="false" />
         <activity
-            android:name=".RecipesScreen"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
