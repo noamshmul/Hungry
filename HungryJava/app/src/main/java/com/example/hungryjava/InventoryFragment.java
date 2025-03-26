@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +30,23 @@ public class InventoryFragment extends Fragment {
     private static final String TAG = "InventoryFragment";
     static List<Item> items = new ArrayList<>();
     static ItemAdapter adapter;
+    private RecyclerView list;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        // Initialize RecyclerView
+        list = view.findViewById(R.id.inventory_list);
+        list.setLayoutManager(new LinearLayoutManager(requireContext()));
+        
+        // Create adapter if it doesn't exist
+        if (adapter == null) {
+            adapter = new ItemAdapter(requireContext(), items);
+            list.setAdapter(adapter);
+        }
 
         // Get the SharedPreferences instance
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("User Data", Context.MODE_PRIVATE);
@@ -64,17 +75,13 @@ public class InventoryFragment extends Fragment {
                             Item item = new Item((String)inv.get(i).get("ingredient_name"), (double)inv.get(i).get("quantity"));
                             items.add(item);
                         }
+                        adapter.notifyDataSetChanged();
                     } else {
                         Log.e(TAG, "Response body is null");
                     }
                 } else {
                     Log.e(TAG, "Error: " + response.message());
                 }
-
-                RecyclerView list = view.findViewById(R.id.inventory_list);
-                list.setLayoutManager(new LinearLayoutManager(requireContext()));
-                adapter = new ItemAdapter(requireContext(), items);
-                list.setAdapter(adapter);
             }
 
             @Override
@@ -84,7 +91,7 @@ public class InventoryFragment extends Fragment {
         });
 
         // Set up add button
-        Button add = view.findViewById(R.id.add_item);
+        ExtendedFloatingActionButton add = view.findViewById(R.id.add_item);
         add.setOnClickListener(v -> {
             PopupAddItem popup = new PopupAddItem();
             popup.show(requireActivity().getSupportFragmentManager(), "PopupAddItem");
