@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.HomeRefreshListener, RecipeAdapter.CatalogRefreshListener {
-
+    private static MainActivity mainActivityInstance;
     private String TAG = "MainActivity";
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Hom
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivityInstance = this; // Store the instance
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPreferences = getSharedPreferences("User Data", Context.MODE_PRIVATE);
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Hom
                     break;
             }
         }).attach();
+    }
+
+    // Static method to get the instance of MainActivity
+    public static MainActivity getInstance() {
+        return mainActivityInstance;
     }
 
     private Retrofit getRetrofit(SharedPreferences sharedPreferences){

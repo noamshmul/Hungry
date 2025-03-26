@@ -110,7 +110,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                             item.setFavorite(false);
                             holder.starIcon.setImageResource(android.R.drawable.btn_star_big_off);
 
-                            if (context instanceof Activity) {
+                            if (context instanceof HungryPopupActivity) {
+                                triggerHomeRefresh();
+                                triggerCatalogRefresh();
+                            }
+                            else if (context instanceof Activity) {
                                 FragmentActivity  activity = (FragmentActivity)context;
                                 TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
                                 ViewPager2 viewPager = activity.findViewById(R.id.viewPager);
@@ -176,7 +180,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                             item.setFavorite(true);
                             holder.starIcon.setImageResource(android.R.drawable.btn_star_big_on);
 
-                            if (context instanceof Activity) {
+                            if (context instanceof HungryPopupActivity) {
+                                triggerHomeRefresh();
+                                triggerCatalogRefresh();
+                            }
+                            else if (context instanceof Activity) {
                                 FragmentActivity  activity = (FragmentActivity)context;
                                 TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
                                 ViewPager2 viewPager = activity.findViewById(R.id.viewPager);

@@ -96,8 +96,9 @@ def get_favorites(inventory_id=Depends(authentication), db=Depends(db_instance.g
 @router.get("/hungry")
 def get_hungry(inventory_id = Depends(authentication), db = Depends(db_instance.get_db)):
     items = inventory_manager.get_inventory(inventory_id, db_instance, db)
+    favs = inventory_manager.get_all_favorites(inventory_id, db_instance, db)
     try:
-        recipes = recipe_manager.hungry(items)
+        recipes = recipe_manager.hungry(items, favs)
     except RuntimeError as err:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

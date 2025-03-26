@@ -1,4 +1,5 @@
 import Recipes
+import random
 from log import logger
 
 base = Recipes.MongoDB_Base
@@ -19,7 +20,7 @@ def get_all_recipes(fav):
 def get_single_recipe_id(selected_recipe_id):
     return func.get_recipe_by_id(selected_recipe_id)
 
-def hungry(items):
+def hungry(items, favorites):
     '''# the big algorithm'''
     existing_items = {str(item["Ingredient_id"]) : item["quantity"] for item in items}
 
@@ -35,8 +36,24 @@ def hungry(items):
                 if r not in recipes:
                     recipes.append(r)
         i += 1
-    
-    recipes = recipes[:3]
+
+    for recipe in recipes:
+        recipe["favorite"] = recipe["_id"] in favorites
+
+    # Filtering recipes that are marked as favorite
+    favorite_recipes = [recipe for recipe in recipes if recipe["favorite"]]
+
+    # If there are more than 3 favorite recipes, return them
+    if len(favorite_recipes) < 3:
+        non_favorite_recipes = [recipe for recipe in recipes if not recipe["favorite"]]
+        random.shuffle(non_favorite_recipes)  # Shuffle to get random recipes
+        favorite_recipes.extend(non_favorite_recipes[:3 - len(favorite_recipes)])
+    else:
+        random.shuffle(favorite_recipes)  # Shuffle to get random recipes
+        favorite_recipes = favorite_recipes[:3]
+
+    recipes = favorite_recipes
+
     return recipes
 
 

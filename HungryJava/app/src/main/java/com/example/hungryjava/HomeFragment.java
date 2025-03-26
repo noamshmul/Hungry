@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
         btnHungry.setOnClickListener(v -> {
             // Start the second activity with the shared element transition
             Intent intent = new Intent(getActivity(), HungryPopupActivity.class);
+            intent.putExtra("parent_activity", getActivity().getClass().getName());
             // Add a shared element transition for the FAB
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     getActivity(),
