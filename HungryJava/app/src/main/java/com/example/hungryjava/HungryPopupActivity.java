@@ -134,13 +134,14 @@ public class HungryPopupActivity extends AppCompatActivity {
                         String recipe_id = (String) recipes.get(i).get("_id");
                         String name = (String) recipes.get(i).get("name");
                         String Image_url = (String) recipes.get(i).get("image");
+                        boolean favorite = (boolean) recipes.get(i).get("favorite");
                         RecipesList.add(new RecipeItem(
-                                recipe_id,Image_url, name
+                                recipe_id,Image_url, name, favorite
                         ));
 
                     }
 
-                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList);
+                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList, null, null);
                     recyclerView.setAdapter(adapter);
                 }
                 else if (response.code() == 400) {
