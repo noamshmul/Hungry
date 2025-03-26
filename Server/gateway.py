@@ -12,6 +12,7 @@ from SQL_DB_Manager import db_instance
 import Recipes as DBR
 
 IMAGES_PATH = 'images'
+INGREDIENT_IMAGES_PATH = 'ingredient-images'
 
 app = FastAPI()
 router = APIRouter()
@@ -37,6 +38,19 @@ def get_image(image_id ,inventory_id = Depends(authentication)):
             detail="Image not found - wrong image_id"
         )
         
+    return FileResponse(path,media_type="image/jpeg")
+
+@router.get("/ingredient-images/{ingredient_id}.jpg")
+def get_ingredient_image(ingredient_id ,inventory_id = Depends(authentication)):
+    path = os.path.join(INGREDIENT_IMAGES_PATH, ingredient_id + '.jpg')
+
+    if not os.path.exists(path):
+        logger.error("File Not Exists")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found - wrong image_id"
+        )
+    
     return FileResponse(path,media_type="image/jpeg")
 
 @router.get("/inventory")

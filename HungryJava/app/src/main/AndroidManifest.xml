@@ -25,9 +25,6 @@
             android:name=".Activity_signup"
             android:exported="false" />
         <activity
-            android:name=".FridgeScreen"
-            android:exported="false" />
-        <activity
             android:name=".PopupAddItem"
             android:exported="false" />
         <activity
