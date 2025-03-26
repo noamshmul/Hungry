@@ -39,6 +39,8 @@ def hungry(items):
 
 def get_favorite_recipes(favorites):
     fav_recipes = func.get_favorite_recipes(favorites)
+    for recipe in fav_recipes:
+        recipe["favorite"] = True
     if fav_recipes:
         return fav_recipes
     else:

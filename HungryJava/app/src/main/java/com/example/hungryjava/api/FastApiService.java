@@ -11,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Body;
@@ -47,4 +48,18 @@ public interface FastApiService {
 
     @GET("/hungry")
     Call<Map<String, Object>> getHungry();
+
+    @GET("/favorites")
+    Call<Map<String, Object>> getFavorites();
+
+    @PUT("/favorites")
+    Call<Map<String, String>> addFavorites(
+            @Query("recipe_id") String recipe_id
+    );
+
+    @DELETE("/favorites")
+    Call<Map<String, String>> deleteFavorites(
+            @Query("recipe_id") String recipe_id
+    );
+
 }

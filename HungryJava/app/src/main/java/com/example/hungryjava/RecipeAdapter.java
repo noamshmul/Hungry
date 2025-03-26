@@ -2,6 +2,7 @@ package com.example.hungryjava;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,13 +14,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.hungryjava.api.FastApiService;
 import com.example.hungryjava.api.RetrofitClient;
+import com.google.android.material.tabs.TabLayout;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,37 +61,147 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         RecipeItem item = RecipesList.get(position);
 
         SingleRecipeScreen.loadImage(item.getImageName(), holder.imageView);
-
         holder.captionText.setText(item.getCaption());
+        if (item.getFavorite()){
+            holder.starIcon.setImageResource(android.R.drawable.btn_star_big_on);
+        }
+        else holder.starIcon.setImageResource(android.R.drawable.btn_star_big_off);
 
+        // Handle item click
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SingleRecipeScreen.class);
-            intent.putExtra("recipeName", item.getCaption()); // Pass the recipe name
+            intent.putExtra("recipeName", item.getCaption());
             context.startActivity(intent);
         });
 
+        // Handle favorite button click
+        holder.starIcon.setOnClickListener(v -> {
+            if (item.getFavorite()) {
+                // Remove from favorites
+                // in db
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+                FastApiService apiService = retrofit.create(FastApiService.class);
+                Call<Map<String, String>> call = apiService.deleteFavorites(item.getRecipeId());
+
+                // Log the API request
+                Log.d("hungry", "API call started...");
+
+                // Execute the request synchronously or asynchronously
+                call.enqueue(new Callback<Map<String, String>>() {
+                    @Override
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            // get the response dictionary into "body"
+                            Map<String, String> body = response.body();
+                            Log.d("hungry", "Response: " + response.code() + " " + body);
+                        }
+                        else if (response.code() == 400) {
+                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                        }
+                        else {
+                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
+
+                item.setFavorite(false);
+                holder.starIcon.setImageResource(android.R.drawable.btn_star_big_off);
+
+                //if (context.tabLayout.selectedTab.text == "Home")
+                if (context instanceof Activity) {
+                    FragmentActivity  activity = (FragmentActivity)context;
+                    TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
+                    ViewPager2 viewPager = activity.findViewById(R.id.viewPager);
+                    if (tabLayout != null) {
+                        TabLayout.Tab selectedTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
+                        int selectedTabIndex = tabLayout.getSelectedTabPosition();
+                        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+                        if (selectedTab != null && selectedTab.getText() != null) {
+                            if (selectedTab.getText() == "Catalog"){
+                                // Find the currently displayed fragment using the ID
+                                Fragment f = adapter.getFragment(1);
+                                if (f != null) {
+                                    HomeFragment currentFragment = (HomeFragment)adapter.getFragment(1);
+                                    currentFragment.fetchRecipes();
+                                }
+                            }
+                            if (selectedTab.getText() == "Home"){
+                                Fragment f = adapter.getFragment(2);
+                                if (f != null) {
+                                    CatalogFragment currentFragment = (CatalogFragment) f;
+                                    currentFragment.fetchRecipes();
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                // Add to favorites
+                // in db
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance(null, null, false);
+                FastApiService apiService = retrofit.create(FastApiService.class);
+                Call<Map<String, String>> call = apiService.addFavorites(item.getRecipeId());
+
+                // Log the API request
+                Log.d("hungry", "API call started...");
+
+                // Execute the request synchronously or asynchronously
+                call.enqueue(new Callback<Map<String, String>>() {
+                    @Override
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            // get the response dictionary into "body"
+                            Map<String, String> body = response.body();
+                            Log.d("hungry", "Response: " + response.code() + " " + body);
+                        }
+                        else if (response.code() == 400) {
+                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                        }
+                        else {
+                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
+
+                item.setFavorite(true);
+                holder.starIcon.setImageResource(android.R.drawable.btn_star_big_on);
+                Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-
 
     @Override
     public int getItemCount() {
         return RecipesList.size();
     }
 
+
+
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+        ImageView starIcon;
         TextView captionText;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
+            starIcon = itemView.findViewById(R.id.starIcon);
             captionText = itemView.findViewById(R.id.captionText);
         }
     }
-
 }
-
-
-
-
