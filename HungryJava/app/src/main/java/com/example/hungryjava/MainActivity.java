@@ -8,16 +8,21 @@ import retrofit2.Retrofit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.HomeRefreshListener, RecipeAdapter.CatalogRefreshListener {
+
+    private String TAG = "MainActivity";
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.post(() -> viewPager.setCurrentItem(1, false));
 
@@ -67,6 +72,26 @@ public class MainActivity extends AppCompatActivity {
         if (!(is_user_exist && is_password_exist)){
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRefreshHomeRecipes() {
+        Log.d(TAG, "onRefreshHomeRecipes");
+        Fragment fragment = adapter.getFragment(1);
+        if (fragment != null && fragment.isAdded()) {
+            Log.d(TAG, "onRefreshHomeRecipes - fetch");
+            ((HomeFragment) fragment).fetchRecipes();
+        }
+    }
+
+    @Override
+    public void onRefreshCatalogRecipes() {
+        Log.d(TAG, "onRefreshCatalogRecipes");
+        Fragment fragment = adapter.getFragment(2);
+        if (fragment != null && fragment.isAdded()) {
+            Log.d(TAG, "onRefreshCatalogRecipes - fetch");
+            ((CatalogFragment) fragment).fetchRecipes();
         }
     }
 }

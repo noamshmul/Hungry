@@ -71,6 +71,9 @@ public class CatalogFragment extends Fragment {
                     // Handle the response
                     Map<String, Object> responseBody = response.body();
 
+                    // Clear out before adding new recipes
+                    RecipesList.clear();
+
                     if (responseBody != null) {
                         ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
                         for (int i = 0; i < recipes.size(); i++)
@@ -86,7 +89,7 @@ public class CatalogFragment extends Fragment {
                         // Create a filtered list
                         filteredList = new ArrayList<>(RecipesList);
 
-                        adapter = new RecipeAdapter(view.getContext(), filteredList);
+                        adapter = new RecipeAdapter(view.getContext(), filteredList, (MainActivity) getActivity(), (MainActivity) getActivity());
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -133,7 +136,6 @@ public class CatalogFragment extends Fragment {
             }
         });
     }
-
     private void filter(String text)
     {
         filteredList.clear();

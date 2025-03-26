@@ -43,10 +43,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private final List<RecipeItem> RecipesList;
     private final Context context;
+    private HomeRefreshListener homeRefreshListener; // Add this line
+    private CatalogRefreshListener catalogRefreshListener; // Add this line
 
-    public RecipeAdapter(Context context, List<RecipeItem> RecipesList) {
+    public interface HomeRefreshListener {
+        void onRefreshHomeRecipes();
+    }
+
+    public interface CatalogRefreshListener {
+        void onRefreshCatalogRecipes();
+    }
+
+    public RecipeAdapter(Context context, List<RecipeItem> RecipesList, HomeRefreshListener homeRefreshListener, CatalogRefreshListener catalogRefreshListener) {
         this.RecipesList = RecipesList;
         this.context = context;
+        this.homeRefreshListener = homeRefreshListener;
+        this.catalogRefreshListener = catalogRefreshListener;
     }
 
     @NonNull
@@ -84,7 +96,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 Call<Map<String, String>> call = apiService.deleteFavorites(item.getRecipeId());
 
                 // Log the API request
-                Log.d("hungry", "API call started...");
+                Log.d("RecipeAdapter", "API call started...");
 
                 // Execute the request synchronously or asynchronously
                 call.enqueue(new Callback<Map<String, String>>() {
@@ -93,13 +105,38 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         if (response.isSuccessful() && response.body() != null) {
                             // get the response dictionary into "body"
                             Map<String, String> body = response.body();
-                            Log.d("hungry", "Response: " + response.code() + " " + body);
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + body);
+
+                            item.setFavorite(false);
+                            holder.starIcon.setImageResource(android.R.drawable.btn_star_big_off);
+
+                            if (context instanceof Activity) {
+                                FragmentActivity  activity = (FragmentActivity)context;
+                                TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
+                                ViewPager2 viewPager = activity.findViewById(R.id.viewPager);
+                                if (tabLayout != null) {
+                                    TabLayout.Tab selectedTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
+                                    int selectedTabIndex = tabLayout.getSelectedTabPosition();
+                                    ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+                                    if (selectedTab != null && selectedTab.getText() != null) {
+                                        if (selectedTab.getText() == "Catalog"){
+                                            triggerHomeRefresh();
+                                        }
+                                        if (selectedTab.getText() == "Home"){
+                                            triggerCatalogRefresh();
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show();
                         }
                         else if (response.code() == 400) {
-                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + response.message());
                         }
                         else {
-                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + response.message());
                         }
                     }
 
@@ -109,41 +146,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     }
                 });
 
-
-                item.setFavorite(false);
-                holder.starIcon.setImageResource(android.R.drawable.btn_star_big_off);
-
-                //if (context.tabLayout.selectedTab.text == "Home")
-                if (context instanceof Activity) {
-                    FragmentActivity  activity = (FragmentActivity)context;
-                    TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
-                    ViewPager2 viewPager = activity.findViewById(R.id.viewPager);
-                    if (tabLayout != null) {
-                        TabLayout.Tab selectedTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
-                        int selectedTabIndex = tabLayout.getSelectedTabPosition();
-                        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
-                        if (selectedTab != null && selectedTab.getText() != null) {
-                            if (selectedTab.getText() == "Catalog"){
-                                // Find the currently displayed fragment using the ID
-                                Fragment f = adapter.getFragment(1);
-                                if (f != null) {
-                                    HomeFragment currentFragment = (HomeFragment)adapter.getFragment(1);
-                                    currentFragment.fetchRecipes();
-                                }
-                            }
-                            if (selectedTab.getText() == "Home"){
-                                Fragment f = adapter.getFragment(2);
-                                if (f != null) {
-                                    CatalogFragment currentFragment = (CatalogFragment) f;
-                                    currentFragment.fetchRecipes();
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-                Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show();
             } else {
                 // Add to favorites
                 // in db
@@ -152,7 +154,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 Call<Map<String, String>> call = apiService.addFavorites(item.getRecipeId());
 
                 // Log the API request
-                Log.d("hungry", "API call started...");
+                Log.d("RecipeAdapter", "API call started...");
 
                 // Execute the request synchronously or asynchronously
                 call.enqueue(new Callback<Map<String, String>>() {
@@ -161,13 +163,37 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         if (response.isSuccessful() && response.body() != null) {
                             // get the response dictionary into "body"
                             Map<String, String> body = response.body();
-                            Log.d("hungry", "Response: " + response.code() + " " + body);
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + body);
+
+                            item.setFavorite(true);
+                            holder.starIcon.setImageResource(android.R.drawable.btn_star_big_on);
+
+                            if (context instanceof Activity) {
+                                FragmentActivity  activity = (FragmentActivity)context;
+                                TabLayout tabLayout = activity.findViewById(R.id.tabLayout);
+                                ViewPager2 viewPager = activity.findViewById(R.id.viewPager);
+                                if (tabLayout != null) {
+                                    TabLayout.Tab selectedTab = tabLayout.getTabAt(tabLayout.getSelectedTabPosition());
+                                    int selectedTabIndex = tabLayout.getSelectedTabPosition();
+                                    ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+                                    if (selectedTab != null && selectedTab.getText() != null) {
+                                        if (selectedTab.getText() == "Catalog"){
+                                            triggerHomeRefresh();
+                                        }
+                                        if (selectedTab.getText() == "Home"){
+                                            triggerCatalogRefresh();
+                                        }
+
+                                    }
+                                }
+                            }
+                            Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show();
                         }
                         else if (response.code() == 400) {
-                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + response.message());
                         }
                         else {
-                            Log.d("hungry", "Response: " + response.code() + " " + response.message());
+                            Log.d("RecipeAdapter", "Response: " + response.code() + " " + response.message());
                         }
                     }
 
@@ -176,11 +202,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         t.printStackTrace();
                     }
                 });
-
-
-                item.setFavorite(true);
-                holder.starIcon.setImageResource(android.R.drawable.btn_star_big_on);
-                Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -190,7 +211,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return RecipesList.size();
     }
 
+    private void triggerHomeRefresh() {
+        if (homeRefreshListener != null) {
+            homeRefreshListener.onRefreshHomeRecipes();
+        }
+    }
 
+    private void triggerCatalogRefresh() {
+        if (catalogRefreshListener != null) {
+            catalogRefreshListener.onRefreshCatalogRecipes();
+        }
+    }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;

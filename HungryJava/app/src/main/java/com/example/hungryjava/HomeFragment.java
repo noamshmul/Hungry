@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
                         // Create a filtered list
                         filteredList = new ArrayList<>(RecipesList);
 
-                        adapter = new RecipeAdapter(view.getContext(), filteredList);
+                        adapter = new RecipeAdapter(view.getContext(), filteredList, (MainActivity) getActivity(), (MainActivity) getActivity());
                         recyclerView.setAdapter(adapter);
 
                     }

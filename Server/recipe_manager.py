@@ -44,4 +44,4 @@ def get_favorite_recipes(favorites):
     if fav_recipes:
         return fav_recipes
     else:
-        return None
+        return []
