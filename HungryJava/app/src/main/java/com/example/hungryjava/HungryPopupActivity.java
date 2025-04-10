@@ -1,6 +1,7 @@
 package com.example.hungryjava;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -134,13 +135,15 @@ public class HungryPopupActivity extends AppCompatActivity {
                         String recipe_id = (String) recipes.get(i).get("_id");
                         String name = (String) recipes.get(i).get("name");
                         String Image_url = (String) recipes.get(i).get("image");
+                        boolean favorite = (boolean) recipes.get(i).get("favorite");
                         RecipesList.add(new RecipeItem(
-                                recipe_id,Image_url, name
+                                recipe_id,Image_url, name, favorite
                         ));
 
                     }
-
-                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList);
+                    // Access MainActivity instance
+                    MainActivity mainActivity = MainActivity.getInstance();
+                    adapter = new RecipeAdapter(HungryPopupActivity.this, RecipesList, mainActivity, mainActivity);
                     recyclerView.setAdapter(adapter);
                 }
                 else if (response.code() == 400) {

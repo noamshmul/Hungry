@@ -34,21 +34,24 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
 public class HomeFragment extends Fragment {
 
     private RecipeAdapter adapter;
     private static final String TAG = "RecipesScreen";
     private List<RecipeItem> RecipesList = new ArrayList<>();
     private List<RecipeItem> filteredList;
+    private View view;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
         FloatingActionButton btnHungry = view.findViewById(R.id.fabHungry);
         btnHungry.setOnClickListener(v -> {
             // Start the second activity with the shared element transition
             Intent intent = new Intent(getActivity(), HungryPopupActivity.class);
+            intent.putExtra("parent_activity", getActivity().getClass().getName());
             // Add a shared element transition for the FAB
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     getActivity(),
@@ -57,6 +60,12 @@ public class HomeFragment extends Fragment {
             );
             startActivity(intent, options.toBundle());
         });
+        fetchRecipes();
+
+        return view;
+    }
+
+    public void fetchRecipes() {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
 
@@ -78,6 +87,10 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     // Handle the response
                     Map<String, Object> responseBody = response.body();
+
+                    // Clear out before adding new recipes
+                    RecipesList.clear();
+
                     if (responseBody != null) {
                         ArrayList<Map<String, Object>> recipes = (ArrayList<Map<String, Object>>)responseBody.get("recipes");
                         for (int i = 0; i < recipes.size(); i++)
@@ -85,15 +98,16 @@ public class HomeFragment extends Fragment {
                             String recipe_id = (String) recipes.get(i).get("_id");
                             String name = (String) recipes.get(i).get("name");
                             String Image_url = (String) recipes.get(i).get("image");
+                            boolean favorite = (boolean) recipes.get(i).get("favorite");
                             RecipesList.add(new RecipeItem(
-                                    recipe_id,Image_url, name
+                                    recipe_id,Image_url, name, favorite
                             ));
 
                         }
                         // Create a filtered list
                         filteredList = new ArrayList<>(RecipesList);
 
-                        adapter = new RecipeAdapter(view.getContext(), filteredList);
+                        adapter = new RecipeAdapter(view.getContext(), filteredList, (MainActivity) getActivity(), (MainActivity) getActivity());
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -106,10 +120,11 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG, "Error: " + response.message());
 
                     Toast.makeText(view.getContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
-
+                    // Close the parent activity
+                    requireActivity().finish();
                 }
 
             }
@@ -137,11 +152,8 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-
-
-
-        return view;
     }
+
     private void filter(String text)
     {
         filteredList.clear();
