@@ -95,6 +95,11 @@ After the initial setup, simply turn on Docker Desktop and start the containers 
 3. **Need Assistance?**  
    Contact `@SavvaS412` for any setup or runtime issues.
 
+4. **Proxy The Server via Ngrok**  (Optional)
+   ```bash
+   docker run -it -e NGROK_AUTHTOKEN=2vR5O1Fe4p0Z2HetCqqXcGfpwqA_86VmL1bcUj4ZqyKeesqwE ngrok/ngrok:latest http --url=normal-pleasant-pigeon.ngrok-free.app host.docker.internal:8000
+   ```
+
 ---
 
 ## Stopping the Server
