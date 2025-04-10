@@ -104,8 +104,8 @@
     <!-- Submit Button -->
     <Button
         android:id="@+id/submit"
-        android:text="Sumbit"
-        android:layout_width="0dp"
+        android:text="Submit"
+        android:layout_width="0dpg"
         android:layout_height="50dp"
         android:background="@drawable/rounded_button"
         android:textColor="@android:color/white"
